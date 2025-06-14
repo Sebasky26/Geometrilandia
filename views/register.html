@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Geometrilandia</title>
+    <meta name="description" content="Regístrate en Geometrilandia - Sistema educativo interactivo para niños de 2 a 4 años">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="auth-layout">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>🏰 Geometrilandia</h1>
+                <p>Únete a la aventura geométrica</p>
+            </div>
+            
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="nombre" class="form-label">Nombre completo</label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        class="form-input" 
+                        required 
+                        autocomplete="name"
+                        placeholder="Tu nombre completo"
+                        aria-describedby="nombre-help"
+                    >
+                    <div id="nombre-help" class="sr-only">Ingresa tu nombre completo como tutor</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="correo" class="form-label">Correo electrónico</label>
+                    <input 
+                        type="email" 
+                        id="correo" 
+                        name="correo" 
+                        class="form-input" 
+                        required 
+                        autocomplete="email"
+                        placeholder="tu@correo.com"
+                        aria-describedby="correo-help"
+                    >
+                    <div id="correo-help" class="sr-only">Ingresa un correo válido para tu cuenta</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        required 
+                        autocomplete="new-password"
+                        placeholder="Mínimo 6 caracteres"
+                        aria-describedby="password-help"
+                        minlength="6"
+                    >
+                    <div id="password-help" class="sr-only">La contraseña debe tener al menos 6 caracteres</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        class="form-input" 
+                        required 
+                        autocomplete="new-password"
+                        placeholder="Repite tu contraseña"
+                        aria-describedby="confirm-password-help"
+                    >
+                    <div id="confirm-password-help" class="sr-only">Repite la contraseña para confirmar</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-large btn-full">
+                    Crear Cuenta
+                </button>
+            </form>
+            
+            <div class="text-center mt-lg">
+                <p>¿Ya tienes cuenta? 
+                    <a href="/login" class="link-primary">Inicia sesión aquí</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/auth.js"></script>
+</body>
+</html>

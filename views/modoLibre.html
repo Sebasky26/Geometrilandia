@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Libre - Geometrilandia</title>
+    <meta name="description" content="Modo libre de Geometrilandia - Explora figuras geométricas libremente">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="game-layout">
+        <header class="game-header">
+            <div class="container">
+                <nav class="game-nav">
+                    <div class="game-title">🎨 Modo Libre</div>
+                    <div>
+                        <button class="btn btn-secondary back-to-dashboard">← Volver al Menú</button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        
+        <main class="game-content">
+            <div class="container">
+                <div class="game-panel">
+                    <h2>🌟 Exploración Libre de Figuras</h2>
+                    <p id="gameInstructions" class="text-center mb-lg">
+                        En este modo puedes explorar todas las figuras geométricas sin límites. 
+                        ¡Coloca cualquier figura en el lector y descubre sus características!
+                    </p>
+                    
+                    <div id="gameStatus" class="game-status waiting">
+                        Coloca una figura en el lector para comenzar la exploración
+                    </div>
+                    
+                    <div id="figureInfo" class="text-center mb-xl">
+                        <!-- Información de la figura aparecerá aquí -->
+                    </div>
+                    
+                    <!-- Simulador RFID para desarrollo -->
+                    <div class="game-panel" style="background-color: var(--color-gray-100);">
+                        <h3>🔧 Simulador RFID (Desarrollo)</h3>
+                        <p>Selecciona una figura para simular la lectura del sensor:</p>
+                        <select id="rfidSimulator" class="form-input">
+                            <option value="">Cargando figuras...</option>
+                        </select>
+                        <small style="color: var(--color-gray-600);">
+                            Este simulador solo es visible durante el desarrollo
+                        </small>
+                    </div>
+                    
+                    <div class="text-center mt-xl">
+                        <button class="btn btn-primary btn-large game-action-btn" data-action="reset-game">
+                            🔄 Reiniciar Exploración
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Panel de ayuda -->
+                <div class="game-panel">
+                    <h3>💡 Consejos para el Modo Libre</h3>
+                    <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <li><strong>Explora sin prisa:</strong> No hay límite de tiempo ni objetivos específicos</li>
+                        <li><strong>Repite figuras:</strong> Puedes colocar la misma figura varias veces para reforzar el aprendizaje</li>
+                        <li><strong>Observa los colores:</strong> Cada figura tiene un color característico que ayuda a identificarla</li>
+                        <li><strong>Lee las descripciones:</strong> Aprende las características únicas de cada figura geométrica</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/js/auth.js"></script>
+    <script src="/js/game.js"></script>
+</body>
+</html>

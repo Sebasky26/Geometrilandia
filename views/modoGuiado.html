@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Guiado - Geometrilandia</title>
+    <meta name="description" content="Modo guiado de Geometrilandia - Encuentra figuras específicas siguiendo instrucciones">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="game-layout">
+        <header class="game-header">
+            <div class="container">
+                <nav class="game-nav">
+                    <div class="game-title">🎯 Modo Guiado</div>
+                    <div>
+                        <button class="btn btn-secondary back-to-dashboard">← Volver al Menú</button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        
+        <main class="game-content">
+            <div class="container">
+                <div class="game-panel">
+                    <h2>🎯 Búsqueda Dirigida de Figuras</h2>
+                    <p id="gameInstructions" class="text-center mb-lg">
+                        En este modo debes encontrar figuras específicas. 
+                        ¡Sigue las instrucciones y encuentra la figura correcta!
+                    </p>
+                    
+                    <div id="gameStatus" class="game-status waiting">
+                        Haz clic en "Nueva Figura" para comenzar
+                    </div>
+                    
+                    <div id="figureTarget" class="text-center mb-xl">
+                        <!-- Figura objetivo aparecerá aquí -->
+                    </div>
+                    
+                    <div class="text-center mb-xl">
+                        <button class="btn btn-success btn-large game-action-btn" data-action="start-guided">
+                            🎯 Nueva Figura
+                        </button>
+                        <button class="btn btn-warning btn-large game-action-btn" data-action="new-objective">
+                            🔄 Cambiar Objetivo
+                        </button>
+                    </div>
+                    
+                    <!-- Simulador RFID para desarrollo -->
+                    <div class="game-panel" style="background-color: var(--color-gray-100);">
+                        <h3>🔧 Simulador RFID (Desarrollo)</h3>
+                        <p>Selecciona una figura para simular la lectura del sensor:</p>
+                        <select id="rfidSimulator" class="form-input">
+                            <option value="">Cargando figuras...</option>
+                        </select>
+                        <small style="color: var(--color-gray-600);">
+                            Este simulador solo es visible durante el desarrollo
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Panel de ayuda -->
+                <div class="game-panel">
+                    <h3>💡 Consejos para el Modo Guiado</h3>
+                    <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <li><strong>Lee la instrucción:</strong> Observa bien qué figura debes encontrar</li>
+                        <li><strong>Fíjate en el color:</strong> Cada figura tiene un color que te ayuda a identificarla</li>
+                        <li><strong>No te preocupes por los errores:</strong> Si te equivocas, puedes intentar de nuevo</li>
+                        <li><strong>Tómate tu tiempo:</strong> No hay prisa, lo importante es aprender</li>
+                        <li><strong>Celebra los aciertos:</strong> ¡Cada figura encontrada es un logro!</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/js/auth.js"></script>
+    <script src="/js/game.js"></script>
+</body>
+</html>
