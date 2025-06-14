@@ -1,14 +1,27 @@
 const express = require("express")
 const router = express.Router()
 const AuthController = require("../controllers/authController")
-const { redirectIfAuth } = require("../middleware/auth")
+const GameController = require("../controllers/gameController")
+const { requireAuth, redirectIfAuth } = require("../middleware/auth")
 
 // Rutas de autenticación
-router.get("/login", redirectIfAuth, AuthController.showLogin)
 router.get("/register", redirectIfAuth, AuthController.showRegister)
-router.post("/login", AuthController.login)
 router.post("/register", AuthController.register)
+router.get("/login", redirectIfAuth, AuthController.showLogin)
+router.post("/login", AuthController.login)
 router.post("/logout", AuthController.logout)
-router.get("/check-auth", AuthController.checkAuth)
+router.get("/current-user", AuthController.getCurrentUser)
+
+// Rutas del juego (requieren autenticación)
+router.get("/dashboard", requireAuth, GameController.showDashboard)
+router.get("/modo-libre", requireAuth, GameController.showModoLibre)
+router.get("/modo-guiado", requireAuth, GameController.showModoGuiado)
+router.get("/modo-desafio", requireAuth, GameController.showModoDesafio)
+
+// API endpoints
+router.get("/api/figuras", requireAuth, GameController.getFiguras)
+router.post("/api/rfid", requireAuth, GameController.processRFID)
+router.get("/api/figura-aleatoria", requireAuth, GameController.getFiguraAleatoria)
+router.get("/api/stats", requireAuth, GameController.getStats)
 
 module.exports = router

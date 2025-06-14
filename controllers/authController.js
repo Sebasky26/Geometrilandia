@@ -1,63 +1,61 @@
 const UserModel = require("../models/userModel")
 
 class AuthController {
-  // Mostrar página de login
-  static showLogin(req, res) {
-    res.sendFile("login.html", { root: "./views" })
-  }
-
   // Mostrar página de registro
   static showRegister(req, res) {
     res.sendFile("register.html", { root: "./views" })
   }
 
-  // Procesar login
-  static async login(req, res) {
-    try {
-      const { correo, password } = req.body
+  // Mostrar página de login
+  static showLogin(req, res) {
+    res.sendFile("login.html", { root: "./views" })
+  }
 
-      // Validaciones básicas
-      if (!correo || !password) {
+  // Procesar registro
+  static async register(req, res) {
+    try {
+      const { cedula, nombre_nino, edad, password, confirm_password } = req.body
+
+      // Validaciones
+      if (!cedula || !nombre_nino || !edad || !password || !confirm_password) {
         return res.status(400).json({
           success: false,
-          message: "Correo y contraseña son requeridos",
+          message: "Todos los campos son obligatorios",
         })
       }
 
-      // Buscar usuario
-      const user = await UserModel.findByEmail(correo)
-      if (!user) {
-        return res.status(401).json({
+      if (password !== confirm_password) {
+        return res.status(400).json({
           success: false,
-          message: "Credenciales incorrectas",
+          message: "Las contraseñas no coinciden",
         })
       }
 
-      // Verificar contraseña
-      const isValidPassword = await UserModel.verifyPassword(password, user.password)
-      if (!isValidPassword) {
-        return res.status(401).json({
+      if (edad < 2 || edad > 4) {
+        return res.status(400).json({
           success: false,
-          message: "Credenciales incorrectas",
+          message: "La edad debe estar entre 2 y 4 años",
         })
       }
 
-      // Crear sesión
-      req.session.userId = user.id
-      req.session.userName = user.nombre
-      req.session.userEmail = user.correo
+      // Verificar si el usuario ya existe
+      const existingUser = await UserModel.findByCedula(cedula)
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: "Ya existe un usuario con esta cédula",
+        })
+      }
+
+      // Crear usuario
+      await UserModel.create({ cedula, nombre_nino, edad, password })
 
       res.json({
         success: true,
-        message: "Login exitoso",
-        user: {
-          id: user.id,
-          nombre: user.nombre,
-          correo: user.correo,
-        },
+        message: "Usuario registrado exitosamente",
       })
     } catch (error) {
-      console.error("Error en login:", error)
+      console.error("Error en registro:", error)
       res.status(500).json({
         success: false,
         message: "Error interno del servidor",
@@ -65,57 +63,49 @@ class AuthController {
     }
   }
 
-  // Procesar registro
-  static async register(req, res) {
+  // Procesar login
+  static async login(req, res) {
     try {
-      const { nombre, correo, password, confirmPassword } = req.body
+      const { cedula, password } = req.body
 
       // Validaciones
-      if (!nombre || !correo || !password || !confirmPassword) {
+      if (!cedula || !password) {
         return res.status(400).json({
           success: false,
-          message: "Todos los campos son requeridos",
+          message: "Cédula y contraseña son obligatorios",
         })
       }
 
-      if (password !== confirmPassword) {
+      // Buscar usuario
+      const user = await UserModel.findByCedula(cedula)
+      if (!user) {
         return res.status(400).json({
           success: false,
-          message: "Las contraseñas no coinciden",
+          message: "Cédula o contraseña incorrectos",
         })
       }
 
-      if (password.length < 6) {
+      // Verificar contraseña
+      const isValidPassword = await UserModel.verifyPassword(password, user.password)
+      if (!isValidPassword) {
         return res.status(400).json({
           success: false,
-          message: "La contraseña debe tener al menos 6 caracteres",
+          message: "Cédula o contraseña incorrectos",
         })
       }
 
-      // Verificar si el correo ya existe
-      const existingUser = await UserModel.findByEmail(correo)
-      if (existingUser) {
-        return res.status(409).json({
-          success: false,
-          message: "El correo ya está registrado",
-        })
-      }
-
-      // Crear usuario
-      const newUser = await UserModel.create({ nombre, correo, password })
-
-      // Crear sesión automáticamente
-      req.session.userId = newUser.id
-      req.session.userName = newUser.nombre
-      req.session.userEmail = newUser.correo
+      // Crear sesión
+      req.session.userId = user.id
+      req.session.userCedula = user.cedula
+      req.session.nombreNino = user.nombre_nino
+      req.session.edad = user.edad
 
       res.json({
         success: true,
-        message: "Usuario registrado exitosamente",
-        user: newUser,
+        message: "Inicio de sesión exitoso",
       })
     } catch (error) {
-      console.error("Error en registro:", error)
+      console.error("Error en login:", error)
       res.status(500).json({
         success: false,
         message: "Error interno del servidor",
@@ -127,13 +117,11 @@ class AuthController {
   static logout(req, res) {
     req.session.destroy((err) => {
       if (err) {
-        console.error("Error cerrando sesión:", err)
         return res.status(500).json({
           success: false,
-          message: "Error cerrando sesión",
+          message: "Error al cerrar sesión",
         })
       }
-
       res.json({
         success: true,
         message: "Sesión cerrada exitosamente",
@@ -141,24 +129,24 @@ class AuthController {
     })
   }
 
-  // Verificar autenticación
-  static checkAuth(req, res) {
-    if (req.session.userId) {
-      res.json({
-        success: true,
-        authenticated: true,
-        user: {
-          id: req.session.userId,
-          nombre: req.session.userName,
-          correo: req.session.userEmail,
-        },
-      })
-    } else {
-      res.json({
-        success: true,
-        authenticated: false,
+  // Obtener datos del usuario actual
+  static getCurrentUser(req, res) {
+    if (!req.session.userId) {
+      return res.status(401).json({
+        success: false,
+        message: "No hay sesión activa",
       })
     }
+
+    res.json({
+      success: true,
+      user: {
+        id: req.session.userId,
+        cedula: req.session.userCedula,
+        nombre_nino: req.session.nombreNino,
+        edad: req.session.edad,
+      },
+    })
   }
 }
 

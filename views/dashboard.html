@@ -4,137 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Geometrilandia</title>
-    <meta name="description" content="Panel principal de Geometrilandia - Selecciona el modo de juego para tu pequeño explorador">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/adult-styles.css">
 </head>
 <body>
-    <div class="dashboard-layout">
-        <header class="dashboard-header">
-            <div class="container">
-                <nav class="dashboard-nav">
-                    <div class="dashboard-logo">🏰 Geometrilandia</div>
-                    <div class="dashboard-user">
-                        <span id="userName">Cargando...</span>
-                        <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
-                    </div>
-                </nav>
+    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>¡Bienvenido a Geometrilandia!</h1>
+            <p id="welcomeMessage">Cargando...</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3>🎮 Modo Libre</h3>
+                <p>Explora y descubre figuras sin restricciones. Perfecto para familiarizarse con las formas.</p>
+                <button class="btn" onclick="goToMode('libre')">Jugar Modo Libre</button>
             </div>
-        </header>
-        
-        <main class="dashboard-content">
-            <div class="container">
-                <div class="dashboard-welcome">
-                    <h1>¡Bienvenido a Geometrilandia! 🎉</h1>
-                    <p>Selecciona un modo de juego para comenzar la aventura geométrica</p>
-                </div>
-                
-                <div class="game-modes">
-                    <div class="game-mode-card" data-mode="libre" role="button" tabindex="0" aria-label="Modo libre de exploración">
-                        <div class="game-mode-icon">🎨</div>
-                        <h2 class="game-mode-title">Modo Libre</h2>
-                        <p class="game-mode-description">
-                            Explora libremente todas las figuras geométricas. 
-                            Perfecto para descubrir y aprender sin presión.
-                        </p>
-                        <div class="btn btn-primary btn-large">Comenzar Exploración</div>
-                    </div>
-                    
-                    <div class="game-mode-card" data-mode="guiado" role="button" tabindex="0" aria-label="Modo guiado con objetivos">
-                        <div class="game-mode-icon">🎯</div>
-                        <h2 class="game-mode-title">Modo Guiado</h2>
-                        <p class="game-mode-description">
-                            Encuentra figuras específicas siguiendo instrucciones. 
-                            Ideal para aprendizaje dirigido y práctica.
-                        </p>
-                        <div class="btn btn-success btn-large">Iniciar Práctica</div>
-                    </div>
-                    
-                    <div class="game-mode-card" data-mode="desafio" role="button" tabindex="0" aria-label="Modo desafío con secuencias">
-                        <div class="game-mode-icon">🏆</div>
-                        <h2 class="game-mode-title">Modo Desafío</h2>
-                        <p class="game-mode-description">
-                            Completa secuencias de figuras en orden correcto. 
-                            ¡Pon a prueba la memoria y concentración!
-                        </p>
-                        <div class="btn btn-warning btn-large">Aceptar Desafío</div>
-                    </div>
-                </div>
-                
-                <div class="stats-preview">
-                    <div class="game-panel">
-                        <h3>📊 Resumen de Progreso</h3>
-                        <div class="stats-grid" id="statsGrid">
-                            <div class="stat-card">
-                                <div class="stat-value" id="totalInteractions">-</div>
-                                <div class="stat-label">Interacciones Totales</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="successRate">-</div>
-                                <div class="stat-label">Tasa de Éxito</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="favoriteFigure">-</div>
-                                <div class="stat-label">Figura Favorita</div>
-                            </div>
-                        </div>
-                        <div class="text-center mt-lg">
-                            <button class="btn btn-secondary" onclick="window.location.href='/estadisticas'">
-                                Ver Estadísticas Completas
-                            </button>
-                        </div>
-                    </div>
+
+            <div class="dashboard-card">
+                <h3>🎯 Modo Guiado</h3>
+                <p>Encuentra la figura que te pedimos. Ideal para aprender de forma dirigida.</p>
+                <button class="btn" onclick="goToMode('guiado')">Jugar Modo Guiado</button>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>🏆 Modo Desafío</h3>
+                <p>Completa secuencias de figuras. ¡El reto más emocionante!</p>
+                <button class="btn" onclick="goToMode('desafio')">Jugar Modo Desafío</button>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h3>📊 Progreso de Aprendizaje</h3>
+            <div id="statsContainer">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Cargando estadísticas...</div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-    
-    <script src="/js/auth.js"></script>
-    <script src="/js/game.js"></script>
+
+    <script src="/js/dashboard.js"></script>
     <script>
-        // Cargar información del usuario y estadísticas
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Verificar autenticación y obtener datos del usuario
-                const authResponse = await fetch('/check-auth');
-                const authResult = await authResponse.json();
-                
-                if (authResult.authenticated) {
-                    document.getElementById('userName').textContent = authResult.user.nombre;
-                } else {
-                    window.location.href = '/login';
-                    return;
-                }
-                
-                // Cargar estadísticas básicas
-                const statsResponse = await fetch('/api/estadisticas');
-                const statsResult = await statsResponse.json();
-                
-                if (statsResult.success) {
-                    const stats = statsResult.estadisticas;
-                    
-                    document.getElementById('totalInteractions').textContent = 
-                        stats.resumen.totalInteracciones || 0;
-                    
-                    document.getElementById('successRate').textContent = 
-                        stats.resumen.porcentajeAcierto + '%' || '0%';
-                    
-                    // Encontrar figura favorita (más interacciones)
-                    let figuraFavorita = 'Ninguna';
-                    let maxInteracciones = 0;
-                    
-                    Object.keys(stats.porFigura).forEach(figura => {
-                        if (stats.porFigura[figura].interacciones > maxInteracciones) {
-                            maxInteracciones = stats.porFigura[figura].interacciones;
-                            figuraFavorita = figura;
-                        }
-                    });
-                    
-                    document.getElementById('favoriteFigure').textContent = figuraFavorita;
-                }
-                
-            } catch (error) {
-                console.error('Error cargando dashboard:', error);
-            }
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initDashboard();
         });
     </script>
 </body>

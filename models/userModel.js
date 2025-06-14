@@ -4,24 +4,19 @@ const bcrypt = require("bcryptjs")
 class UserModel {
   // Crear nuevo usuario
   static async create(userData) {
-    const { nombre, correo, password } = userData
+    const { cedula, nombre_nino, edad, password } = userData
 
     try {
       // Encriptar contraseña
-      const saltRounds = 10
-      const hashedPassword = await bcrypt.hash(password, saltRounds)
+      const hashedPassword = await bcrypt.hash(password, 10)
 
       return new Promise((resolve, reject) => {
-        const query = "INSERT INTO users (nombre, correo, password) VALUES (?, ?, ?)"
-        db.query(query, [nombre, correo, hashedPassword], (err, results) => {
+        const query = "INSERT INTO users (cedula, nombre_nino, edad, password) VALUES (?, ?, ?, ?)"
+        db.query(query, [cedula, nombre_nino, edad, hashedPassword], (err, result) => {
           if (err) {
             reject(err)
           } else {
-            resolve({
-              id: results.insertId,
-              nombre,
-              correo,
-            })
+            resolve(result)
           }
         })
       })
@@ -30,15 +25,15 @@ class UserModel {
     }
   }
 
-  // Buscar usuario por correo
-  static findByEmail(correo) {
+  // Buscar usuario por cédula
+  static findByCedula(cedula) {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM users WHERE correo = ?"
-      db.query(query, [correo], (err, results) => {
+      const query = "SELECT * FROM users WHERE cedula = ?"
+      db.query(query, [cedula], (err, results) => {
         if (err) {
           reject(err)
         } else {
-          resolve(results[0] || null)
+          resolve(results[0])
         }
       })
     })
@@ -46,29 +41,24 @@ class UserModel {
 
   // Verificar contraseña
   static async verifyPassword(plainPassword, hashedPassword) {
-    try {
-      return await bcrypt.compare(plainPassword, hashedPassword)
-    } catch (error) {
-      throw error
-    }
+    return await bcrypt.compare(plainPassword, hashedPassword)
   }
 
   // Obtener estadísticas del usuario
-  static getUserStats(userId) {
+  static getStats(userId) {
     return new Promise((resolve, reject) => {
       const query = `
-        SELECT 
-          COUNT(*) as total_interacciones,
-          SUM(CASE WHEN resultado = 'acierto' THEN 1 ELSE 0 END) as aciertos,
-          SUM(CASE WHEN resultado = 'error' THEN 1 ELSE 0 END) as errores,
-          modo,
-          f.nombre as figura_nombre
-        FROM interacciones i
-        JOIN figuras f ON i.figura_id = f.id
-        WHERE i.user_id = ?
-        GROUP BY modo, f.nombre
-        ORDER BY modo, f.nombre
-      `
+                SELECT 
+                    f.nombre as figura,
+                    COUNT(i.id) as total_intentos,
+                    SUM(CASE WHEN i.resultado = 'correcto' THEN 1 ELSE 0 END) as aciertos,
+                    i.modo
+                FROM interacciones i
+                JOIN figuras f ON i.figura_id = f.id
+                WHERE i.user_id = ?
+                GROUP BY f.id, i.modo
+                ORDER BY f.nombre, i.modo
+            `
 
       db.query(query, [userId], (err, results) => {
         if (err) {

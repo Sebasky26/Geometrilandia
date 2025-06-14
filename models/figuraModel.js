@@ -16,46 +16,42 @@ class FiguraModel {
   }
 
   // Buscar figura por código RFID
-  static findByRFID(codigoRfid) {
+  static findByRFID(codigo_rfid) {
     return new Promise((resolve, reject) => {
       const query = "SELECT * FROM figuras WHERE codigo_rfid = ?"
-      db.query(query, [codigoRfid], (err, results) => {
+      db.query(query, [codigo_rfid], (err, results) => {
         if (err) {
           reject(err)
         } else {
-          resolve(results[0] || null)
-        }
-      })
-    })
-  }
-
-  // Obtener figura aleatoria
-  static getRandom() {
-    return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM figuras ORDER BY RAND() LIMIT 1"
-      db.query(query, (err, results) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(results[0] || null)
+          resolve(results[0])
         }
       })
     })
   }
 
   // Registrar interacción
-  static registrarInteraccion(userId, figuraId, modo, resultado, tiempoRespuesta = 0) {
+  static registrarInteraccion(userId, figuraId, modo, resultado) {
     return new Promise((resolve, reject) => {
-      const query = `
-        INSERT INTO interacciones (user_id, figura_id, modo, resultado, tiempo_respuesta) 
-        VALUES (?, ?, ?, ?, ?)
-      `
-
-      db.query(query, [userId, figuraId, modo, resultado, tiempoRespuesta], (err, results) => {
+      const query = "INSERT INTO interacciones (user_id, figura_id, modo, resultado) VALUES (?, ?, ?, ?)"
+      db.query(query, [userId, figuraId, modo, resultado], (err, result) => {
         if (err) {
           reject(err)
         } else {
-          resolve(results)
+          resolve(result)
+        }
+      })
+    })
+  }
+
+  // Obtener figura aleatoria
+  static getRandomFigura() {
+    return new Promise((resolve, reject) => {
+      const query = "SELECT * FROM figuras ORDER BY RAND() LIMIT 1"
+      db.query(query, (err, results) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(results[0])
         }
       })
     })

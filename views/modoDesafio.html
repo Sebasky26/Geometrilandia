@@ -4,146 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modo Desafío - Geometrilandia</title>
-    <meta name="description" content="Modo desafío de Geometrilandia - Completa secuencias de figuras geométricas">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/kids-styles.css">
 </head>
 <body>
-    <div class="game-layout">
-        <header class="game-header">
-            <div class="container">
-                <nav class="game-nav">
-                    <div class="game-title">🏆 Modo Desafío</div>
-                    <div>
-                        <button class="btn btn-secondary back-to-dashboard">← Volver al Menú</button>
-                    </div>
-                </nav>
-            </div>
-        </header>
-        
-        <main class="game-content">
-            <div class="container">
-                <div class="game-panel">
-                    <h2>🏆 Desafío de Secuencias</h2>
-                    <p id="gameInstructions" class="text-center mb-lg">
-                        En este modo debes completar una secuencia de 3 figuras en el orden correcto. 
-                        ¡Pon a prueba tu memoria y concentración!
-                    </p>
-                    
-                    <div id="challengeProgress" class="text-center mb-lg">
-                        <!-- Progreso del desafío aparecerá aquí -->
-                    </div>
-                    
-                    <div id="gameStatus" class="game-status waiting">
-                        Haz clic en "Iniciar Desafío" para comenzar
-                    </div>
-                    
-                    <div id="challengeSequence" class="text-center mb-xl">
-                        <!-- Secuencia del desafío aparecerá aquí -->
-                    </div>
-                    
-                    <div class="text-center mb-xl">
-                        <button class="btn btn-warning btn-large game-action-btn" data-action="start-challenge">
-                            🚀 Iniciar Desafío
-                        </button>
-                        <button class="btn btn-primary btn-large game-action-btn" data-action="reset-game">
-                            🔄 Nuevo Desafío
-                        </button>
-                    </div>
-                    
-                    <!-- Simulador RFID para desarrollo -->
-                    <div class="game-panel" style="background-color: var(--color-gray-100);">
-                        <h3>🔧 Simulador RFID (Desarrollo)</h3>
-                        <p>Selecciona una figura para simular la lectura del sensor:</p>
-                        <select id="rfidSimulator" class="form-input">
-                            <option value="">Cargando figuras...</option>
-                        </select>
-                        <small style="color: var(--color-gray-600);">
-                            Este simulador solo es visible durante el desarrollo
-                        </small>
-                    </div>
+    <button class="back-button" onclick="goBack()">
+        <span class="back-icon">←</span>
+    </button>
+
+    <div class="kids-container">
+        <div class="game-area bounce-in">
+            <div id="welcomeScreen" class="show">
+                <div class="play-button" onclick="startChallengeMode()">
+                    <div class="play-icon">🏆</div>
+                    <div class="play-text">¡DESAFÍO!</div>
                 </div>
-                
-                <!-- Panel de ayuda -->
-                <div class="game-panel">
-                    <h3>💡 Consejos para el Modo Desafío</h3>
-                    <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
-                        <li><strong>Memoriza la secuencia:</strong> Observa bien el orden de las figuras antes de empezar</li>
-                        <li><strong>Ve paso a paso:</strong> Completa una figura a la vez, no te apresures</li>
-                        <li><strong>Usa el progreso visual:</strong> Los círculos numerados te muestran dónde vas</li>
-                        <li><strong>Si te equivocas:</strong> No pasa nada, puedes seguir intentando con la figura correcta</li>
-                        <li><strong>¡Celebra al completar!</strong> Terminar un desafío es un gran logro</li>
-                    </ul>
+                <div class="feedback-message feedback-info">
+                    <span class="sound-wave"></span>
+                    ¡Completa la secuencia de figuras!
+                    <span class="sound-wave"></span>
                 </div>
             </div>
-        </main>
+
+            <div id="gameScreen" class="hidden">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+
+                <div class="feedback-message feedback-info" id="instructionMessage">
+                    <span class="sound-wave"></span>
+                    Paso <span id="currentStep">1</span> de <span id="totalSteps">5</span>
+                    <span class="sound-wave"></span>
+                </div>
+
+                <div class="figura-display" id="targetDisplay">
+                    <div class="figura-icon" id="targetIcon">🔷</div>
+                </div>
+
+                <div class="figura-name" id="targetName">CUBO</div>
+
+                <div class="feedback-message feedback-info" id="searchMessage">
+                    ¡Encuentra el CUBO!
+                </div>
+
+                <div class="figura-display" id="resultDisplay" style="margin-top: 2rem;">
+                    <div class="loading hidden" id="loadingIndicator">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Verificando...</div>
+                    </div>
+                    <div class="figura-icon" id="resultIcon">❓</div>
+                </div>
+
+                <div id="feedbackMessage" class="feedback-message hidden"></div>
+
+                <button class="btn" id="nextButton" onclick="nextStep()" style="display: none; margin-top: 2rem; padding: 1rem 2rem; font-size: 1.5rem;">
+                    ¡Continuar! 🎉
+                </button>
+
+                <button class="btn" id="finishButton" onclick="finishChallenge()" style="display: none; margin-top: 2rem; padding: 1rem 2rem; font-size: 1.5rem; background: #00b894;">
+                    ¡Completado! 🏆
+                </button>
+            </div>
+
+            <div id="completionScreen" class="hidden">
+                <div class="feedback-message feedback-success" style="font-size: 3rem;">
+                    🎉 ¡FELICITACIONES! 🎉
+                </div>
+                <div class="feedback-message feedback-info" style="margin-top: 2rem;">
+                    ¡Has completado el desafío!
+                </div>
+                <button class="btn" onclick="restartChallenge()" style="margin-top: 2rem; padding: 1rem 2rem; font-size: 1.5rem;">
+                    ¡Jugar de Nuevo! 🔄
+                </button>
+            </div>
+        </div>
     </div>
-    
-    <!-- Estilos adicionales para el modo desafío -->
-    <style>
-        .completion-message {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .completion-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 1rem;
-            text-align: center;
-            max-width: 400px;
-            animation: pulse 2s infinite;
-        }
-        
-        .completion-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-        
-        .celebration-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
-        
-        .confetti {
-            position: absolute;
-            font-size: 2rem;
-            animation: confettiFall 3s ease-out forwards;
-        }
-        
-        .confetti:nth-child(1) { left: 20%; animation-delay: 0s; }
-        .confetti:nth-child(2) { left: 40%; animation-delay: 0.5s; }
-        .confetti:nth-child(3) { left: 60%; animation-delay: 1s; }
-        .confetti:nth-child(4) { left: 80%; animation-delay: 1.5s; }
-        
-        @keyframes confettiFall {
-            0% {
-                top: -10%;
-                transform: rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                top: 100%;
-                transform: rotate(360deg);
-                opacity: 0;
-            }
-        }
-    </style>
-    
-    <script src="/js/auth.js"></script>
-    <script src="/js/game.js"></script>
+
+    <!-- Audio para retroalimentación -->
+    <audio id="successSound" preload="auto">
+        <source src="/audio/success.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="errorSound" preload="auto">
+        <source src="/audio/error.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="detectSound" preload="auto">
+        <source src="/audio/detect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="completionSound" preload="auto">
+        <source src="/audio/completion.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="/js/game-common.js"></script>
+    <script src="/js/modo-desafio.js"></script>
+    <script>
+        // Inicializar modo desafío
+        document.addEventListener('DOMContentLoaded', function() {
+            initModoDesafio();
+        });
+    </script>
 </body>
 </html>

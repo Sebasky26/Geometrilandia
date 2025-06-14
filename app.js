@@ -1,71 +1,66 @@
 const express = require("express")
 const session = require("express-session")
-const bodyParser = require("body-parser")
 const path = require("path")
 require("dotenv").config()
-
-// Importar rutas
-const authRoutes = require("./routes/auth")
-const gameRoutes = require("./routes/game")
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Configuración de middleware
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+// Middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static("public"))
 
-// Configuración de sesiones
+// Configurar sesiones
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // Cambiar a true en producción con HTTPS
+      secure: false, // true en producción con HTTPS
       maxAge: 24 * 60 * 60 * 1000, // 24 horas
     },
   }),
 )
 
-// Servir archivos estáticos
-app.use(express.static(path.join(__dirname, "public")))
-
-// Configurar rutas
+// Rutas
+const authRoutes = require("./routes/auth")
 app.use("/", authRoutes)
-app.use("/", gameRoutes)
 
-// Ruta raíz - redirigir según autenticación
+// Ruta raíz - redirigir a login o dashboard
 app.get("/", (req, res) => {
-  if (req.session && req.session.userId) {
+  if (req.session.userId) {
     res.redirect("/dashboard")
   } else {
     res.redirect("/login")
   }
 })
 
-// Middleware para manejar errores 404
+// Manejo de errores 404
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Página no encontrada",
-  })
-})
-
-// Middleware para manejar errores del servidor
-app.use((err, req, res, next) => {
-  console.error("Error del servidor:", err)
-  res.status(500).json({
-    success: false,
-    message: "Error interno del servidor",
-  })
+  res.status(404).send(`
+        <html>
+            <head>
+                <title>Página no encontrada - Geometrilandia</title>
+                <style>
+                    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                    h1 { color: #ff6b6b; }
+                    a { color: #4ecdc4; text-decoration: none; }
+                </style>
+            </head>
+            <body>
+                <h1>404 - Página no encontrada</h1>
+                <p>La página que buscas no existe en Geometrilandia.</p>
+                <a href="/">Volver al inicio</a>
+            </body>
+        </html>
+    `)
 })
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor Geometrilandia ejecutándose en http://localhost:${PORT}`)
+  console.log(`🚀 Servidor de Geometrilandia ejecutándose en http://localhost:${PORT}`)
   console.log(`📚 Sistema educativo para niños de 2-4 años`)
-  console.log(`🔧 Entorno: ${process.env.NODE_ENV || "development"}`)
+  console.log(`🔧 Asegúrate de que XAMPP esté ejecutándose con MySQL`)
 })
-
-module.exports = app
