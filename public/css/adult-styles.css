@@ -1,3 +1,15 @@
+@font-face {
+  font-family: '28 Days Later';
+  src: url('../fonts/28\ Days\ Later.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JMH Typewriter-Thin';
+  src: url('../fonts/JMH\ Typewriter-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /* Estilos para interfaz de adultos */
 * {
   margin: 0;
@@ -6,8 +18,8 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: "JMH Typewriter-Thin", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #FFD449 0%, #FF7F7F 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -15,7 +27,8 @@ body {
 }
 
 .container {
-  background: white;
+  background: #FFF0D5;
+  border: 2px solid rgb(253, 154, 154);
   padding: 2rem;
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
@@ -30,19 +43,22 @@ body {
 }
 
 .logo h1 {
-  color: #667eea;
-  font-size: 2rem;
+  color: #4A2C00;
+  font-family: '28 Days Later', sans-serif;
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
 .logo p {
   color: #666;
   font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .form-group {
   margin-bottom: 1.5rem;
 }
+
 
 .form-group label {
   display: block;
@@ -68,23 +84,28 @@ body {
 .form-group input.error {
   border-color: #ff6b6b;
 }
-
+#welcomeMessage{
+  font-family: 'JMH Typewriter-Thin', sans-serif;
+  font-size: 1.2rem;
+}
 .btn {
+  font-family: 'JMH Typewriter-Thin', sans-serif;
   width: 100%;
-  padding: 0.75rem;
-  background: #667eea;
+  padding: 1.2rem 1rem;
+  background: #D64545;
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-bottom: 1rem;
+  box-shadow: 0 4px 8px #ff6b6b;
 }
 
 .btn:hover {
-  background: #5a67d8;
+  background: #FF4040;
 }
 
 .btn:disabled {
@@ -125,9 +146,9 @@ body {
 }
 
 .link {
-  color: #667eea;
+  color: #5A2612;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .link:hover {
@@ -142,29 +163,92 @@ body {
 }
 
 .dashboard-header {
-  background: white;
+  background: #FFF0D5;
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   margin-bottom: 2rem;
   text-align: center;
+  font-family: '28 Days Later', sans-serif;
+  font-size: 2rem;
+  border: 2px solid #fd9a9a;
 }
 
 .dashboard-header h1 {
-  color: #667eea;
+  color: #4A2C00;
   margin-bottom: 0.5rem;
 }
 
 .dashboard-header p {
   color: #666;
+  font-weight: bold;
   font-size: 1.1rem;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
+}
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 300px; /* Puedes ajustar según el contenido */
+  perspective: 1000px; /* Necesario para el efecto 3D */
+  position: relative;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+/* Flip al pasar el mouse */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: rgba(255, 233, 160, 0.6);
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  padding: 1rem;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2rem;
+  border: 2px solid #FFE9A0;
+}
+
+/* Cara delantera */
+.flip-card-front {
+  z-index: 2;
+  font-family: 'JMH Typewriter-Thin', sans-serif;
+  box-shadow: 0 4px 8px #f5d97c;
+}
+
+/* Cara trasera (oculta inicialmente) */
+.flip-card-back {
+  transform: rotateY(180deg);
+  font-family: 'JMH Typewriter-Thin', sans-serif;
+}
+/* Efecto de hover */
+.flip-card:hover .flip-card-front {
+  background-color: #FFD6D6;
+  border: 2px solid #FF7F7F;
+}
+
+.flip-card:hover .flip-card-back {
+  background-color: #FFF0D5;
+  border: 2px solid #FF7F7F;
 }
 
 .dashboard-card {
@@ -190,14 +274,17 @@ body {
 }
 
 .stats-section {
-  background: white;
+  background: #FFF0D5;
+  border: 2px solid rgb(253, 154, 154);
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .stats-section h3 {
-  color: #333;
+  font-family: '28 Days Later', sans-serif;
+  font-size: 1.8rem;
+  color: #4A2C00;
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -209,14 +296,14 @@ body {
 }
 
 .stat-item {
-  background: #f8f9fa;
+  background: #ffffff;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
 }
 
 .stat-item h4 {
-  color: #667eea;
+  color: #1A1A1A;
   margin-bottom: 0.5rem;
 }
 
@@ -224,13 +311,17 @@ body {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  background: #ff6b6b;
+  background: #D64545;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 1.2rem 1rem;;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: bold;
+  font-family: 'JMH Typewriter-Thin', sans-serif;
+  font-size: 1rem;
+  box-shadow: 0 4px 8px #ff6b6b;
+
 }
 
 .logout-btn:hover {
