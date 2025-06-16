@@ -50,31 +50,39 @@ class AuthController {
   }
 
   // "Login": seleccionar niño existente
-  static async login(req, res) {
-    try {
-      const { nino_id } = req.body
+static async login(req, res) {
+  try {
+    const { nino_id } = req.body;
 
-      if (!nino_id) {
-        return res.status(400).json({ success: false, message: "Debe seleccionar un niño" })
-      }
-
-      const nino = await NinoModel.findById(nino_id)
-
-      if (!nino) {
-        return res.status(404).json({ success: false, message: "Niño no encontrado" })
-      }
-
-      // Guardar en sesión los datos básicos
-      req.session.ninoId = nino.id
-      req.session.nombreNino = nino.nombre
-      req.session.edad = nino.edad
-
-      res.json({ success: true, message: "Sesión iniciada correctamente" })
-    } catch (error) {
-      console.error("Error en login:", error)
-      res.status(500).json({ success: false, message: "Error interno del servidor" })
+    if (!nino_id) {
+      return res.status(400).json({
+        success: false,
+        message: "Debes seleccionar un niño",
+      });
     }
+
+    const nino = await NinoModel.findById(nino_id);
+    if (!nino) {
+      return res.status(404).json({
+        success: false,
+        message: "Niño no encontrado",
+      });
+    }
+
+    req.session.ninoId = nino.id;
+    req.session.nombreNino = nino.nombre;
+    req.session.edad = nino.edad;
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error("Error en login:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error interno del servidor",
+    });
   }
+}
+
 
   // Cerrar sesión
   static logout(req, res) {

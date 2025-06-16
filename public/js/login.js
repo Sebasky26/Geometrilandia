@@ -66,6 +66,7 @@ function initLoginForm() {
       })
 
       const result = await response.json()
+      console.log("Resultado login:", result)
       if (result.success) {
         showSuccess("Bienvenido, redirigiendo...")
         setTimeout(() => {

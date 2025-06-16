@@ -43,7 +43,7 @@ class GameController {
   static async processRFID(req, res) {
     try {
       const { codigo_rfid, modo, figura_esperada } = req.body
-      const userId = req.session.userId
+      const userId = req.session.ninoId
 
       if (!userId) {
         return res.status(401).json({
@@ -110,7 +110,7 @@ class GameController {
   // Obtener estadísticas del usuario
   static async getStats(req, res) {
     try {
-      const userId = req.session.userId
+      const userId = req.session.ninoId
       if (!userId) {
         return res.status(401).json({
           success: false,

@@ -1,75 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/adult-styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - GeoMetrilandia</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="background">
+    <img src="/img/background.png" alt="Fondo" class="background-img" />
+
     <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
 
     <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h1>¡Bienvenido a Geometrilandia!</h1>
-            <p id="welcomeMessage">Cargando...</p>
+      <h1 class="title">¡Bienvenido a Geometrilandia!</h1>
+      <p id="welcomeMessage">Cargando niño...</p>
+
+      <div class="dashboard-grid">
+        <!-- Modo Libre -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🎮<br> Modo Libre</div>
+            <div class="flip-card-back">
+              <p>Explora y descubre figuras sin restricciones.</p>
+              <button onclick="goToMode('libre')">Jugar</button>
+            </div>
+          </div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <h3>🎮<br> Modo Libre</h3>
-                    </div>
-                    <div class="flip-card-back">
-                        <p>Explora y descubre figuras sin restricciones. Perfecto para familiarizarse con las formas.</p>
-                        <button class="btn" onclick="goToMode('libre')">Jugar</button>
-                    </div>
-                </div>
+        <!-- Modo Guiado -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🎯<br> Modo Guiado</div>
+            <div class="flip-card-back">
+              <p>Encuentra la figura que te pedimos.</p>
+              <button onclick="goToMode('guiado')">Jugar</button>
             </div>
-
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">                
-                        <h3>🎯 <br> Modo Guiado</h3>
-                    </div>
-                    <div class="flip-card-back">
-                        <p>Encuentra la figura que te pedimos. Ideal para aprender de forma dirigida.</p>
-                        <button class="btn" onclick="goToMode('guiado')">Jugar</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">  
-                        <h3>🏆<br> Modo Desafío</h3>
-                    </div>
-                    <div class="flip-card-back">
-                        <p>Demuestra tus habilidades con retos avanzados. ¡Solo para expertos!</p>
-                        <button class="btn" onclick="goToMode('desafio')">Jugar</button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <div class="stats-section">
-            <h3>📊 Progreso de Aprendizaje</h3>
-            <div id="statsContainer">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Cargando estadísticas...</div>
-                </div>
+        <!-- Modo Desafío -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🏆<br> Modo Desafío</div>
+            <div class="flip-card-back">
+              <p>Reta tus habilidades con figuras aleatorias.</p>
+              <button onclick="goToMode('desafio')">Jugar</button>
             </div>
+          </div>
         </div>
+
+        <!-- Modo Inteligente -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🧠<br> Modo Inteligente</div>
+            <div class="flip-card-back">
+              <p>La IA elegirá el mejor modo según tu progreso.</p>
+              <button onclick="goToMode('inteligente')">Jugar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-section">
+        <h3>📊 Progreso de Aprendizaje</h3>
+        <div id="statsContainer">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Cargando estadísticas...</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script src="/js/dashboard.js"></script>
-    <script>
-        // Inicializar dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            initDashboard();
-        });
-    </script>
+    <img src="/img/mago.png" alt="Mago" class="mago-img" />
+  </div>
+
+  <script src="/js/dashboard.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initDashboard()
+    })
+  </script>
 </body>
 </html>
