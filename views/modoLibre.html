@@ -8,38 +8,30 @@
 </head>
 <body>
     <button class="back-button" onclick="goBack()">
-        <span class="back-icon">←</span>
+        <span class="back-icon">← Volver</span>
     </button>
 
     <div class="kids-container">
-        <div class="game-area bounce-in">
-            <div id="welcomeScreen" class="show">
-                <div class="play-button" onclick="startFreeMode()">
-                    <div class="play-icon">🎮</div>
-                    <div class="play-text">¡JUGAR!</div>
-                </div>
-                <div class="feedback-message feedback-info">
+        <div class="feedback-message feedback-info">
                     <span class="sound-wave"></span>
                     ¡Acerca una figura al lector y descubre qué es!
                     <span class="sound-wave"></span>
-                </div>
-            </div>
-
-            <div id="gameScreen" class="hidden">
-
+        </div>
+        <div class="game-area bounce-in">
+            <div id="welcomeScreen" class="show">
                 <div class="figura-display" id="figuraDisplay">
                     <div class="loading hidden" id="loadingIndicator">
                         <div class="loading-spinner"></div>
                         <div class="loading-text">Detectando...</div>
                     </div>
                     <div class="figura-icon" id="figuraIcon">❓</div>
+                    <div class="figura-name" id="figuraName"></div>
                 </div>
-
-                <div class="figura-name" id="figuraName">¿Qué figura será?</div>
 
                 <div id="feedbackMessage" class="feedback-message hidden"></div>
             </div>
         </div>
+        <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
     </div>
 
     <!-- Audio para retroalimentación -->

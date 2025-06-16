@@ -161,20 +161,23 @@ function goBack() {
 
 // Agregar listener para teclas (para testing)
 document.addEventListener("keydown", (e) => {
-  // Solo en modo desarrollo - simular RFID con teclas numéricas
-  if (e.key >= "1" && e.key <= "6" && e.ctrlKey) {
-    const figuras = ["cubo", "esfera", "piramide", "cilindro", "cono", "prisma"]
-    const index = Number.parseInt(e.key) - 1
-    const figura = figuras[index]
-    const codigo_rfid = `RFID_${figura.toUpperCase()}_00${index + 1}`
+  // Solo en modo desarrollo - simular RFID con teclas específicas
+  const teclasPermitidas = ["q", "t", "e", "r", "t", "y"];
+  const figuras = ["cubo", "esfera", "piramide", "cilindro", "cono", "prisma"];
+  const index = teclasPermitidas.indexOf(e.key.toLowerCase());
+
+  if (e.ctrlKey && index !== -1) {
+    const figura = figuras[index];
+    const codigo_rfid = `RFID_${figura.toUpperCase()}_00${index + 1}`;
 
     // Disparar evento personalizado para simular RFID
     const event = new CustomEvent("rfidDetected", {
       detail: { codigo_rfid: codigo_rfid },
-    })
-    document.dispatchEvent(event)
+    });
+    document.dispatchEvent(event);
   }
-})
+});
+
 
 // Función para vibrar (si está disponible)
 function vibrate(pattern = [100]) {
@@ -209,6 +212,28 @@ function showVisualNotification(message, type = "success") {
     document.body.removeChild(notification)
   }, 2000)
 }
+function playSound(id) {
+  const audio = document.getElementById(id);
+  if (audio) audio.play();
+}
+
+function vibrate(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
+function showFeedback(text, type, timeout = 2000) {
+  const el = document.getElementById("feedbackMessage");
+  if (!el) return;
+  el.textContent = text;
+  el.className = `feedback-message feedback-${type}`;
+  el.classList.remove("hidden");
+  setTimeout(() => el.classList.add("hidden"), timeout);
+}
+
+function showVisualNotification(msg, type) {
+  console.log(`[VISUAL: ${type}] ${msg}`); // o animación extra
+}
+
 
 // Agregar estilos CSS para notificaciones
 const style = document.createElement("style")
