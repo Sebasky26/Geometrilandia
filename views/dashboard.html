@@ -76,6 +76,19 @@
 
     <img src="/img/mago.png" alt="Mago" class="mago-img" />
   </div>
+<!-- Botón flotante de ayuda -->
+<button id="helpBtn" class="help-button" onclick="mostrarAyuda()">¿Necesitas ayuda?</button>
+
+<!-- Caja de ayuda -->
+<div class="help-box" id="helpBox" style="display: none;">
+  <h4>🧭 ¿Cómo funciona el dashboard?</h4>
+  <p><strong>Modo Libre:</strong> Puedes explorar todas las figuras sin restricciones.</p>
+  <p><strong>Modo Guiado:</strong> El sistema te pedirá una figura específica. Intenta encontrarla.</p>
+  <p><strong>Modo Desafío:</strong> Se mostrarán desafíos con diferentes figuras. Gana puntos por cada acierto.</p>
+  <p><strong>Modo Inteligente:</strong> La IA selecciona el mejor modo para ti según tu progreso.</p>
+  <p><strong>Progreso de Aprendizaje:</strong> Aquí verás cuántos aciertos tienes por figura y modo.</p>
+</div>
+<button class="help-btn" onclick="mostrarAyuda()">?</button>
 
   <script src="/js/dashboard.js"></script>
   <script>

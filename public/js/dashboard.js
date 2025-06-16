@@ -52,3 +52,8 @@ async function loadStats() {
     document.getElementById("statsContainer").textContent = "Error al cargar estadísticas."
   }
 }
+
+function mostrarAyuda() {
+  const box = document.getElementById("helpBox");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
