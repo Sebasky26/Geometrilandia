@@ -6,61 +6,64 @@ require("dotenv").config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Middleware
+// Middleware para parsear JSON y formularios
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static("public"))
 
-// Configurar sesiones
+// Servir archivos estáticos (CSS, imágenes, etc.)
+app.use(express.static(path.join(__dirname, "public")))
+
+// Configuración de sesión
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "geometrilandia_secreta",
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // true en producción con HTTPS
+      secure: false, // usar true solo con HTTPS
       maxAge: 24 * 60 * 60 * 1000, // 24 horas
     },
-  }),
+  })
 )
 
-// Rutas
-const authRoutes = require("./routes/auth")
-app.use("/", authRoutes)
+// Rutas principales
+const routes = require("./routes/auth") // puedes renombrarlo a index.js si deseas
+app.use("/", routes)
 
-// Ruta raíz - redirigir a login o dashboard
+// Redirección por defecto
 app.get("/", (req, res) => {
-  if (req.session.userId) {
+  if (req.session.ninoId) {
     res.redirect("/dashboard")
   } else {
     res.redirect("/login")
   }
 })
 
-// Manejo de errores 404
+// Página 404 personalizada
 app.use((req, res) => {
   res.status(404).send(`
-        <html>
-            <head>
-                <title>Página no encontrada - Geometrilandia</title>
-                <style>
-                    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-                    h1 { color: #ff6b6b; }
-                    a { color: #4ecdc4; text-decoration: none; }
-                </style>
-            </head>
-            <body>
-                <h1>404 - Página no encontrada</h1>
-                <p>La página que buscas no existe en Geometrilandia.</p>
-                <a href="/">Volver al inicio</a>
-            </body>
-        </html>
-    `)
+    <html>
+      <head>
+        <title>Página no encontrada - GeoMetrilandia</title>
+        <style>
+          body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #fce4ec; }
+          h1 { color: #d32f2f; font-size: 3em; }
+          p { font-size: 1.2em; }
+          a { color: #0288d1; text-decoration: none; font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        <h1>404 - Página no encontrada</h1>
+        <p>Ups... la ruta que buscas no existe en GeoMetrilandia.</p>
+        <a href="/">Volver al inicio</a>
+      </body>
+    </html>
+  `)
 })
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor de Geometrilandia ejecutándose en http://localhost:${PORT}`)
-  console.log(`📚 Sistema educativo para niños de 2-4 años`)
-  console.log(`🔧 Asegúrate de que XAMPP esté ejecutándose con MySQL`)
+  console.log(`🚀 Servidor de GeoMetrilandia en http://localhost:${PORT}`)
+  console.log(`🧒 Listo para recibir perfiles de niños (2-4 años)`)
+  console.log(`✅ Middleware, sesiones y rutas configuradas`)
 })

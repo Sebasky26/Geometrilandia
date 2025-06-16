@@ -1,5 +1,5 @@
 const FiguraModel = require("../models/figuraModel")
-const UserModel = require("../models/userModel")
+const UserModel = require("../models/ninoModel")
 
 class GameController {
   // Mostrar dashboard

@@ -1,48 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/adult-styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Geo Metrilandia</title>
+  <link rel="stylesheet" href="/css/login-style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <h1>Geometrilandia</h1>
-            <p>Sistema educativo para niños de 2-4 años</p>
+  <div class="background">
+    <img src="img/background.png" alt="Fondo" class="background-img" />
+
+    <div class="main-container">
+      <h1 class="title">Geo<br>Metrilandia</h1>
+
+      <button class="main-btn perfil-btn" onclick="window.location.href='/register'">Crear Perfil de Niño</button>
+
+      <form id="loginForm">
+        <div class="lista-container">
+          <label for="lista-ninos" class="lista-label">Selecciona un Niño</label>
+          <select id="lista-ninos" name="nino_id" class="lista-ninos">
+            <option value="">-- Selecciona --</option>
+          </select>
         </div>
 
-        <div id="errorMessage" class="error-message"></div>
-        <div id="successMessage" class="success-message"></div>
+        <button type="submit" id="loginBtn" class="main-btn start-btn">Empezar</button>
+      </form>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="cedula">Cédula del tutor:</label>
-                <input type="text" id="cedula" name="cedula" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <button type="submit" class="btn" id="loginBtn">
-                Iniciar Sesión
-            </button>
-        </form>
-
-        <div class="text-center">
-            <p>¿No tienes cuenta? <a href="/register" class="link">Regístrate aquí</a></p>
-        </div>
+      <div id="errorMessage" class="error-msg" style="display: none;"></div>
+      <div id="successMessage" class="success-msg" style="display: none;"></div>
     </div>
 
-    <script src="/js/auth.js"></script>
-    <script>
-        // Inicializar formulario de login
-        document.addEventListener('DOMContentLoaded', function() {
-            initLoginForm();
-        });
-    </script>
+    <img src="img/mago.png" alt="Mago" class="mago-img" />
+
+    <div class="help-box" id="helpBox" style="display: none;">
+      🧙‍♂️ <strong>Ayuda:</strong><br>
+      - <strong>Crear Perfil:</strong> Agrega un nuevo jugador.<br>
+      - <strong>Selecciona un niño:</strong> Escoge un perfil.<br>
+      - <strong>Empezar:</strong> Inicia el juego.
+    </div>
+
+    <button class="help-btn" onclick="mostrarAyuda()">?</button>
+  </div>
+
+  <script src="/js/login.js"></script>
+  
 </body>
 </html>
