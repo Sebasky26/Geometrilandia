@@ -15,7 +15,6 @@ function startFreeMode() {
   gameActive = true
 
   playSound("successSound")
-  showFeedback("¡Acerca cualquier figura al lector!", "info")
 }
 
 // Configurar listener para RFID
@@ -24,14 +23,14 @@ function setupRFIDListener() {
   document.addEventListener("rfidDetected", handleRFIDDetection)
 
   // Para testing - simular RFID cada 5 segundos
-  if (window.location.hostname === "localhost") {
+  /*if (window.location.hostname === "localhost") {
     setInterval(() => {
       if (gameActive && Math.random() > 0.7) {
         const simulation = simulateRFID()
         handleRFIDDetection({ detail: { codigo_rfid: simulation.codigo_rfid } })
       }
     }, 5000)
-  }
+  }*/
 }
 
 // Manejar detección RFID
@@ -44,7 +43,7 @@ async function handleRFIDDetection(event) {
   try {
     // Mostrar que se está procesando
     updateFiguraDisplay("❓", "¿Qué será?", "#ccc")
-    showFeedback("Detectando figura...", "info", 1000)
+    showFeedback("Detectando figura...", "info")
 
     // Procesar RFID
     const result = await processRFIDReading(codigo_rfid, "libre")
