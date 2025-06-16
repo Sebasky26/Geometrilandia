@@ -8,14 +8,16 @@ const figuras = [
   { nombre: "ESTRELLA ROJA", src: "/img/estrella_roja.png", color: "#d32f2f" }
 ];
 
-let currentIndex = 0;
 const img = document.getElementById("figuraImage");
 const nombreSpan = document.getElementById("nombreFigura");
 const progress = document.getElementById("progressBar");
 const stars = document.querySelectorAll(".star");
 
-function mostrarFigura(index) {
-  const figura = figuras[index];
+function mostrarFigura(nombre) {
+  const figura = figuras.find(f => f.nombre === nombre);
+  if (!figura) return;
+
+  const index = figuras.indexOf(figura);
   img.src = figura.src;
   img.alt = `Figura ${figura.nombre}`;
   nombreSpan.textContent = figura.nombre;
@@ -24,12 +26,7 @@ function mostrarFigura(index) {
   stars[index]?.classList.add("active");
 }
 
-function avanzarFigura() {
-  currentIndex = (currentIndex + 1) % figuras.length;
-  mostrarFigura(currentIndex);
-}
-
 window.addEventListener("DOMContentLoaded", () => {
-  mostrarFigura(currentIndex);
-  setInterval(avanzarFigura, 5000);
+  const socket = io();
+  socket.on("nuevaFigura", mostrarFigura);
 });
