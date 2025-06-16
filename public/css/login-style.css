@@ -1,3 +1,16 @@
+@font-face {
+  font-family: 'MiFuentePersonalizada';
+  src: url('../fonts/28 Days Later.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Fredoka', sans-serif;
   min-height: 100vh;
@@ -5,18 +18,12 @@ body {
   align-items: center;
   justify-content: center;
 }
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 .background {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  
 }
 
 .background-img {
@@ -34,29 +41,32 @@ body {
   transform: translate(-50%, -55%);
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 30px;
   align-items: center;
 }
 
 .title {
-  font-size: 5em;
+  font-size: 6.5em;
   color: #ffd740;
   background: #6a1b9a;
-  padding: 30px 50px;
-  border-radius: 30px;
+  padding: 40px 60px;
+  border-radius: 40px;
   text-align: center;
   line-height: 1.2;
   box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.3);
+  font-family: 'MiFuentePersonalizada', sans-serif;
 }
 
 .main-btn {
   border: none;
-  padding: 18px 40px;
-  font-size: 1.6em;
-  border-radius: 18px;
+  padding: 22px 0;
+  font-size: 2em;
+  border-radius: 20px;
   cursor: pointer;
   transition: transform 0.2s;
   font-weight: bold;
+  font-family: 'Fredoka', sans-serif;
+  width: 320px; /* Más ancho */
 }
 
 .main-btn:hover {
@@ -66,44 +76,55 @@ body {
 .perfil-btn {
   background-color: #ffca28;
   color: #5d4037;
-  width: 280px;
+}
+
+.perfil-btn:hover {
+  background-color: #ff9500;
 }
 
 .start-btn {
   background-color: #43a047;
   color: white;
-  width: 280px;
+}
+
+.start-btn:hover {
+  background-color: #5ff166;
 }
 
 .lista-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
 }
 
 .lista-label {
-  font-size: 1.3em;
+  font-size: 1.5em;
   color: #4e342e;
 }
 
 .lista-ninos {
-  padding: 14px;
-  font-size: 1.3em;
+  padding: 16px;
+  font-size: 1.5em;
   border-radius: 12px;
   border: 2px solid #a1887f;
-  width: 250px;
+  width: 270px;
+}
+
+#loginBtn {
+  margin-top: 20px; /* Más espacio respecto al select */
 }
 
 /* Mago más grande */
 .mago-img {
   position: absolute;
   bottom: 0;
-  right: 3%;
-  width: 260px;
+  right: 2%;
+  width: 420px;
+  height: auto;
 }
 
-/* Botón ayuda abajo a la derecha */
+/* Botón ayuda */
 .help-btn {
   position: absolute;
   bottom: 20px;
@@ -113,14 +134,18 @@ body {
   border: none;
   font-size: 2em;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   cursor: pointer;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 3;
 }
 
-/* Caja de ayuda justo sobre el botón */
+.help-btn:hover {
+  background-color: #ee7306;
+  transform: scale(1.1);
+}
+
 .help-box {
   position: absolute;
   bottom: 90px;
@@ -128,11 +153,9 @@ body {
   background-color: #fff9c4;
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 280px;
-  font-size: 1em;
+  font-size: 1.1em;
   z-index: 2;
   color: #5d4037;
 }
-
-

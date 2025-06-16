@@ -10,91 +10,104 @@
 <body>
   <div class="background">
     <img src="/img/background.png" alt="Fondo" class="background-img" />
+  </div>
 
-    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+  <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
 
-    <div class="dashboard-container">
-      <h1 class="title">¡Bienvenido a Geometrilandia!</h1>
-      <p id="welcomeMessage">Cargando niño...</p>
+  <div class="dashboard-container">
+    <h1 class="title">¡Bienvenido a Geometrilandia!</h1>
+    <p id="welcomeMessage">Cargando niño...</p>
 
-      <div class="dashboard-grid">
-        <!-- Modo Libre -->
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">🎮<br> Modo Libre</div>
-            <div class="flip-card-back">
-              <p>Explora y descubre figuras sin restricciones.</p>
-              <button onclick="goToMode('libre')">Jugar</button>
-            </div>
+    <!-- MODOS DE JUEGO -->
+    <div class="dashboard-grid">
+      <!-- Modo Libre -->
+      <div class="flip-card libre">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <span class="emoji">🎮</span>
+            Modo Libre
           </div>
-        </div>
-
-        <!-- Modo Guiado -->
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">🎯<br> Modo Guiado</div>
-            <div class="flip-card-back">
-              <p>Encuentra la figura que te pedimos.</p>
-              <button onclick="goToMode('guiado')">Jugar</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modo Desafío -->
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">🏆<br> Modo Desafío</div>
-            <div class="flip-card-back">
-              <p>Reta tus habilidades con figuras aleatorias.</p>
-              <button onclick="goToMode('desafio')">Jugar</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modo Inteligente -->
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">🧠<br> Modo Inteligente</div>
-            <div class="flip-card-back">
-              <p>La IA elegirá el mejor modo según tu progreso.</p>
-              <button onclick="goToMode('inteligente')">Jugar</button>
-            </div>
+          <div class="flip-card-back">
+            <p>Explora figuras sin restricciones.</p>
+            <button onclick="goToMode('libre')">Jugar</button>
           </div>
         </div>
       </div>
 
-      <div class="stats-section">
-        <h3>📊 Progreso de Aprendizaje</h3>
-        <div id="statsContainer">
-          <div class="loading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Cargando estadísticas...</div>
+      <!-- Modo Guiado -->
+      <div class="flip-card guiado">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <span class="emoji">🎯</span>
+            Modo Guiado
+          </div>
+          <div class="flip-card-back">
+            <p>Encuentra la figura que te pedimos.</p>
+            <button onclick="goToMode('guiado')">Jugar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modo Desafío -->
+      <div class="flip-card desafio">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <span class="emoji">🏆</span>
+            Modo Desafío
+          </div>
+          <div class="flip-card-back">
+            <p>Reta tus habilidades con desafíos.</p>
+            <button onclick="goToMode('desafio')">Jugar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modo Inteligente -->
+      <div class="flip-card inteligente">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <span class="emoji">🧠</span>
+            Modo Inteligente
+          </div>
+          <div class="flip-card-back">
+            <p>La IA elegirá el mejor modo para ti.</p>
+            <button onclick="goToMode('inteligente')">Jugar</button>
           </div>
         </div>
       </div>
     </div>
 
-    <img src="/img/mago.png" alt="Mago" class="mago-img" />
+    <!-- PROGRESO -->
+    <div class="stats-section">
+      <h3>📊 Progreso de Aprendizaje</h3>
+      <div id="statsContainer">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">Cargando estadísticas...</div>
+        </div>
+      </div>
+    </div>
   </div>
-<!-- Botón flotante de ayuda -->
-<button id="helpBtn" class="help-button" onclick="mostrarAyuda()">¿Necesitas ayuda?</button>
 
-<!-- Caja de ayuda -->
-<div class="help-box" id="helpBox" style="display: none;">
-  <h4>🧭 ¿Cómo funciona el dashboard?</h4>
-  <p><strong>Modo Libre:</strong> Puedes explorar todas las figuras sin restricciones.</p>
-  <p><strong>Modo Guiado:</strong> El sistema te pedirá una figura específica. Intenta encontrarla.</p>
-  <p><strong>Modo Desafío:</strong> Se mostrarán desafíos con diferentes figuras. Gana puntos por cada acierto.</p>
-  <p><strong>Modo Inteligente:</strong> La IA selecciona el mejor modo para ti según tu progreso.</p>
-  <p><strong>Progreso de Aprendizaje:</strong> Aquí verás cuántos aciertos tienes por figura y modo.</p>
-</div>
-<button class="help-btn" onclick="mostrarAyuda()">?</button>
+  <!-- MAGO -->
+  <img src="/img/mago.png" alt="Mago" class="mago-img" />
+
+  <!-- AYUDA -->
+  <div class="help-box" id="helpBox" style="display: none;">
+    <h4>🧭 ¿Cómo funciona el dashboard?</h4>
+    <p><strong>Modo Libre:</strong> Explora todas las figuras.</p>
+    <p><strong>Modo Guiado:</strong> Encuentra la figura correcta.</p>
+    <p><strong>Modo Desafío:</strong> Gana puntos con desafíos.</p>
+    <p><strong>Modo Inteligente:</strong> Juega según tu progreso.</p>
+    <p><strong>Progreso:</strong> Revisa tus estadísticas.</p>
+  </div>
+  <button class="help-btn" onclick="mostrarAyuda()">?</button>
 
   <script src="/js/dashboard.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      initDashboard()
-    })
+      initDashboard();
+    });
   </script>
 </body>
 </html>
