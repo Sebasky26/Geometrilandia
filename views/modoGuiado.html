@@ -1,82 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Modo Guiado - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/kids-styles.css">
-</head>
-<body>
-    <button class="back-button" onclick="goBack()">
-        <span class="back-icon">←</span>
-    </button>
-
-    <div class="kids-container">
-        <div class="game-area bounce-in">
-            <div id="welcomeScreen" class="show">
-                <div class="play-button" onclick="startGuidedMode()">
-                    <div class="play-icon">🎯</div>
-                    <div class="play-text">¡EMPEZAR!</div>
-                </div>
-                <div class="feedback-message feedback-info">
-                    <span class="sound-wave"></span>
-                    ¡Te diré qué figura buscar!
-                    <span class="sound-wave"></span>
-                </div>
-            </div>
-
-            <div id="gameScreen" class="hidden">
-                <div class="feedback-message feedback-info" id="instructionMessage">
-                    <span class="sound-wave"></span>
-                    Busca esta figura:
-                    <span class="sound-wave"></span>
-                </div>
-
-                <div class="figura-display" id="targetDisplay">
-                    <div class="figura-icon" id="targetIcon">🔷</div>
-                </div>
-
-                <div class="figura-name" id="targetName">CUBO</div>
-
-                <div class="feedback-message feedback-info" id="searchMessage">
-                    ¡Encuentra el CUBO y acércalo al lector!
-                </div>
-
-                <div class="figura-display" id="resultDisplay" style="margin-top: 2rem;">
-                    <div class="loading hidden" id="loadingIndicator">
-                        <div class="loading-spinner"></div>
-                        <div class="loading-text">Verificando...</div>
-                    </div>
-                    <div class="figura-icon" id="resultIcon">❓</div>
-                </div>
-
-                <div id="feedbackMessage" class="feedback-message hidden"></div>
-
-                <button class="btn" id="nextButton" onclick="nextChallenge()" style="display: none; margin-top: 2rem; padding: 1rem 2rem; font-size: 1.5rem;">
-                    ¡Siguiente! 🎉
-                </button>
-            </div>
-        </div>
+    <link rel="stylesheet" href="/css/guiado-style.css" />
+  </head>
+  <body>
+    <div class="background">
+      <img
+        src="/img/background.png"
+        alt="Fondo colorido"
+        class="background-img"
+      />
     </div>
 
-    <!-- Audio para retroalimentación -->
-    <audio id="successSound" preload="auto">
-        <source src="/audio/success.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="errorSound" preload="auto">
-        <source src="/audio/error.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="detectSound" preload="auto">
-        <source src="/audio/detect.mp3" type="audio/mpeg">
-    </audio>
+    <button class="back-button" onclick="window.history.back()">
+      ← Volver
+    </button>
 
-    <script src="/js/game-common.js"></script>
-    <script src="/js/modo-guiado.js"></script>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="game-area">
+      <div class="content-box">
+        <p class="instruction-text" id="instructionText">
+          Este es un <strong>CUADRADO ROJO</strong>
+        </p>
+        <p class="instruction-text" id="instructionText">¡Encuentralo y acercalo al lector!</p>
+        <div class="figura-display">
+          <img
+            src="/img/cuadrado_rojo.png"
+            alt="Figura CUADRADO ROJO"
+            class="figura-img"
+            id="figuraImage"
+          />
+        </div>
+
+        <div class="stars" id="starContainer">
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+        </div>
+      </div>
+    </div>
+
+    <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+
     <script>
-        // Inicializar modo guiado
-        document.addEventListener('DOMContentLoaded', function() {
-            initModoGuiado();
-        });
+      const figuras = [
+        { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rosado.png" },
+        { nombre: "TRIÁNGULO NARANJA", src: "/img/triangulo_naranja.png" },
+        { nombre: "CÍRCULO VERDE", src: "/img/circulo_verde.png" },
+        { nombre: "ESTRELLA CELESTE", src: "/img/estrella_celeste.png" },
+        { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png" },
+        { nombre: "CÍRCULO AZUL", src: "/img/circulo_azul.png" },
+        { nombre: "TRIÁNGULO VIOLETA", src: "/img/triangulo_MORADO.png" },
+        { nombre: "ESTRELLA ROJA", src: "/img/estrella_roja.png" }
+      ];
+
+      let currentIndex = 0;
+      const img = document.getElementById("figuraImage");
+      const text = document.getElementById("instructionText");
+      const progress = document.getElementById("progressBar");
+      const stars = document.querySelectorAll(".star");
+
+      function mostrarFigura(index) {
+        const figura = figuras[index];
+        img.src = figura.src;
+        img.alt = `Figura ${figura.nombre}`;
+        text.innerHTML = `Este es un <strong>${figura.nombre}</strong>`;
+        progress.style.width = `${((index + 1) / figuras.length) * 100}%`;
+        stars[index].classList.add("active");
+      }
+
+      function avanzarFigura() {
+        currentIndex = (currentIndex + 1) % figuras.length;
+        mostrarFigura(currentIndex);
+      }
+
+      // Inicializar
+      window.addEventListener("DOMContentLoaded", () => {
+        mostrarFigura(currentIndex);
+        setInterval(avanzarFigura, 5000);
+      });
     </script>
-</body>
+  </body>
 </html>
