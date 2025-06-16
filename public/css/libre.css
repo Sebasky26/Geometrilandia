@@ -1,10 +1,18 @@
+@font-face {
+    font-family: 'MiFuentePersonalizada';
+    src: url('../fonts/28 Days Later.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  font-family: "Fredoka", cursive, sans-serif;
+  font-family:  'MiFuentePersonalizada', sans-serif;
   background-image: url("../img/background.png");
   background-size: cover;           /* Hace que la imagen cubra todo el fondo */
   background-position: center;      /* Centra la imagen */
@@ -22,17 +30,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   padding: 2rem;
   text-align: center;
   position: relative;
 }
+
 .mago-img {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 20%; /* ajusta según el tamaño deseado */
-  height: auto;
+  width: 650px; /* ajusta según el tamaño deseado */
+  height: 650px;
   z-index: 10; /* para asegurarte que quede encima si hay otros elementos */
 }
 
@@ -99,15 +108,17 @@ body {
   padding: 0rem 10rem;
   margin: 1rem;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  min-height: 300px;
+  height: 500px;
+  width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .figura-display {
-  width: 150px;
-  height: 150px;
+  width: 300px;
+  height: 300px;
   border-radius: 20px;
   background: #fff;
   border: 5px solid #ddd;

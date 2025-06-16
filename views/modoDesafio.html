@@ -1,142 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modo Desafío - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/kids-style.css" />
-  </head>
-  <body>
-    <button class="back-button" onclick="goBack()">
-      <span class="back-icon">←</span>
-    </button>
 
-    <div class="kids-container">
-      <div class="game-area bounce-in">
-        <div id="welcomeScreen" class="show">
-          <div class="play-button" onclick="startChallengeMode()">
-            <div class="play-icon">🏆</div>
-            <div class="play-text">¡DESAFÍO!</div>
-          </div>
-          <div class="feedback-message feedback-info">
-            <span class="sound-wave"></span>
-            ¡Completa la secuencia de figuras!
-            <span class="sound-wave"></span>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modo Desafío - Geometrilandia</title>
+  <link rel="stylesheet" href="/css/kids-style.css" />
+</head>
+
+<body>
+  <!-- Fondo -->
+  <div class="background">
+    <img src="/img/background.png" alt="Fondo colorido" class="background-img" />
+  </div>
+
+  <button class="back-button" onclick="window.history.back()">← Volver</button>
+
+
+  <div class="kids-container">
+    <div class="game-area bounce-in">
+      <div id="welcomeScreen" class="show">
+        <div class="play-button" onclick="startChallengeMode()">
+          <div class="play-icon">🏆</div>
+          <div class="play-text">¡DESAFÍO!</div>
+        </div>
+        <div class="feedback-message feedback-info">
+          <span class="sound-wave"></span>
+          ¡Completa la secuencia de figuras!
+          <span class="sound-wave"></span>
+        </div>
+      </div>
+
+      <div id="gameScreen" class="hidden">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
         </div>
 
-        <div id="gameScreen" class="hidden">
-          <div class="progress-bar">
-            <div
-              class="progress-fill"
-              id="progressFill"
-              style="width: 0%"
-            ></div>
+        <div class="feedback-message feedback-info" id="instructionMessage">
+          <span class="sound-wave"></span>
+          Paso <span id="currentStep">1</span> de
+          <span id="totalSteps">5</span>
+          <span class="sound-wave"></span>
+        </div>
+
+        <div class="figura-display" id="targetDisplay">
+          <div class="figura-icon" id="targetIcon">🔷</div>
+        </div>
+
+        <div class="figura-name" id="targetName">CUBO</div>
+
+        <div class="feedback-message feedback-info" id="searchMessage">
+          ¡Encuentra el CUBO!
+        </div>
+
+        <div class="figura-display" id="resultDisplay" style="margin-top: 2rem">
+          <div class="loading hidden" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Verificando...</div>
           </div>
+          <div class="figura-icon" id="resultIcon">❓</div>
+        </div>
 
-          <div class="feedback-message feedback-info" id="instructionMessage">
-            <span class="sound-wave"></span>
-            Paso <span id="currentStep">1</span> de
-            <span id="totalSteps">5</span>
-            <span class="sound-wave"></span>
-          </div>
+        <div id="feedbackMessage" class="feedback-message hidden"></div>
 
-          <div class="figura-display" id="targetDisplay">
-            <div class="figura-icon" id="targetIcon">🔷</div>
-          </div>
-
-          <div class="figura-name" id="targetName">CUBO</div>
-
-          <div class="feedback-message feedback-info" id="searchMessage">
-            ¡Encuentra el CUBO!
-          </div>
-
-          <div
-            class="figura-display"
-            id="resultDisplay"
-            style="margin-top: 2rem"
-          >
-            <div class="loading hidden" id="loadingIndicator">
-              <div class="loading-spinner"></div>
-              <div class="loading-text">Verificando...</div>
-            </div>
-            <div class="figura-icon" id="resultIcon">❓</div>
-          </div>
-
-          <div id="feedbackMessage" class="feedback-message hidden"></div>
-
-          <button
-            class="btn"
-            id="nextButton"
-            onclick="nextStep()"
-            style="
+        <button class="btn" id="nextButton" onclick="nextStep()" style="
               display: none;
               margin-top: 2rem;
               padding: 1rem 2rem;
               font-size: 1.5rem;
-            "
-          >
-            ¡Continuar! 🎉
-          </button>
+            ">
+          ¡Continuar! 🎉
+        </button>
 
-          <button
-            class="btn"
-            id="finishButton"
-            onclick="finishChallenge()"
-            style="
+        <button class="btn" id="finishButton" onclick="finishChallenge()" style="
               display: none;
               margin-top: 2rem;
               padding: 1rem 2rem;
               font-size: 1.5rem;
               background: #00b894;
-            "
-          >
-            ¡Completado! 🏆
-          </button>
-        </div>
+            ">
+          ¡Completado! 🏆
+        </button>
+      </div>
 
-        <div id="completionScreen" class="hidden">
-          <div
-            class="feedback-message feedback-success"
-            style="font-size: 3rem"
-          >
-            🎉 ¡FELICITACIONES! 🎉
-          </div>
-          <div class="feedback-message feedback-info" style="margin-top: 2rem">
-            ¡Has completado el desafío!
-          </div>
-          <button
-            class="btn"
-            onclick="restartChallenge()"
-            style="margin-top: 2rem; padding: 1rem 2rem; font-size: 1.5rem"
-          >
-            ¡Jugar de Nuevo! 🔄
-          </button>
+      <div id="completionScreen" class="hidden">
+        <div class="feedback-message feedback-success" style="font-size: 3rem">
+          🎉 ¡FELICITACIONES! 🎉
         </div>
+        <div class="feedback-message feedback-info" style="margin-top: 2rem">
+          ¡Has completado el desafío!
+        </div>
+        <button class="btn" onclick="restartChallenge()"
+          style="margin-top: 2rem; padding: 1rem 2rem; font-size: 1.5rem">
+          ¡Jugar de Nuevo! 🔄
+        </button>
       </div>
     </div>
+  </div>
 
-    <!-- Audio para retroalimentación -->
-    <audio id="successSound" preload="auto">
-      <source src="/audio/success.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="errorSound" preload="auto">
-      <source src="/audio/error.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="detectSound" preload="auto">
-      <source src="/audio/detect.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="completionSound" preload="auto">
-      <source src="/audio/completion.mp3" type="audio/mpeg" />
-    </audio>
+  <script src="/js/game-common.js"></script>
+  <script src="/js/modo-desafio.js"></script>
+  <script>
+    // Inicializar modo desafío
+    document.addEventListener("DOMContentLoaded", function () {
+      initModoDesafio();
+    });
+  </script>
 
-    <script src="/js/game-common.js"></script>
-    <script src="/js/modo-desafio.js"></script>
-    <script>
-      // Inicializar modo desafío
-      document.addEventListener("DOMContentLoaded", function () {
-        initModoDesafio();
-      });
-    </script>
-  </body>
+    <!-- Mago -->
+  <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+</body>
+
 </html>

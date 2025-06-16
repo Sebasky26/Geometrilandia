@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modo Guiado - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/guiado-style.css" />
-  </head>
-  <body>
-    <div class="background">
-      <img src="/img/background.png" alt="Fondo colorido" class="background-img" />
-    </div>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modo Guiado - Geometrilandia</title>
+  <link rel="stylesheet" href="/css/guiado-style.css" />
+</head>
+
+<body>
+  <!-- Fondo -->
+  <div class="background">
+    <img src="/img/background.png" alt="Fondo colorido" class="background-img" />
+  </div>
+
+  <!-- Botón y estrellas -->
+  <div class="top-bar">
     <button class="back-button" onclick="window.history.back()">← Volver</button>
-
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
+    <div class="stars" id="starContainer">
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
     </div>
+  </div>
 
-    <div class="game-area">
-      <div class="content-box">
-        <p class="instruction-text" id="instructionText">
-          Este es un <strong><span id="nombreFigura">CUADRADO ROJO</span></strong>
-        </p>
-        <p class="instruction-text">¡Encuentralo y acercalo al lector!</p>
-        <div class="figura-display">
-          <img src="/img/cuadrado_naranja.png" alt="Figura CUADRADO NARANJA" class="figura-img" id="figuraImage" />
-        </div>
+  <!-- Barra de progreso -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
 
-        <div class="stars" id="starContainer">
-          <span class="star">⭐</span>
-          <span class="star">⭐</span>
-          <span class="star">⭐</span>
-          <span class="star">⭐</span>
-          <span class="star">⭐</span>
-        </div>
+  <!-- Área de juego -->
+  <div class="game-area">
+    <div class="content-box">
+      <p class="instruction-text">
+        Este es un <strong><span id="nombreFigura">CIRCULO AZUL</span></strong>
+      </p>
+      <p class="instruction-text">¡Encuentralo y acercalo al lector!</p>
+      <div class="figura-display">
+        <img src="/img/circulo_azul.png" alt="Figura CÍRCULO AZUL" class="figura-img" id="figuraImage" />
       </div>
     </div>
+  </div>
 
-    <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+  <!-- Mago -->
+  <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
 
-    <script src="/js/modo-guiado.js"></script>
-  </body>
+  <!-- JS -->
+  <script src="/js/modo-guiado.js"></script>
+</body>
+
 </html>

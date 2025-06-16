@@ -1,10 +1,10 @@
 const figuras = [
-  { nombre: "TRIÁNGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#fb8c00" },
-  { nombre: "CÍRCULO VERDE", src: "/img/circulo_verde.png", color: "#43a047" },
+  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#fb8c00" },
+  { nombre: "CIRCULO VERDE", src: "/img/circulo_verde.png", color: "#43a047" },
   { nombre: "ESTRELLA CELESTE", src: "/img/estrella_celeste.png", color: "#4fc3f7" },
   { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png", color: "#fdd835" },
-  { nombre: "CÍRCULO AZUL", src: "/img/circulo_azul.png", color: "#1e88e5" },
-  { nombre: "TRIÁNGULO MORADO", src: "/img/triangulo_MORADO.png", color: "#8e24aa" },
+  { nombre: "CIRCULO AZUL", src: "/img/circulo_azul.png", color: "#1e88e5" },
+  { nombre: "TRIANGULO MORADO", src: "/img/triangulo_MORADO.png", color: "#8e24aa" },
   { nombre: "ESTRELLA ROJA", src: "/img/estrella_roja.png", color: "#d32f2f" }
 ];
 
