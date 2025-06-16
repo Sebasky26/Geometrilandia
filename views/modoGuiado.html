@@ -8,16 +8,10 @@
   </head>
   <body>
     <div class="background">
-      <img
-        src="/img/background.png"
-        alt="Fondo colorido"
-        class="background-img"
-      />
+      <img src="/img/background.png" alt="Fondo colorido" class="background-img" />
     </div>
 
-    <button class="back-button" onclick="window.history.back()">
-      ← Volver
-    </button>
+    <button class="back-button" onclick="window.history.back()">← Volver</button>
 
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
@@ -26,16 +20,11 @@
     <div class="game-area">
       <div class="content-box">
         <p class="instruction-text" id="instructionText">
-          Este es un <strong>CUADRADO ROJO</strong>
+          Este es un <strong><span id="nombreFigura">CUADRADO ROJO</span></strong>
         </p>
-        <p class="instruction-text" id="instructionText">¡Encuentralo y acercalo al lector!</p>
+        <p class="instruction-text">¡Encuentralo y acercalo al lector!</p>
         <div class="figura-display">
-          <img
-            src="/img/cuadrado_rojo.png"
-            alt="Figura CUADRADO ROJO"
-            class="figura-img"
-            id="figuraImage"
-          />
+          <img src="/img/cuadrado_rojo.png" alt="Figura CUADRADO ROJO" class="figura-img" id="figuraImage" />
         </div>
 
         <div class="stars" id="starContainer">
@@ -50,43 +39,6 @@
 
     <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
 
-    <script>
-      const figuras = [
-        { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rosado.png" },
-        { nombre: "TRIÁNGULO NARANJA", src: "/img/triangulo_naranja.png" },
-        { nombre: "CÍRCULO VERDE", src: "/img/circulo_verde.png" },
-        { nombre: "ESTRELLA CELESTE", src: "/img/estrella_celeste.png" },
-        { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png" },
-        { nombre: "CÍRCULO AZUL", src: "/img/circulo_azul.png" },
-        { nombre: "TRIÁNGULO VIOLETA", src: "/img/triangulo_MORADO.png" },
-        { nombre: "ESTRELLA ROJA", src: "/img/estrella_roja.png" }
-      ];
-
-      let currentIndex = 0;
-      const img = document.getElementById("figuraImage");
-      const text = document.getElementById("instructionText");
-      const progress = document.getElementById("progressBar");
-      const stars = document.querySelectorAll(".star");
-
-      function mostrarFigura(index) {
-        const figura = figuras[index];
-        img.src = figura.src;
-        img.alt = `Figura ${figura.nombre}`;
-        text.innerHTML = `Este es un <strong>${figura.nombre}</strong>`;
-        progress.style.width = `${((index + 1) / figuras.length) * 100}%`;
-        stars[index].classList.add("active");
-      }
-
-      function avanzarFigura() {
-        currentIndex = (currentIndex + 1) % figuras.length;
-        mostrarFigura(currentIndex);
-      }
-
-      // Inicializar
-      window.addEventListener("DOMContentLoaded", () => {
-        mostrarFigura(currentIndex);
-        setInterval(avanzarFigura, 5000);
-      });
-    </script>
+    <script src="/js/modo-guiado.js"></script>
   </body>
 </html>
