@@ -89,39 +89,20 @@ body {
 
 /* Botón de regreso optimizado */
 .back-button {
-  position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
-  width: 98px;
-  height: var(--button-size);
-  background: linear-gradient(135deg, #ea6726, #ff5101);
-  color: var(--text-light);
-  border: none;
-  border-radius: var(--border-radius-md);
-  font-size: clamp(0.8rem, 2.5vw, 1rem);
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: var(--shadow-medium);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: manipulation;
-  pointer-events: auto;
-}
-.separator {
-  width: 1px;
-  height: 40px;
+    background-color: rgb(234, 103, 38);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
-.back-button:hover,
-.back-button:focus {
-  transform: scale(1.05);
-  outline: 2px solid rgba(255, 255, 255, 0.5);
-}
-
-.back-button:active {
-  transform: scale(0.95);
+.back-button:hover {
+    background-color: rgb(248, 84, 8);
 }
 
 .back-icon {

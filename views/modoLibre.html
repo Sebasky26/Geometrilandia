@@ -11,11 +11,7 @@
 </head>
 <body>
     <!-- Botón de regreso mejorado con mejor accesibilidad -->
-    <button class="back-button" onclick="goBack()" aria-label="Volver al menú principal" tabindex="1">
-        <span class="back-icon" aria-hidden="true">←</span>
-        <span class="back-text">Volver</span>
-    </button>
-    <div class="separator"></div>
+    <button class="back-button" onclick="window.history.back()">← Volver</button>
 
     <!-- Contenedor principal optimizado -->
     <main class="kids-container" role="main">
