@@ -251,6 +251,8 @@ body {
   color: var(--primary-purple);
   line-height: 1;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  height: 50%;
 }
 
 .figura-name {
@@ -323,7 +325,7 @@ body {
 }
 
 .mago-img {
-  width: min(450px, 15vw);
+  width: clamp(250px, 25vw, 450px);
   height: auto;
   max-width: 500px;
   animation: magoBounce 3s ease-in-out infinite;

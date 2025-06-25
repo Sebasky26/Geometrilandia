@@ -32,15 +32,11 @@
                 <div id="welcomeScreen" class="game-screen show">
                     <!-- Display de figura con mejor estructura semántica -->
                     <div class="figura-display" id="figuraDisplay" role="img" aria-labelledby="figura-description">
-                        <!-- Estado de carga -->
-                        <div class="loading hidden" id="loadingIndicator" role="status" aria-label="Detectando figura">
-                            <div class="loading-spinner" aria-hidden="true"></div>
-                            <div class="loading-text">Detectando...</div>
-                        </div>
-                        
                         <!-- Icono y nombre de figura -->
                         <div class="figura-content">
-                            <div class="figura-icon" id="figuraIcon" aria-hidden="true">❓</div>
+                            <div class="figura-icon" id="figuraIcon" aria-hidden="true">
+                                <img id="figuraImage" src="" alt="" style="width: 100%; height: 100%;" />
+                            </div>
                             <div class="figura-name" id="figuraName" aria-live="polite"></div>
                         </div>
                     </div>
@@ -71,8 +67,9 @@
     </audio>
 
     <!-- Scripts -->
-    <script src="/js/game-common.js"></script>
-    <script src="/js/modo-libre.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/game-common.js"></script>
+<script src="/js/modo-libre.js"></script>
+
 </body>
 </html>
