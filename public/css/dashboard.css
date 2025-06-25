@@ -10,16 +10,21 @@ body {
   padding: 0;
   font-family: 'Fredoka', sans-serif;
   overflow-x: hidden;
-  overflow-y: auto;
   background-color: #f0f4ff;
   min-height: 100vh;
+  position: relative;
+  z-index: 0;
 }
 
+/* Fondo */
 .background {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   z-index: -1;
+  overflow: hidden;
 }
 
 .background-img {
@@ -28,47 +33,83 @@ body {
   object-fit: cover;
 }
 
+/* Contenedor principal */
 .dashboard-container {
-  padding: 100px 20px 60px;
+  padding: 40px 20px 20px;
   text-align: center;
 }
 
+/* Título */
 .title {
-  font-size: 4.5em;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   color: #ffd740;
   background: #6a1b9a;
-  padding: 25px 50px;
-  border-radius: 30px;
+  padding: 18px 30px;
+  border-radius: 24px;
   font-family: 'MiFuentePersonalizada', sans-serif;
+  margin-bottom: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   display: inline-block;
-  margin-bottom: 40px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+/* Mensaje del niño debajo del título */
+#welcomeMessage {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  background: #f4f744;
+  color: #4e148c;
+  padding: 10px 20px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 25px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cuadrícula de modos */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px 50px;
-  max-width: 800px;
-  margin: 40px auto 60px;
-  padding: 0 20px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 30px auto 20px;
+  padding: 0 10px;
 }
 
-/* Flip card base */
+/* Flip card */
 .flip-card {
   background-color: transparent;
   width: 100%;
-  height: 260px;
+  height: 200px;
   perspective: 1000px;
+  overflow: hidden;
 }
 
 .flip-card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  text-align: center;
   transition: transform 0.6s ease;
   transform-style: preserve-3d;
+  border-radius: 20px;
 }
 
 .flip-card:hover .flip-card-inner {
@@ -80,59 +121,43 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   backface-visibility: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 25px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  border-radius: 20px;
   color: white;
   font-weight: bold;
-  font-size: 30px;
-  padding: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Nuevos colores con buen contraste */
-.flip-card.libre .flip-card-front {
-  background-color: #5e35b1; /* púrpura fuerte */
-}
-
-.flip-card.guiado .flip-card-front {
-  background-color: #d81b60; /* rosa fuerte */
-}
-
-.flip-card.desafio .flip-card-front {
-  background-color: #f57c00; /* naranja fuerte */
-}
-
-.flip-card.inteligente .flip-card-front {
-  background-color: #039be5; /* azul intenso */
-}
-
-/* Reverso igual en todos: neutro con buen contraste */
 .flip-card-back {
-  background-color: #3949ab; /* azul oscuro consistente */
   transform: rotateY(180deg);
+  background-color: #3949ab;
 }
 
 .flip-card-back p {
-  font-size: 1em;
-  margin-bottom: 15px;
-  padding: 0 10px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
   text-align: center;
+  padding: 0 10px;
 }
 
 .flip-card-back button {
   background: #ffd740;
   color: #5d4037;
   border: none;
-  padding: 10px 22px;
-  font-size: 1.1em;
+  padding: 8px 18px;
+  font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease;
 }
 
@@ -140,36 +165,38 @@ body {
   transform: scale(1.05);
 }
 
-
-.stats-section {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto 60px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* Colores por modo */
+.flip-card.libre .flip-card-front {
+  background-color: #7e57c2;
 }
 
-#welcomeMessage {
-  font-size: 40px;
-  font-weight: bold;
-  color: #4e148c;
-  background-color: #ffd740;
-  display: flex;
-  justify-content: center;
-  width: auto;
-  padding: 12px 24px;
-  border-radius: 20px;
-  margin-top: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  font-family: 'Fredoka', sans-serif;
+.flip-card.guiado .flip-card-front {
+  background-color: #ec407a;
+}
+
+.flip-card.desafio .flip-card-front {
+  background-color: #ffb300;
+}
+
+.flip-card.inteligente .flip-card-front {
+  background-color: #29b6f6;
+}
+
+/* Progreso */
+.stats-section {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .stats-section h3 {
-  font-size: 1.8em;
+  font-size: 1.5rem;
   color: #5d4037;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .loading {
@@ -195,6 +222,27 @@ body {
   }
 }
 
+/* Mago animado, no bloquea clics */
+.mago-img {
+  position: fixed;
+  bottom: 10px;
+  right: 50px;
+  width: 300px;
+  z-index: 10;
+  animation: magoBounce 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes magoBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Cerrar sesión */
 .logout-btn {
   position: fixed;
   top: 20px;
@@ -202,11 +250,12 @@ body {
   background: #ff7043;
   color: white;
   font-size: 1.3em;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logout-btn:hover {
@@ -214,18 +263,11 @@ body {
   transform: scale(1.05);
 }
 
-.mago-img {
-  position: fixed;
-  bottom: 0;
-  right: 2%;
-  width: 400px;
-  z-index: 1;
-}
-
+/* Botón de ayuda visible y funcional */
 .help-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 10px;
   background-color: #29b6f6;
   color: white;
   border: none;
@@ -235,7 +277,8 @@ body {
   height: 70px;
   cursor: pointer;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 3;
+  z-index: 20;
+  transition: transform 0.2s ease;
 }
 
 .help-btn:hover {
@@ -243,6 +286,7 @@ body {
   transform: scale(1.1);
 }
 
+/* Caja de ayuda */
 .help-box {
   position: fixed;
   bottom: 100px;
@@ -250,9 +294,10 @@ body {
   background-color: #fff9c4;
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 300px;
   font-size: 1em;
-  z-index: 4;
+  z-index: 21;
   color: #5d4037;
+  display: none;
 }
