@@ -4,7 +4,6 @@ const figuras = [
   { nombre: "ESTRELLA CELESTE", src: "/img/estrella_celeste.png", color: "#4fc3f7" },
   { nombre: "CUADRADO ROSADO", src: "/img/cuadrado_rosado.png", color: "#f06292" },
   { nombre: "CIRCULO AZUL", src: "/img/circulo_azul.png", color: "#1e88e5" },
-  { nombre: "TRIANGULO MORADO", src: "/img/triangulo_morado.png", color: "#8e24aa" },
   { nombre: "CUADRADO NARANJA", src: "/img/cuadrado_naranja.png", color: "#ffa726" }
 ];
 
