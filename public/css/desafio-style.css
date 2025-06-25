@@ -36,9 +36,23 @@ html {
 .mago-img {
   position: absolute;
   bottom: 10px;
-  right: 100px;
-  width: 550px;
+  right: 20px;
+  width: 450px;
   height: 600px;
+  animation: magoBounce 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes magoBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 /* Encabezado */
@@ -204,10 +218,12 @@ html {
     transform: translate(-50%, -50%) scale(0.5);
     opacity: 0;
   }
+
   50% {
     transform: translate(-50%, -50%) scale(1.1);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;

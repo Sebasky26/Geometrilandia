@@ -52,7 +52,8 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   height: 100vh;
-  overflow: hidden; /* Evita scroll */
+  overflow: hidden;
+  /* Evita scroll */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -72,7 +73,8 @@ body {
   align-items: center;
   padding: var(--spacing-sm) var(--spacing-md);
   z-index: 1000;
-  pointer-events: none; /* Permite clicks a través del header */
+  pointer-events: none;
+  /* Permite clicks a través del header */
 }
 
 /* Indicador de estado optimizado */
@@ -89,20 +91,20 @@ body {
 
 /* Botón de regreso optimizado */
 .back-button {
-    background-color: rgb(234, 103, 38);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.5rem;
-    padding: 10px 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin-top: 10px;
-    margin-left: 10px;
+  background-color: rgb(234, 103, 38);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  margin-left: 40px;
 }
 
 .back-button:hover {
-    background-color: rgb(248, 84, 8);
+  background-color: rgb(248, 84, 8);
 }
 
 .back-icon {
@@ -110,7 +112,8 @@ body {
 }
 
 .back-text {
-  display: none; /* Oculto para ahorrar espacio */
+  display: none;
+  /* Oculto para ahorrar espacio */
 }
 
 /* Contenedor principal optimizado para viewport completo */
@@ -120,7 +123,8 @@ body {
   flex-direction: column;
   padding-top: var(--header-height);
   overflow: hidden;
-  gap: var(--spacing-md); /* Esto da separación entre instrucciones y juego */
+  gap: var(--spacing-md);
+  /* Esto da separación entre instrucciones y juego */
 }
 
 
@@ -132,7 +136,8 @@ body {
   justify-content: center;
   padding: 0 var(--spacing-md);
   flex-shrink: 0;
-  margin-bottom: var(--spacing-lg); /* Espaciado visual agregado */
+  margin-bottom: var(--spacing-lg);
+  /* Espaciado visual agregado */
 }
 
 
@@ -177,7 +182,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 var(--spacing-md) var(--spacing-md);
-  min-height: 0; /* Permite que flex funcione correctamente */
+  min-height: 0;
+  /* Permite que flex funcione correctamente */
 }
 
 /* Área de juego compacta */
@@ -317,30 +323,49 @@ body {
 }
 
 .mago-img {
-  width: min(200px, 15vw);
+  width: min(450px, 15vw);
   height: auto;
-  max-width: 250px;
+  max-width: 500px;
+  animation: magoBounce 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes magoBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Animaciones */
 @keyframes success-pulse {
+
   0%,
   100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
 }
 
 @keyframes error-shake {
+
   0%,
   100% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-5px);
   }
+
   75% {
     transform: translateX(5px);
   }
@@ -350,16 +375,19 @@ body {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 @keyframes bounce {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-5px);
   }
@@ -375,10 +403,12 @@ body {
     opacity: 0;
     transform: scale(0.5);
   }
+
   60% {
     opacity: 1;
     transform: scale(1.05);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -421,6 +451,20 @@ body {
 
   .mago-img {
     width: min(300px, 18vw);
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes magoBounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
@@ -440,6 +484,20 @@ body {
 
   .mago-img {
     width: min(180px, 14vw);
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes magoBounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
@@ -465,6 +523,20 @@ body {
 
   .mago-img {
     width: min(150px, 12vw);
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes magoBounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
@@ -504,6 +576,20 @@ body {
     width: min(120px, 10vw);
     bottom: -5px;
     right: -5px;
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes magoBounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
   }
 
   .feedback-info {
@@ -525,6 +611,20 @@ body {
 
   .mago-img {
     width: min(100px, 8vw);
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes magoBounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-6px);
+    }
   }
 }
 
@@ -552,6 +652,20 @@ body {
 
   .mago-img {
     width: min(100px, 15vh);
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes magoBounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-4px);
+    }
   }
 }
 
@@ -565,6 +679,7 @@ body {
 
 /* Reducción de movimiento */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

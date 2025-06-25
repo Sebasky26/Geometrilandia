@@ -11,7 +11,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     font-family: 'Fredoka', sans-serif;
     height: 100%;
     overflow: hidden;
@@ -144,4 +145,18 @@ html, body {
     right: 40px;
     width: clamp(250px, 25vw, 450px);
     height: auto;
+    animation: magoBounce 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes magoBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
