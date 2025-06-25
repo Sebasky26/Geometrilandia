@@ -127,7 +127,10 @@ function respuestaIncorrecta(figuraDetectada) {
   console.log(`❌ Incorrecto. Vidas restantes: ${gameState.vidas}`);
 
   // Mostrar feedback negativo
-  mostrarFeedback(`Incorrecto 😞<br>Era: ${figuraDetectada}`, "error");
+  mostrarFeedback(
+    `Incorrecto 😞<br>Era: ${gameState.figuraActual.nombre}`,
+    "error"
+  );
 
   actualizarVidas();
 
