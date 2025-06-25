@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modo Desafío - Geometrilandia</title>
-  <link rel="stylesheet" href="/css/desafio-style.css" />
-</head>
-<body>
-
-  <!-- Fondo -->
-  <div class="background">
-    <img src="/img/background.png" alt="Fondo colorido" class="background-img" />
-  </div>
-
-  <!-- Botón y estrellas -->
-  <div class="top-bar">
-    <button class="back-button" onclick="window.history.back()">← Volver</button>
-    <div class="stars" id="starContainer">
-      <span class="star">⭐</span>
-      <span class="star">⭐</span>
-      <span class="star">⭐</span>
-      <span class="star">⭐</span>
-      <span class="star">⭐</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modo Desafío - Geometrilandia</title>
+    <link rel="stylesheet" href="/css/desafio-style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <!-- Fondo -->
+    <div class="background">
+      <img
+        src="/img/background.png"
+        alt="Fondo colorido"
+        class="background-img"
+      />
     </div>
-  </div>
 
-  <!-- Barra de progreso -->
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <!-- Área de juego -->
-  <div class="game-area">
-    <div class="content-box">
-      <p class="instruction-text">¡Encuentra las figuras!</p>
-      <div class="figura-display" id="figuraDisplay">
-        <!-- Figuras múltiples (2 o 3) se insertarán dinámicamente -->
-        <img src="/img/triangulo_amarillo.png" class="figura-img" />
-        <img src="/img/cuadrado_rojo.png" class="figura-img" />
-        <img src="/img/circulo_azul.png" class="figura-img" />
+    <!-- Botón, vidas y estrellas -->
+    <div class="top-bar">
+      <button class="back-button" onclick="volverAlMenu()">← Volver</button>
+      <div class="vidas" id="vidasContainer">❤️❤️❤️</div>
+      <div class="stars" id="starContainer">
+        <span class="star">⭐</span>
+        <span class="star">⭐</span>
+        <span class="star">⭐</span>
+        <span class="star">⭐</span>
+        <span class="star">⭐</span>
       </div>
     </div>
-  </div>
 
-  <!-- Mago -->
-  <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+    <!-- Barra de progreso -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-  <!-- Script -->
-  <script src="/js/modo-desafio.js"></script>
-</body>
+    <!-- Área de juego -->
+    <div class="game-area">
+      <div class="content-box">
+        <p class="instruction-text">¡Encuentra las figuras!</p>
+        <div class="figura-display" id="figuraDisplay">
+          <!-- Las figuras se insertarán dinámicamente -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Mago -->
+    <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+
+    <!-- Botón de prueba (solo para desarrollo) -->
+    <button
+      id="btnPrueba"
+      onclick="simularLectura()"
+      style="
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        padding: 10px;
+        background: #ff5722;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      "
+    >
+      🧪 Simular Lectura
+    </button>
+
+    <!-- Script -->
+    <script src="/js/modo-desafio.js"></script>
+  </body>
 </html>
