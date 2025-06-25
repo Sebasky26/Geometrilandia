@@ -1,152 +1,354 @@
+/* Fuente personalizada con fallback mejorado */
 @font-face {
-    font-family: 'MiFuentePersonalizada';
-    src: url('../fonts/28 Days Later.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "MiFuentePersonalizada";
+  src: url("../fonts/28 Days Later.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
+/* Reset mejorado */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Variables CSS optimizadas para viewport completo */
+:root {
+  /* Colores principales */
+  --primary-purple: #6a1b9a;
+  --primary-yellow: #ffd54f;
+  --game-area-bg: #6e53b7;
+  --success-green: #00b894;
+  --error-red: #d63031;
+  --text-dark: #2c3e50;
+  --text-light: #ffffff;
+
+  /* Tamaños optimizados para viewport */
+  --header-height: 60px;
+  --button-size: 70px;
+  --instruction-height: 15vh;
+  --game-area-height: 60vh;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+
+  /* Bordes y sombras */
+  --border-radius-sm: 8px;
+  --border-radius-md: 15px;
+  --border-radius-lg: 20px;
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Body optimizado para viewport completo */
 body {
-  font-family:  'MiFuentePersonalizada', sans-serif;
+  font-family: "MiFuentePersonalizada", "Comic Sans MS", cursive, sans-serif;
   background-image: url("../img/background.png");
-  background-size: cover;           /* Hace que la imagen cubra todo el fondo */
-  background-position: center;      /* Centra la imagen */
-  background-repeat: no-repeat;     /* Evita que se repita la imagen */
-  min-height: 100vh;
-  overflow-x: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  overflow: hidden; /* Evita scroll */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-}
-/* Contenedor principal para niños */
-.kids-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 2rem;
-  text-align: center;
-  position: relative;
+  -webkit-text-size-adjust: 100%;
 }
 
-.mago-img {
-  position: absolute;
-  bottom: 0;
+/* Header con elementos fijos */
+.header-controls {
+  position: fixed;
+  top: 0;
+  left: 0;
   right: 0;
-  width: 650px; /* ajusta según el tamaño deseado */
-  height: 650px;
-  z-index: 10; /* para asegurarte que quede encima si hay otros elementos */
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: 1000;
+  pointer-events: none; /* Permite clicks a través del header */
 }
 
-.play-button {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: #ffd54f;
-  border: 8px solid #6a1b9a;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+/* Indicador de estado optimizado */
+.system-status {
+  background: var(--success-green);
+  color: var(--text-light);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  font-weight: bold;
+  box-shadow: var(--shadow-light);
+  pointer-events: auto;
+}
+
+/* Botón de regreso optimizado */
+.back-button {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 98px;
+  height: var(--button-size);
+  background: linear-gradient(135deg, #ea6726, #ff5101);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.2s ease;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  touch-action: manipulation;
+  pointer-events: auto;
 }
-.play-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+.separator {
+  width: 1px;
+  height: 40px;
 }
 
-.play-button:active {
+.back-button:hover,
+.back-button:focus {
+  transform: scale(1.05);
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.back-button:active {
   transform: scale(0.95);
 }
 
-.play-button::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transform: rotate(45deg);
-  animation: shine 2s infinite;
+.back-icon {
+  font-size: 1.2em;
 }
 
-@keyframes shine {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
-  }
+.back-text {
+  display: none; /* Oculto para ahorrar espacio */
 }
-.play-icon {
-  font-size: 4rem;
-  color: white;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+/* Contenedor principal optimizado para viewport completo */
+.kids-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--header-height);
+  overflow: hidden;
+  gap: var(--spacing-md); /* Esto da separación entre instrucciones y juego */
 }
-.play-text {
-  font-size: 2rem;
-  color: #6a1b9a;
+
+
+/* Sección de instrucciones compacta */
+.instructions-section {
+  height: var(--instruction-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-md);
+  flex-shrink: 0;
+  margin-bottom: var(--spacing-lg); /* Espaciado visual agregado */
+}
+
+
+.feedback-info {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+  color: var(--primary-purple);
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
+  border: 2px solid var(--primary-purple);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: clamp(0.9rem, 3vw, 1.4rem);
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: var(--shadow-light);
+  width: 100%;
+  max-width: 600px;
 }
+
+.instruction-text {
+  display: block;
+  font-size: 1.5rem;
+}
+
+.sound-wave {
+  display: inline-block;
+  margin: 0 var(--spacing-xs);
+}
+
+.sound-wave::before {
+  content: "♪";
+  font-size: 1.2em;
+  color: var(--primary-yellow);
+  animation: bounce 1.5s infinite ease-in-out;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Sección de juego optimizada */
+.game-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-md) var(--spacing-md);
+  min-height: 0; /* Permite que flex funcione correctamente */
+}
+
+/* Área de juego compacta */
 .game-area {
-  background: #6e53b7f9;
-  border-radius: 30px;
-  padding: 0rem 10rem;
-  margin: 1rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  height: 500px;
-  width: 700px;
+  background: linear-gradient(135deg, var(--game-area-bg), #8e44ad);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-medium);
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  max-height: var(--game-area-height);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
 }
 
+/* Display de figura optimizado */
 .figura-display {
-  width: 300px;
-  height: 300px;
-  border-radius: 20px;
-  background: #fff;
-  border: 5px solid #ddd;
+  width: min(250px, 40vw);
+  height: min(250px, 40vw);
+  max-width: 280px;
+  max-height: 280px;
+  border-radius: var(--border-radius-md);
+  background: var(--text-light);
+  border: 4px solid #e0e0e0;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.5s ease;
-}
-.figura-display.success {
-  border-color: #00b894;
-  background: #e6ffe6;
-  animation: success-pulse 1s ease-in-out;
-}
-.figura-display.error {
-  border-color: #d63031;
-  background: #ffe6e6;
-  animation: error-shake 0.5s ease-in-out;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
+.figura-display.success {
+  border-color: var(--success-green);
+  background: linear-gradient(135deg, #e6ffe6, #d4edda);
+  animation: success-pulse 1s ease-in-out;
+  box-shadow: 0 0 20px rgba(0, 184, 148, 0.4);
+}
+
+.figura-display.error {
+  border-color: var(--error-red);
+  background: linear-gradient(135deg, #ffe6e6, #f8d7da);
+  animation: error-shake 0.5s ease-in-out;
+  box-shadow: 0 0 20px rgba(214, 48, 49, 0.4);
+}
+
+/* Contenido de figura */
+.figura-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: 100%;
+}
+
+.figura-icon {
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--primary-purple);
+  line-height: 1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.figura-name {
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  color: var(--text-dark);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Mensajes de retroalimentación compactos */
+.feedback-message {
+  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  font-weight: bold;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-light);
+  line-height: 1.3;
+  margin-top: var(--spacing-sm);
+  max-width: 90%;
+}
+
+.feedback-success {
+  background: linear-gradient(135deg, var(--success-green), #00a085);
+  color: var(--text-light);
+}
+
+.feedback-error {
+  background: linear-gradient(135deg, var(--error-red), #b71c1c);
+  color: var(--text-light);
+}
+
+/* Estados de carga compactos */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: 100%;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(102, 126, 234, 0.2);
+  border-top: 6px solid var(--primary-purple);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--primary-purple);
+  font-weight: bold;
+}
+
+/* Personaje optimizado */
+.character-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.mago-img {
+  width: min(200px, 15vw);
+  height: auto;
+  max-width: 250px;
+}
+
+/* Animaciones */
 @keyframes success-pulse {
   0%,
   100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 }
 
@@ -156,120 +358,11 @@ body {
     transform: translateX(0);
   }
   25% {
-    transform: translateX(-10px);
+    transform: translateX(-5px);
   }
   75% {
-    transform: translateX(10px);
+    transform: translateX(5px);
   }
-}
-.figura-icon {
-  font-size: 6rem;
-  color: #667eea;
-}
-
-.figura-name {
-  font-size: 3rem;
-  color: #333;
-  font-weight: bold;
-  margin: 1rem 0;
-  text-transform: uppercase;
-}
-/* Mensajes de retroalimentación */
-.feedback-message {
-  font-size: 2.5rem;
-  font-weight: bold;
-  padding: 0.5rem 1.5rem;
-  border-radius: 20px;
-  margin: 1rem 0;
-  text-align: center;
-  animation: fadeInUp 0.5s ease-out;
-}
-
-.feedback-success {
-  background: #00b894;
-  color: white;
-}
-
-.feedback-error {
-  background: #d63031;
-  color: white;
-}
-
-.feedback-info {
-  color: #ffffff;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3)
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Botón de regreso */
-.back-button {
-    position: absolute;
-    top: 15px;
-    left: 40px;
-    padding: 12px 15px;
-    background-color: rgb(234, 103, 38);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 25px;
-    font-family: 'Fredoka', sans-serif;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    z-index: 1000;
-   
-}
-.back-button:hover {
-  transform: scale(1.1);
-   background-color: rgb(255, 81, 1);
-}
-
-.back-button:active {
-  transform: scale(0.9);
-}
-
-.back-icon {
-  font-size: 2rem;
-  color: #ffffff;
-}
-/* Estados de carga */
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
-}
-
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #e0e0e0;
-  border-top: 6px solid #667eea;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
 }
 
 @keyframes spin {
@@ -281,124 +374,29 @@ body {
   }
 }
 
-.loading-text {
-  font-size: 1.5rem;
-  color: #667eea;
-  font-weight: bold;
-}
-
-/* Efectos de sonido visual */
-.sound-wave {
-  display: inline-block;
-  margin: 0 5px;
-}
-
-.sound-wave::before {
-  content: "♪";
-  font-size: 2rem;
-  color: #ffffff;
-  animation: bounce 1s infinite;
-}
-
 @keyframes bounce {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 }
 
-/* Responsive para tablets y móviles */
-@media (max-width: 768px) {
-  .play-button {
-    width: 250px;
-    height: 250px;
-  }
-
-  .play-icon {
-    font-size: 3rem;
-}
-
-  .play-text {
-    font-size: 1.5rem;
-  }
-
-  .mode-button {
-    width: 150px;
-    height: 150px;
-  }
-
-  .mode-icon {
-    font-size: 2rem;
-  }
-
-  .mode-title {
-    font-size: 1.2rem;
-  }
-
-  .figura-display {
-    width: 200px;
-    height: 200px;
-  }
-
-  .figura-icon {
-    font-size: 4rem;
-  }
-
-  .figura-name {
-    font-size: 2rem;
-  }
-
-  .feedback-message {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .kids-container {
-    padding: 1rem;
-  }
-
-  .play-button {
-    width: 200px;
-    height: 200px;
-  }
-
-  .game-modes {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .mode-button {
-    width: 180px;
-    height: 120px;
-    border-radius: 15px;
-  }
-
-  .game-area {
-    margin: 1rem;
-    padding: 2rem;
-  }
-}
-
-/* Animaciones adicionales para hacer la interfaz más atractiva */
+/* Clases de utilidad */
 .bounce-in {
-  animation: bounceIn 0.8s ease-out;
+  animation: bounceIn 0.6s ease-out;
 }
 
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: scale(0.3);
+    transform: scale(0.5);
   }
-  50% {
+  60% {
     opacity: 1;
     transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
   }
   100% {
     opacity: 1;
@@ -406,40 +404,191 @@ body {
   }
 }
 
-.slide-in {
-  animation: slideIn 0.6s ease-out;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Ocultar elementos por defecto */
 .hidden {
   display: none !important;
 }
 
-/* Mostrar elementos con animación */
 .show {
   display: flex !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 0.5s ease-in;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive Design Optimizado para Viewport Completo */
+
+/* Tablets grandes (1024px+) */
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 70px;
+    --button-size: 70px;
+    --instruction-height: 12vh;
+    --game-area-height: 65vh;
   }
-  to {
-    opacity: 1;
+
+  .mago-img {
+    width: min(300px, 18vw);
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+  :root {
+    --header-height: 60px;
+    --button-size: 55px;
+    --instruction-height: 14vh;
+    --game-area-height: 62vh;
+  }
+
+  .figura-display {
+    width: min(220px, 35vw);
+    height: min(220px, 35vw);
+  }
+
+  .mago-img {
+    width: min(180px, 14vw);
+  }
+}
+
+/* Móviles grandes (481px - 767px) */
+@media (max-width: 767px) {
+  :root {
+    --header-height: 55px;
+    --button-size: 50px;
+    --instruction-height: 16vh;
+    --game-area-height: 58vh;
+    --spacing-md: 0.5rem;
+    --spacing-lg: 0.75rem;
+  }
+
+  .game-area {
+    padding: var(--spacing-md);
+  }
+
+  .figura-display {
+    width: min(200px, 45vw);
+    height: min(200px, 45vw);
+  }
+
+  .mago-img {
+    width: min(150px, 12vw);
+  }
+}
+
+/* Móviles pequeños (320px - 480px) */
+@media (max-width: 480px) {
+  :root {
+    --header-height: 50px;
+    --button-size: 45px;
+    --instruction-height: 18vh;
+    --game-area-height: 55vh;
+    --spacing-sm: 0.25rem;
+    --spacing-md: 0.4rem;
+    --spacing-lg: 0.6rem;
+  }
+
+  .instructions-section {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .game-section {
+    padding: 0 var(--spacing-sm) var(--spacing-sm);
+  }
+
+  .game-area {
+    padding: var(--spacing-sm);
+    max-width: none;
+    width: 100%;
+  }
+
+  .figura-display {
+    width: min(180px, 50vw);
+    height: min(180px, 50vw);
+    border-width: 3px;
+  }
+
+  .mago-img {
+    width: min(120px, 10vw);
+    bottom: -5px;
+    right: -5px;
+  }
+
+  .feedback-info {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+/* Móviles muy pequeños (menos de 320px) */
+@media (max-width: 319px) {
+  :root {
+    --instruction-height: 20vh;
+    --game-area-height: 50vh;
+  }
+
+  .figura-display {
+    width: min(160px, 55vw);
+    height: min(160px, 55vw);
+  }
+
+  .mago-img {
+    width: min(100px, 8vw);
+  }
+}
+
+/* Orientación landscape en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --header-height: 40px;
+    --instruction-height: 20vh;
+    --game-area-height: 60vh;
+  }
+
+  .instructions-section {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .feedback-info {
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    padding: var(--spacing-xs);
+  }
+
+  .figura-display {
+    width: min(150px, 30vh);
+    height: min(150px, 30vh);
+  }
+
+  .mago-img {
+    width: min(100px, 15vh);
+  }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .back-button {
+    min-width: 48px;
+    min-height: 48px;
+  }
+}
+
+/* Reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

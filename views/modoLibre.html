@@ -2,55 +2,81 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Modo Libre - Geometrilandia</title>
     <link rel="stylesheet" href="/css/libre.css">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="../fonts/28 Days Later.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/img/mago.png" as="image">
 </head>
 <body>
-    <button class="back-button" onclick="goBack()">
-        <span class="back-icon">← Volver</span>
+    <!-- Botón de regreso mejorado con mejor accesibilidad -->
+    <button class="back-button" onclick="goBack()" aria-label="Volver al menú principal" tabindex="1">
+        <span class="back-icon" aria-hidden="true">←</span>
+        <span class="back-text">Volver</span>
     </button>
+    <div class="separator"></div>
 
-    <div class="kids-container">
-        <div class="feedback-message feedback-info">
-                    <span class="sound-wave"></span>
-                    ¡Acerca una figura al lector y descubre que es!
-                    <span class="sound-wave"></span>
-        </div>
-        <div class="game-area bounce-in">
-            <div id="welcomeScreen" class="show">
-                <div class="figura-display" id="figuraDisplay">
-                    <div class="loading hidden" id="loadingIndicator">
-                        <div class="loading-spinner"></div>
-                        <div class="loading-text">Detectando...</div>
-                    </div>
-                    <div class="figura-icon" id="figuraIcon">❓</div>
-                    <div class="figura-name" id="figuraName"></div>
-                </div>
-
-                <div id="feedbackMessage" class="feedback-message hidden"></div>
+    <!-- Contenedor principal optimizado -->
+    <main class="kids-container" role="main">
+        <!-- Instrucciones claras y visibles -->
+        <section class="instructions-section" aria-labelledby="instructions-title">
+            <h1 id="instructions-title" class="sr-only">Instrucciones del juego</h1>
+            <div class="feedback-message feedback-info" role="banner">
+                <span class="sound-wave" aria-hidden="true"></span>
+                <span class="instruction-text">¡Acerca una figura al lector y descubre que es!</span>
+                <span class="sound-wave" aria-hidden="true"></span>
             </div>
+        </section>
+
+        <!-- Área de juego principal -->
+        <section class="game-section" aria-labelledby="game-title">
+            <h2 id="game-title" class="sr-only">Área de detección de figuras</h2>
+            <div class="game-area bounce-in" role="application" aria-label="Detector de figuras geométricas">
+                <div id="welcomeScreen" class="game-screen show">
+                    <!-- Display de figura con mejor estructura semántica -->
+                    <div class="figura-display" id="figuraDisplay" role="img" aria-labelledby="figura-description">
+                        <!-- Estado de carga -->
+                        <div class="loading hidden" id="loadingIndicator" role="status" aria-label="Detectando figura">
+                            <div class="loading-spinner" aria-hidden="true"></div>
+                            <div class="loading-text">Detectando...</div>
+                        </div>
+                        
+                        <!-- Icono y nombre de figura -->
+                        <div class="figura-content">
+                            <div class="figura-icon" id="figuraIcon" aria-hidden="true">❓</div>
+                            <div class="figura-name" id="figuraName" aria-live="polite"></div>
+                        </div>
+                    </div>
+
+                    <!-- Descripción accesible -->
+                    <div id="figura-description" class="sr-only">
+                        Área donde aparecerá la figura detectada
+                    </div>
+
+                    <!-- Mensajes de retroalimentación -->
+                    <div id="feedbackMessage" class="feedback-message hidden" role="alert" aria-live="assertive"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personaje guía -->
+        <div class="character-container">
+            <img src="/img/mago.png" alt="Mago amigable que te ayuda a aprender sobre figuras geométricas" class="mago-img" />
         </div>
-        <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
-    </div>
+    </main>
 
     <!-- Audio para retroalimentación -->
-    <audio id="successSound" preload="auto">
+    <audio id="successSound" preload="auto" aria-label="Sonido de éxito">
         <source src="/audio/success.mp3" type="audio/mpeg">
     </audio>
-    <audio id="detectSound" preload="auto">
+    <audio id="detectSound" preload="auto" aria-label="Sonido de detección">
         <source src="/audio/detect.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Scripts -->
     <script src="/js/game-common.js"></script>
     <script src="/js/modo-libre.js"></script>
-      <!-- Socket.IO -->
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        // Inicializar modo libre
-        document.addEventListener('DOMContentLoaded', function() {
-            initModoLibre();
-        });
-    </script>
 </body>
 </html>
