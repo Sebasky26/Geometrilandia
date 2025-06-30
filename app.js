@@ -15,13 +15,24 @@ const PORT = process.env.PORT || 3000;
 
 // === Diccionario de UIDs RFID → Nombres de figuras ===
 const mapaRFID = {
-  "91275D7B": "TRIANGULO NARANJA",
-  "07AA2886": "CIRCULO VERDE",
-  "E3111D11": "ESTRELLA CELESTE",
-  "E1B7A07B": "CUADRADO ROSADO",
-  "374BC885": "CIRCULO AZUL",
-  "F6A7B8C9": "TRIANGULO MORADO",
-  "B39DD90D": "CUADRADO NARANJA"
+  "F6FE0885": "Estrella turquesa",
+  "B39DD90D": "Cuadrado azul",
+  "E1B7A07B": "Cuadrado rojo",
+  "55754239": "Estrella amarilla",
+  "4CA16D3B": "Corazon verde",
+  "F74B6E3B": "Cuadrado amarillo",
+  "BC124D39": "Estrella marron",
+  "22614239": "Circulo amarillo",
+  "8CAB6D3B": "Circulo turqueza",
+  "F7934D39": "Rectángulo azul",
+  "65EA4139": "Rectángulo verde",
+  "BB5F4239": "Corazon azul",
+  "E7BD4239": "Rectángulo turqueza",
+  "896A4D39": "Corazon rojo",
+  "AE9E4239": "Triangulo verde",
+  "B0DE6D3B": "Triangulo marron",
+  "91275D7B": "Triangulo rojo",
+  "C6770785": "Circulo marron"
 };
 
 // Middleware

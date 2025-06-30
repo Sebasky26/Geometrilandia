@@ -1,32 +1,24 @@
 const figuras = [
-  {
-    nombre: "TRIANGULO NARANJA",
-    src: "/img/triangulo_naranja.png",
-    color: "#fb8c00",
-  },
-  { nombre: "CIRCULO VERDE", src: "/img/circulo_verde.png", color: "#43a047" },
-  {
-    nombre: "ESTRELLA CELESTE",
-    src: "/img/estrella_celeste.png",
-    color: "#4fc3f7",
-  },
-  {
-    nombre: "CUADRADO ROSADO",
-    src: "/img/cuadrado_rosado.png",
-    color: "#f06292",
-  },
-  { nombre: "CIRCULO AZUL", src: "/img/circulo_azul.png", color: "#1e88e5" },
-  {
-    nombre: "TRIANGULO MORADO",
-    src: "/img/triangulo_morado.png",
-    color: "#8e24aa",
-  },
-  {
-    nombre: "CUADRADO NARANJA",
-    src: "/img/cuadrado_naranja.png",
-    color: "#ffa726",
-  },
+  { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.png", color: "#40e0d0" },
+  { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.png", color: "#1e88e5" },
+  { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rojo.png", color: "#e53935" },
+  { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.png", color: "#fdd835" },
+  { nombre: "CORAZON VERDE", src: "/img/corazon_verde.png", color: "#43a047" },
+  { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png", color: "#fbc02d" },
+  { nombre: "ESTRELLA MARRON", src: "/img/estrella_marron.png", color: "#8d6e63" },
+  { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.png", color: "#fdd835" },
+  { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.png", color: "#40e0d0" },
+  { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5" },
+  { nombre: "RECTÁNGULO VERDE", src: "/img/rectangulo_verde.png", color: "#43a047" },
+  { nombre: "CORAZON AZUL", src: "/img/corazon_azul.png", color: "#1e88e5" },
+  { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0" },
+  { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.png", color: "#e53935" },
+  { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.png", color: "#43a047" },
+  { nombre: "TRIANGULO MARRON", src: "/img/triangulo_marron.png", color: "#8d6e63" },
+  { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.png", color: "#e53935" },
+  { nombre: "CIRCULO MARRON", src: "/img/circulo_marron.png", color: "#8d6e63" }
 ];
+
 
 // Estado del juego
 let gameState = {
