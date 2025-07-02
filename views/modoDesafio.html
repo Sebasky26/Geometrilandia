@@ -48,7 +48,7 @@
     <!-- Mago -->
     <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
 
-    <!-- Botón de prueba (solo para desarrollo)
+    <!-- Botón de prueba (solo para desarrollo) -->
     <button
       id="btnPrueba"
       onclick="simularLectura()"
@@ -67,48 +67,50 @@
     >
       🧪 Simular Lectura
     </button>
-  <audio id="fondoDesafio" loop>
-    <source src="/audio/desafio.mp3" type="audio/mpeg">
-  </audio>
-  <script>
-  const music = document.getElementById('fondoDesafio');
+    <audio id="fondoDesafio" loop>
+      <source src="/audio/desafio.mp3" type="audio/mpeg" />
+    </audio>
+    <script>
+      const music = document.getElementById("fondoDesafio");
 
-  function iniciarMusicaFondo() {
-    if (!music) return;
-    music.volume = 0.2;
+      function iniciarMusicaFondo() {
+        if (!music) return;
+        music.volume = 0.2;
 
-    // Intenta reproducir inmediatamente
-    music.play().catch(() => {
-      // Si falla (por política del navegador), espera a la primera interacción
-      document.addEventListener('click', reproducirTrasInteraccion, { once: true });
-    });
-  }
-
-  function reproducirTrasInteraccion() {
-    music.play().catch((err) => {
-      console.warn("El navegador sigue bloqueando la reproducción:", err);
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    iniciarMusicaFondo();
-
-    // Si se vuelve al dashboard desde otro modo (tipo back/forward)
-    window.addEventListener('pageshow', (event) => {
-      const tipo = performance.getEntriesByType("navigation")[0]?.type;
-      if (event.persisted || tipo === "back_forward") {
-        iniciarMusicaFondo();
+        // Intenta reproducir inmediatamente
+        music.play().catch(() => {
+          // Si falla (por política del navegador), espera a la primera interacción
+          document.addEventListener("click", reproducirTrasInteraccion, {
+            once: true,
+          });
+        });
       }
-    });
-  });
-  window.addEventListener('beforeunload', () => {
-    const music = document.getElementById('backgroundMusic');
-    if (music) {
-        music.pause();
-        music.currentTime = 0;
-    }
-});
-</script>
+
+      function reproducirTrasInteraccion() {
+        music.play().catch((err) => {
+          console.warn("El navegador sigue bloqueando la reproducción:", err);
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        iniciarMusicaFondo();
+
+        // Si se vuelve al dashboard desde otro modo (tipo back/forward)
+        window.addEventListener("pageshow", (event) => {
+          const tipo = performance.getEntriesByType("navigation")[0]?.type;
+          if (event.persisted || tipo === "back_forward") {
+            iniciarMusicaFondo();
+          }
+        });
+      });
+      window.addEventListener("beforeunload", () => {
+        const music = document.getElementById("backgroundMusic");
+        if (music) {
+          music.pause();
+          music.currentTime = 0;
+        }
+      });
+    </script>
 
     <!-- Script -->
     <script src="/js/modo-desafio.js"></script>
