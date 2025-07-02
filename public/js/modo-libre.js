@@ -4,10 +4,10 @@ const nameElement = document.getElementById("figuraName");
 const displayElement = document.getElementById("figura-content");
 const feedback = document.getElementById("feedbackMessage");
 const detectSound = document.getElementById("detectSound");
+const instruction= document.getElementsById("instrucciones");
 const successSound = document.getElementById("successSound");
 
 // Estado inicial: imagen incógnita
-imgElement.src = "/img/incognita.png";
 imgElement.alt = "Figura desconocida";
 nameElement.textContent = "";
 displayElement.classList.remove("success", "error");
@@ -17,6 +17,7 @@ feedback.textContent = "";
 function mostrarFigura(nombre) {
   const figura = figuras.find(f => f.nombre === nombre);
   if (!figura) {
+    hablar(`Figura no reconocida`);
     mostrarError("Figura no reconocida");
     return;
   }
@@ -33,6 +34,7 @@ function mostrarFigura(nombre) {
   displayElement.classList.add("success");
 
   feedback.textContent = `¡Has detectado un ${figura.nombre}!`;
+  hablar(`¡Muy bien! ¡La figura es un ${figura.nombre}! y su color es ${figura.colorTexto}!`);
   feedback.className = "feedback-message feedback-success show";
 
   successSound.currentTime = 0;
@@ -57,6 +59,19 @@ function mostrarError(mensaje) {
   setTimeout(() => {
     feedback.classList.remove("show");
   }, 3000);
+}
+
+function hablar(texto) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const msg = new SpeechSynthesisUtterance(texto);
+    msg.lang = 'es-ES';
+    msg.rate = 0.85;
+    const voces = window.speechSynthesis.getVoices();
+    const vozSuave = voces.find(v => v.name.toLowerCase().includes("google") || v.name.toLowerCase().includes("soledad"));
+    if (vozSuave) msg.voice = vozSuave;
+    window.speechSynthesis.speak(msg);
+  }
 }
 
 // WebSocket

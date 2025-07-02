@@ -20,7 +20,7 @@
             <h1 id="instructions-title" class="sr-only">Instrucciones del juego</h1>
             <div class="feedback-message feedback-info" role="banner">
                 <span class="sound-wave" aria-hidden="true"></span>
-                <span class="instruction-text">¡Acerca una figura al lector y descubre que es!</span>
+                <span class="instruction-text" id = "instrucciones" >¡Acerca una figura al lector y descubre que es!</span>
                 <span class="sound-wave" aria-hidden="true"></span>
             </div>
         </section>
@@ -35,7 +35,7 @@
                         <!-- Icono y nombre de figura -->
                         <div class="figura-content">
                             <div class="figura-icon" id="figuraIcon" aria-hidden="true">
-                                <img id="figuraImage" src="" alt="" style="width: 100%; height: 100%;" />
+                                <img id="figuraImage" src="/img/incognita.png" alt="" style="width: 100%; height: 100%;" />
                             </div>
                             <div class="figura-name" id="figuraName" aria-live="polite"></div>
                         </div>
@@ -83,12 +83,15 @@
         });
     });
     window.addEventListener('beforeunload', () => {
-    const music = document.getElementById('backgroundMusic');
+    const music = document.getElementById('fondoLibre');
     if (music) {
         music.pause();
         music.currentTime = 0;
     }
 });
+window.onload = function() {
+  hablar("¡Acerca una figura al lector y descubre que es!");
+};
 
 </script>
 
