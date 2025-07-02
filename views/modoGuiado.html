@@ -34,9 +34,9 @@
   <!-- Área de juego -->
   <div class="game-area">
     <div class="content-box">
-      <p class="instruction-text">
-        Este es un <strong><span id="nombreFigura">CIRCULO AZUL</span></strong>
-      </p>
+      <p class="instruction-text"><span id="nombreFigura"></span></p>
+
+
       <div class="figura-display">
         <img src="/img/circulo_azul.png" alt="Figura CÍRCULO AZUL" class="figura-img" id="figuraImage" />
       </div>
@@ -50,10 +50,10 @@
   </audio>
 
   <!-- Socket.IO -->
-<script src="/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
 
-<!-- JS del modo guiado -->
-<script src="/js/modo-guiado.js"></script>
+  <!-- JS del modo guiado -->
+  <script src="/js/modo-guiado.js"></script>
 
 <script>
   const music = document.getElementById('fondoGuiado');
