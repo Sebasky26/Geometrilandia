@@ -1,3 +1,4 @@
+/* Fuente personalizada */
 @font-face {
   font-family: 'MiFuentePersonalizada';
   src: url('../fonts/28 Days Later.ttf') format('truetype');
@@ -5,77 +6,69 @@
   font-style: normal;
 }
 
-* {
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
   font-family: 'Fredoka', sans-serif;
-  height: 100%;
-  overflow: hidden;
-  background-color: #f0f4ff;
+  overflow: hidden; /* Elimina scroll */
+  height: 100vh;
 }
 
-/* Fondo */
 .background {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  z-index: -1;
 }
 
 .background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: -1;
 }
 
-/* Contenedor del formulario estilo Bootstrap container */
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 2rem;
+  padding: 20px 30px;
   border-radius: 25px;
-  width: 100%;
-  max-width: 540px;
+  width: 90vw;
+  max-width: 520px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
+  gap: 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-/* Título */
 .title {
-  font-family: 'MiFuentePersonalizada', sans-serif;
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-size: 3.8em;
   color: #ffd740;
   background: #6a1b9a;
-  padding: 1rem 2rem;
+  padding: 15px 35px;
   border-radius: 20px;
   text-align: center;
   line-height: 1.2;
   box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.3);
+  font-family: 'MiFuentePersonalizada', sans-serif;
 }
 
-/* Formulario */
 .registro-form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 1rem;
+  gap: 14px;
 }
 
 .registro-form label {
-  font-size: 1rem;
+  font-size: 1.1em;
   color: #4e342e;
   font-weight: bold;
 }
@@ -83,26 +76,23 @@ html, body {
 .registro-form input,
 .registro-form select {
   padding: 10px;
-  font-size: 1rem;
+  font-size: 1.1em;
   border: 2px solid #a1887f;
   border-radius: 10px;
   outline: none;
   background-color: #fffde7;
-  width: 100%;
 }
 
-/* Botón guardar */
 .guardar-btn {
   background-color: #4caf50;
   color: white;
   width: 100%;
-  font-size: 1.2rem;
+  font-size: 1.4em;
   border: none;
-  padding: 12px;
+  padding: 12px 0;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  transition: transform 0.2s ease;
 }
 
 .guardar-btn:hover {
@@ -110,14 +100,13 @@ html, body {
   transform: scale(1.03);
 }
 
-/* Imagen del mago */
 .mago-img {
   position: absolute;
   bottom: 0;
   right: 2%;
-  width: clamp(180px, 30vw, 360px);
+  width: 360px;
+  height: auto;
   animation: mago-bounce 3s ease-in-out infinite;
-  pointer-events: none;
 }
 
 @keyframes mago-bounce {
@@ -129,7 +118,6 @@ html, body {
   }
 }
 
-/* Botón de ayuda */
 .help-btn {
   position: absolute;
   bottom: 20px;
@@ -137,14 +125,13 @@ html, body {
   background-color: #29b6f6;
   color: white;
   border: none;
-  font-size: 2rem;
+  font-size: 2em;
   border-radius: 50%;
   width: 65px;
   height: 65px;
   cursor: pointer;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 3;
-  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .help-btn:hover {
@@ -152,37 +139,30 @@ html, body {
   transform: scale(1.1);
 }
 
-/* Caja de ayuda */
 .help-box {
   position: absolute;
   bottom: 90px;
   right: 20px;
   background-color: #fff9c4;
-  padding: 1rem;
+  padding: 12px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  max-width: 90vw;
-  font-size: 1rem;
+  max-width: 300px;
+  font-size: 1em;
   z-index: 2;
   color: #5d4037;
-  display: none;
 }
 
-.help-box.visible {
-  display: block;
-}
-
-/* Botón volver */
 .back-button {
   position: absolute;
   top: 15px;
-  left: 20px;
+  left: 30px;
   padding: 10px 14px;
   background-color: rgb(234, 103, 38);
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 1.1rem;
+  font-size: 22px;
   font-family: 'Fredoka', sans-serif;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
