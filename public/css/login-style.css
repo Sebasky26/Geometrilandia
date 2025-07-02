@@ -21,6 +21,7 @@ body {
   background-color: #c5f6ff;
 }
 
+/* Fondo */
 .background {
   position: relative;
   width: 100vw;
@@ -36,6 +37,7 @@ body {
   z-index: -1;
 }
 
+/* Contenedor principal */
 .main-container {
   position: absolute;
   top: 50%;
@@ -48,6 +50,7 @@ body {
   z-index: 2;
 }
 
+/* Título */
 .title {
   font-size: 6em;
   color: #ffd740;
@@ -63,9 +66,7 @@ body {
 }
 
 @keyframes popTitle {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
 
@@ -74,6 +75,7 @@ body {
   }
 }
 
+/* Botones principales */
 .main-btn {
   border: none;
   padding: 22px 0;
@@ -109,6 +111,7 @@ body {
   color: #2e7d32;
 }
 
+/* Lista de niños */
 .lista-container {
   display: flex;
   flex-direction: column;
@@ -133,7 +136,7 @@ body {
   margin-top: 20px;
 }
 
-/* 🧙‍♂️ Mago animado */
+/* Imagen del mago */
 .mago-img {
   position: absolute;
   bottom: 0;
@@ -146,9 +149,7 @@ body {
 }
 
 @keyframes magoSalta {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
 
@@ -157,7 +158,7 @@ body {
   }
 }
 
-/* ❓ Botón de ayuda */
+/* Botón de ayuda */
 .help-btn {
   position: absolute;
   bottom: 20px;
@@ -180,6 +181,7 @@ body {
   transform: scale(1.1);
 }
 
+/* Caja de ayuda */
 .help-box {
   position: absolute;
   bottom: 100px;
@@ -212,7 +214,7 @@ body {
   }
 }
 
-/* 🎨 Mensajes */
+/* Mensajes */
 .error-msg,
 .success-msg {
   font-size: 1.2em;
@@ -234,7 +236,7 @@ body {
   color: #388e3c;
 }
 
-/* Responsive */
+/* 🔽 RESPONSIVE DESIGN 🔽 */
 @media (max-width: 768px) {
   .title {
     font-size: 4em;
@@ -244,22 +246,38 @@ body {
   .main-btn {
     width: 260px;
     font-size: 1.6em;
+    padding: 18px 0;
+  }
+
+  .lista-ninos {
+    width: 240px;
+    font-size: 1.3em;
+    padding: 14px;
   }
 
   .mago-img {
     width: 320px;
+    right: 15px;
   }
 
   .help-btn {
     width: 60px;
     height: 60px;
     font-size: 1.5em;
+    bottom: 15px;
+    right: 15px;
   }
 
   .help-box {
     font-size: 1em;
     bottom: 85px;
-    right: 20px;
+    right: 15px;
+    max-width: 90%;
+  }
+
+  .main-container {
+    transform: translate(-50%, -52%);
+    gap: 25px;
   }
 }
 
@@ -272,13 +290,37 @@ body {
   .main-btn {
     width: 220px;
     font-size: 1.4em;
-  }
-
-  .mago-img {
-    width: 280px;
+    padding: 16px 0;
   }
 
   .lista-ninos {
-    width: 230px;
+    width: 200px;
+    font-size: 1.2em;
+    padding: 12px;
+  }
+
+  .mago-img {
+    width: 260px;
+    right: 10px;
+  }
+
+  .help-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 1.3em;
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .help-box {
+    font-size: 0.95em;
+    bottom: 78px;
+    right: 10px;
+    padding: 16px;
+  }
+
+  .main-container {
+    transform: translate(-50%, -50%);
+    gap: 20px;
   }
 }
