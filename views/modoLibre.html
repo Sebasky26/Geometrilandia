@@ -83,6 +83,14 @@
             console.warn("Autoplay bloqueado, espera interacción del usuario.");
         });
     });
+    window.addEventListener('beforeunload', () => {
+    const music = document.getElementById('backgroundMusic');
+    if (music) {
+        music.pause();
+        music.currentTime = 0;
+    }
+});
+
 </script>
 
 </body>
