@@ -5,7 +5,7 @@ const figuras = [
   { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.png", color: "#fdd835" },
   { nombre: "CORAZON VERDE", src: "/img/corazon_verde.png", color: "#43a047" },
   { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png", color: "#fbc02d" },
-  { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.png", color: "#8d6e63" },
+  { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.png", color: "#fe970e" },
   { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.png", color: "#fdd835" },
   { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.png", color: "#40e0d0" },
   { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5" },
@@ -14,12 +14,17 @@ const figuras = [
   { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0" },
   { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.png", color: "#e53935" },
   { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.png", color: "#43a047" },
-  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#8d6e63" },
+  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#fe970e" },
   { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.png", color: "#e53935" },
-  { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.png", color: "#8d6e63" }
+  { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.png", color: "#fe970e" }
 ];
 
+// Barajar las figuras aleatoriamente al iniciar
+function barajarFiguras(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
+let figurasMezcladas = barajarFiguras([...figuras]);
 let indiceActual = 0;
 
 const img = document.getElementById("figuraImage");
@@ -31,21 +36,28 @@ mensaje.className = "instruction-text";
 nombreSpan.parentElement.after(mensaje);
 
 function actualizarFigura() {
-  const figura = figuras[indiceActual];
+  const figura = figurasMezcladas[indiceActual];
   img.src = figura.src;
   img.alt = `Figura ${figura.nombre}`;
   nombreSpan.textContent = figura.nombre;
   nombreSpan.style.color = figura.color;
-  progress.style.width = `${((indiceActual + 1) / figuras.length) * 100}%`;
+  progress.style.width = `${((indiceActual + 1) / figurasMezcladas.length) * 100}%`;
 
-  // Resetear mensaje
+  // Restablecer mensaje
   mensaje.textContent = "Encuentra esta figura y acercala al lector";
   mensaje.style.color = "#ffffff";
 }
 
-function mostrarMensaje(texto, color) {
+function mostrarMensaje(texto, color, temporal = false) {
   mensaje.textContent = texto;
   mensaje.style.color = color;
+
+  if (temporal) {
+    setTimeout(() => {
+      mensaje.textContent = "Encuentra esta figura y acercala al lector";
+      mensaje.style.color = "#ffffff";
+    }, 2000); // Cambia la duración si lo deseas
+  }
 }
 
 function marcarEstrella(index) {
@@ -58,22 +70,22 @@ window.addEventListener("DOMContentLoaded", () => {
   const socket = io();
 
   socket.on("nuevaFigura", (nombre) => {
-    const figuraEsperada = figuras[indiceActual];
+    const figuraEsperada = figurasMezcladas[indiceActual];
 
     if (nombre === figuraEsperada.nombre) {
-      mostrarMensaje("Muy bien! Sigue asi!", "#00e676"); // verde
+      mostrarMensaje("¡Muy bien! ¡Sigue así!", "#00e676"); // verde
       marcarEstrella(indiceActual);
       indiceActual++;
 
-      if (indiceActual < figuras.length) {
-        setTimeout(actualizarFigura, 1500); // esperar un poco antes de mostrar la siguiente
+      if (indiceActual < figurasMezcladas.length) {
+        setTimeout(actualizarFigura, 1500); // espera antes de pasar a la siguiente
       } else {
-        mostrarMensaje("Genial! Completaste todas!", "#00e676");
-        img.src = "/img/finalizado.png"; // imagen opcional para final
+        mostrarMensaje("¡Genial! ¡Completaste todas!", "#00e676");
+        img.src = "/img/finalizado.png"; // Imagen final opcional
       }
 
     } else {
-      mostrarMensaje("Uy! Esa no es. Intenta otra vez", "#ff1744"); // rojo
-    }
-  });
+      mostrarMensaje("¡Uy! Esa no es. Intenta otra vez", "#ff1744", true); // rojo y temporal
+    }
+  });
 });
