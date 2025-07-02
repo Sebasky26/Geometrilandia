@@ -1,4 +1,4 @@
-// ✅ FIGURAS
+// FIGURAS
 const figuras = [
   { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.png", color: "#40e0d0", forma: "estrella", colorTexto: "turquesa", genero: "la" },
   { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.png", color: "#1e88e5", forma: "cuadrado", colorTexto: "azul", genero: "el" },
@@ -54,8 +54,12 @@ function actualizarFigura() {
   img.alt = `Figura ${figura.nombre}`;
   progress.style.width = `${((indiceActual) / figurasMezcladas.length) * 100}%`;
 
-  const texto = `Busca ${figura.genero} ${figura.forma} ${figura.colorTexto}`;
-  mensaje.innerHTML = `Busca ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>`;
+  const esFemenino = figura.genero === "la";
+  const esteEsta = esFemenino ? "Esta" : "Este";
+  const loLa = esFemenino ? "la" : "lo";
+
+  const texto = `${esteEsta} es ${figura.genero} ${figura.forma} ${figura.colorTexto}. Acerca${loLa} a la caja para que te ${loLa} lea.`;
+  mensaje.innerHTML = `${esteEsta} es ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>. Acerca${loLa} a la caja para que te ${loLa} lea.`;
   mensaje.style.color = "#ffffff";
 
   hablar(texto);
@@ -71,13 +75,22 @@ function mostrarMensaje(texto, color, temporal = false, repetir = true) {
     setTimeout(() => {
       if (indiceActual < figurasMezcladas.length) {
         const figura = figurasMezcladas[indiceActual];
-        mensaje.innerHTML = `Busca ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>`;
+        const esFemenino = figura.genero === "la";
+        const esteEsta = esFemenino ? "Esta" : "Este";
+        const loLa = esFemenino ? "la" : "lo";
+
+        mensaje.innerHTML = `${esteEsta} es ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>. Acérca${loLa} a la caja para que te ${loLa} lea.`;
         mensaje.style.color = "#ffffff";
-        if (repetir) hablar(`Busca ${figura.genero} ${figura.forma} ${figura.colorTexto}`);
+
+        if (repetir) {
+          const texto = `${esteEsta} es ${figura.genero} ${figura.forma} ${figura.colorTexto}. Acerca${loLa} a la caja para que te ${loLa} lea.`;
+          hablar(texto);
+        }
       }
     }, 3000);
   }
 }
+
 
 function marcarEstrella() {
   const total = figurasMezcladas.length;
@@ -119,16 +132,34 @@ function verificarFigura(nombre) {
       actualizarEstrellas();
     }
   } else {
-    mostrarMensaje("Ups, intenta otra vez. Tu puedes hacerlo mejor", "#ff1744", true);
+    mostrarMensaje("Ups, intenta otra vez. Tú puedes hacerlo mejor", "#ff1744", true);
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   actualizarFigura();
 
+  // Animación visual a la imagen
+  img.style.transition = "transform 0.3s ease, filter 0.3s ease";
+  img.style.display = "block";
+  img.style.margin = "0 auto";
+  img.style.border = "none";
+  img.style.background = "none";
+  img.style.boxShadow = "none";
+
+  img.addEventListener("mouseenter", () => {
+    img.style.transform = "scale(1.05)";
+    img.style.filter = "drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4))";
+  });
+
+  img.addEventListener("mouseleave", () => {
+    img.style.transform = "scale(1)";
+    img.style.filter = "none";
+  });
+
+
   const socket = io();
   socket.on("nuevaFigura", (nombre) => {
     verificarFigura(nombre);
   });
 });
-
