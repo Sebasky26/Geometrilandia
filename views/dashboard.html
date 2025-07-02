@@ -106,6 +106,49 @@
     <p><strong>Progreso:</strong> Revisa tus estadísticas.</p>
   </div>
   <button class="help-btn" onclick="mostrarAyuda()">?</button>
+  <audio id="fondoTablero" loop>
+    <source src="/audio/tablero.mp3" type="audio/mpeg">
+  </audio>
+<script>
+  const music = document.getElementById('fondoTablero');
+
+  function iniciarMusicaFondo() {
+    if (!music) return;
+    music.volume = 0.2;
+
+    // Intenta reproducir inmediatamente
+    music.play().catch(() => {
+      // Si falla (por política del navegador), espera a la primera interacción
+      document.addEventListener('click', reproducirTrasInteraccion, { once: true });
+    });
+  }
+
+  function reproducirTrasInteraccion() {
+    music.play().catch((err) => {
+      console.warn("El navegador sigue bloqueando la reproducción:", err);
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    iniciarMusicaFondo();
+
+    // Si se vuelve al dashboard desde otro modo (tipo back/forward)
+    window.addEventListener('pageshow', (event) => {
+      const tipo = performance.getEntriesByType("navigation")[0]?.type;
+      if (event.persisted || tipo === "back_forward") {
+        iniciarMusicaFondo();
+      }
+    });
+  });
+  window.addEventListener('beforeunload', () => {
+    const music = document.getElementById('backgroundMusic');
+    if (music) {
+        music.pause();
+        music.currentTime = 0;
+    }
+});
+</script>
+
 
   <script src="/js/dashboard.js"></script>
   <script>

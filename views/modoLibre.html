@@ -53,9 +53,8 @@
         </section>
 
         <!-- Personaje guía -->
-        <div class="character-container">
-            <img src="/img/mago.png" alt="Mago amigable que te ayuda a aprender sobre figuras geométricas" class="mago-img" />
-        </div>
+        <img src="/img/mago.png" alt="Mago amigable que te ayuda a aprender sobre figuras geométricas" class="mago-img" />
+
     </main>
 
     <!-- Audio para retroalimentación -->
@@ -65,11 +64,33 @@
     <audio id="detectSound" preload="auto" aria-label="Sonido de detección">
         <source src="/audio/detect.mp3" type="audio/mpeg">
     </audio>
+    <!-- Música de fondo -->
+    <audio id="fondoLibre" loop>
+        <source src="/audio/libre.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Scripts -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/game-common.js"></script>
 <script src="/js/modo-libre.js"></script>
+<!-- Script para iniciar la música -->
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const music = document.getElementById('fondoLibre');
+        music.volume = 0.2; // volumen bajo
+        music.play().catch((e) => {
+            console.warn("Autoplay bloqueado, espera interacción del usuario.");
+        });
+    });
+    window.addEventListener('beforeunload', () => {
+    const music = document.getElementById('backgroundMusic');
+    if (music) {
+        music.pause();
+        music.currentTime = 0;
+    }
+});
+
+</script>
 
 </body>
 </html>

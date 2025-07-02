@@ -146,8 +146,6 @@ body {
   padding: 10px;
 }
 
-
-
 .flip-card-back {
   transform: rotateY(180deg);
   background-color: #3949ab;
@@ -234,21 +232,19 @@ body {
   }
 }
 
-/* Mago animado, no bloquea clics */
+/* Mago animado */
 .mago-img {
   position: fixed;
   bottom: 10px;
   right: 50px;
-  width: 400px;
+  width: 300px;
   z-index: 10;
   animation: magoBounce 3s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes magoBounce {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
 
@@ -257,7 +253,7 @@ body {
   }
 }
 
-/* Cerrar sesión */
+/* Botón cerrar sesión */
 .logout-btn {
   position: fixed;
   top: 20px;
@@ -278,7 +274,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Botón de ayuda visible y funcional */
+/* Botón de ayuda */
 .help-btn {
   position: fixed;
   bottom: 10px;
@@ -316,3 +312,198 @@ body {
   color: #5d4037;
   display: none;
 }
+
+/* 🌐 Bootstrap-style Responsive System */
+
+/* Breakpoints */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard-container {
+    padding: 30px 15px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .modo-icono {
+    width: 70px;
+    height: 70px;
+  }
+
+  .flip-card {
+    height: 180px;
+  }
+
+  .mago-img {
+    width: 240px;
+    right: 10px;
+  }
+
+  .help-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.6em;
+  }
+
+  .help-box {
+    bottom: 90px;
+    right: 15px;
+    font-size: 0.95em;
+  }
+
+  .logout-btn {
+    font-size: 1em;
+    padding: 8px 14px;
+  }
+
+  #welcomeMessage {
+    font-size: 1.3rem;
+    padding: 8px 16px;
+  }
+
+  .title {
+    font-size: 2.8rem;
+    padding: 16px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .flip-card {
+    height: 160px;
+  }
+
+  .flip-card-back p {
+    font-size: 0.85rem;
+  }
+
+  .flip-card-back button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .mago-img {
+    width: 200px;
+    bottom: 8px;
+  }
+
+  .help-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 1.4em;
+  }
+
+  .logout-btn {
+    font-size: 0.95em;
+    padding: 6px 12px;
+  }
+
+  .title {
+    font-size: 2.4rem;
+    padding: 14px 20px;
+  }
+
+  #welcomeMessage {
+    font-size: 1.1rem;
+  }
+
+  .stats-section {
+    padding: 16px;
+    width: 95%;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modo-icono {
+    width: 60px;
+    height: 60px;
+  }
+
+  .flip-card {
+    height: 140px;
+  }
+
+  .flip-card-back p {
+    font-size: 0.75rem;
+  }
+
+  .flip-card-back button {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+
+  .mago-img {
+    width: 150px;
+    bottom: 5px;
+    right: 5px;
+  }
+
+  .help-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2em;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .help-box {
+    max-width: 90%;
+    font-size: 0.85em;
+    bottom: 70px;
+    right: 10px;
+  }
+
+  .logout-btn {
+    font-size: 0.85em;
+    padding: 5px 10px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .title {
+    font-size: 2rem;
+    padding: 12px 16px;
+  }
+
+  #welcomeMessage {
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+
+  .stats-section {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .stats-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .loading {
+    font-size: 1em;
+    gap: 8px;
+  }
+
+  .loading-spinner {
+    width: 16px;
+    height: 16px;
+    border-width: 3px;
+  }
+}
+

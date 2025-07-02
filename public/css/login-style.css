@@ -282,3 +282,106 @@ body {
     width: 230px;
   }
 }
+
+/* ...[Tu código original intacto hasta aquí]... */
+
+/* 📱 Responsive estilo Bootstrap */
+
+@media (max-width: 992px) {
+  .main-container {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 4rem;
+    padding: 18px 30px;
+  }
+
+  .main-btn {
+    font-size: 1.5rem;
+    max-width: 300px;
+  }
+
+  .lista-ninos {
+    max-width: 250px;
+  }
+
+  .mago-img {
+    width: clamp(150px, 25vw, 380px);
+  }
+
+  .help-box {
+    font-size: 0.95rem;
+    right: 15px;
+    bottom: 90px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+    padding: 16px 24px;
+  }
+
+  .main-btn {
+    font-size: 1.4rem;
+    padding: 16px;
+  }
+
+  .lista-ninos {
+    font-size: 1.1rem;
+    width: 90%;
+  }
+
+  .mago-img {
+    width: clamp(120px, 35vw, 300px);
+    right: 10px;
+  }
+
+  .help-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 1.3rem;
+  }
+
+  .help-box {
+    max-width: 85%;
+    bottom: 85px;
+    right: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 2.2rem;
+    padding: 14px 20px;
+  }
+
+  .main-btn {
+    font-size: 1.2rem;
+    width: 100%;
+    padding: 14px;
+  }
+
+  .lista-ninos {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .help-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
+  }
+
+  .help-box {
+    padding: 12px;
+    font-size: 0.85rem;
+    bottom: 80px;
+  }
+
+  .mago-img {
+    width: 180px;
+  }
+}
