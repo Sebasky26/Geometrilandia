@@ -11,62 +11,57 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   font-family: 'Fredoka', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
   background-color: #c5f6ff;
-}
-
-/* Fondo */
-.background {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.background-img {
-  position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  overflow-x: hidden;
+}
+
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
   z-index: -1;
 }
 
-/* Contenedor principal */
+.background-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .main-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
   display: flex;
   flex-direction: column;
   gap: 30px;
   align-items: center;
-  z-index: 2;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+  text-align: center;
 }
 
-/* Título */
+/* Título principal */
 .title {
-  font-size: 6em;
+  font-family: 'MiFuentePersonalizada', sans-serif;
   color: #ffd740;
   background: #6a1b9a;
-  padding: 30px 50px;
   border-radius: 40px;
-  text-align: center;
-  line-height: 1.2;
+  padding: 20px 40px;
   box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.3);
-  font-family: 'MiFuentePersonalizada', sans-serif;
   animation: popTitle 3s ease-in-out infinite;
   pointer-events: none;
+  font-size: clamp(2.2rem, 6vw, 5rem);
 }
 
+/* Animación del título */
 @keyframes popTitle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
 
@@ -78,14 +73,15 @@ body {
 /* Botones principales */
 .main-btn {
   border: none;
-  padding: 22px 0;
-  font-size: 2em;
   border-radius: 20px;
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.3s;
+  padding: 18px;
+  width: 100%;
+  max-width: 320px;
+  font-size: 1.8rem;
   font-weight: bold;
   font-family: 'Fredoka', sans-serif;
-  width: 320px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .main-btn:hover {
@@ -117,39 +113,38 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  width: 100%;
 }
 
 .lista-label {
-  font-size: 1.6em;
+  font-size: 1.4rem;
   color: #4e342e;
 }
 
 .lista-ninos {
-  padding: 16px;
-  font-size: 1.5em;
+  padding: 14px;
+  font-size: 1.3rem;
   border-radius: 12px;
   border: 2px solid #a1887f;
-  width: 270px;
-}
-
-#loginBtn {
-  margin-top: 20px;
+  width: 100%;
+  max-width: 270px;
 }
 
 /* Imagen del mago */
 .mago-img {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 30px;
-  width: 460px;
-  max-width: 100%;
-  height: auto;
-  z-index: 1;
+  width: clamp(180px, 30vw, 460px);
   animation: magoSalta 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
 @keyframes magoSalta {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
 
@@ -160,18 +155,18 @@ body {
 
 /* Botón de ayuda */
 .help-btn {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
-  right: 30px;
+  right: 20px;
   background-color: #29b6f6;
   color: white;
-  border: none;
   font-size: 2em;
+  border: none;
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   cursor: pointer;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 3;
   transition: background-color 0.2s, transform 0.2s;
 }
@@ -183,18 +178,18 @@ body {
 
 /* Caja de ayuda */
 .help-box {
-  position: absolute;
+  position: fixed;
   bottom: 100px;
-  right: 30px;
+  right: 20px;
   background-color: #fff9c4;
-  padding: 20px;
+  padding: 16px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  font-size: 1.2em;
-  z-index: 2;
+  max-width: 280px;
+  font-size: 1rem;
   color: #5d4037;
   display: none;
+  z-index: 2;
 }
 
 .help-box.visible {
@@ -214,16 +209,16 @@ body {
   }
 }
 
-/* Mensajes */
+/* Mensajes de estado */
 .error-msg,
 .success-msg {
-  font-size: 1.2em;
-  padding: 10px 20px;
+  font-size: 1rem;
+  padding: 10px 16px;
   border-radius: 10px;
   margin-top: 10px;
   text-align: center;
-  font-weight: bold;
   max-width: 300px;
+  font-weight: bold;
 }
 
 .error-msg {
@@ -236,91 +231,92 @@ body {
   color: #388e3c;
 }
 
-/* 🔽 RESPONSIVE DESIGN 🔽 */
-@media (max-width: 768px) {
+/* 📱 Responsive estilo Bootstrap */
+
+@media (max-width: 992px) {
   .title {
-    font-size: 4em;
-    padding: 25px 35px;
+    font-size: 4.2rem;
   }
 
   .main-btn {
-    width: 260px;
-    font-size: 1.6em;
-    padding: 18px 0;
-  }
-
-  .lista-ninos {
-    width: 240px;
-    font-size: 1.3em;
-    padding: 14px;
-  }
-
-  .mago-img {
-    width: 320px;
-    right: 15px;
+    font-size: 1.6rem;
   }
 
   .help-btn {
     width: 60px;
     height: 60px;
-    font-size: 1.5em;
-    bottom: 15px;
-    right: 15px;
+    font-size: 1.6em;
   }
 
   .help-box {
-    font-size: 1em;
-    bottom: 85px;
+    bottom: 90px;
     right: 15px;
-    max-width: 90%;
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3.2rem;
+    padding: 18px 30px;
   }
 
-  .main-container {
-    transform: translate(-50%, -52%);
-    gap: 25px;
+  .main-btn {
+    font-size: 1.4rem;
+    padding: 16px;
+  }
+
+  .lista-ninos {
+    font-size: 1.1rem;
+  }
+
+  .mago-img {
+    right: 10px;
+  }
+
+  .help-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 1.4em;
+  }
+
+  .help-box {
+    bottom: 85px;
+    right: 10px;
+    max-width: 90%;
   }
 }
 
 @media (max-width: 480px) {
   .title {
-    font-size: 3em;
-    padding: 20px 30px;
+    font-size: 2.4rem;
+    padding: 14px 20px;
   }
 
   .main-btn {
-    width: 220px;
-    font-size: 1.4em;
-    padding: 16px 0;
+    font-size: 1.2rem;
+    width: 100%;
+    padding: 14px;
   }
 
   .lista-ninos {
-    width: 200px;
-    font-size: 1.2em;
-    padding: 12px;
-  }
-
-  .mago-img {
-    width: 260px;
-    right: 10px;
+    font-size: 1rem;
+    padding: 10px;
   }
 
   .help-btn {
-    width: 52px;
-    height: 52px;
-    font-size: 1.3em;
-    bottom: 12px;
-    right: 12px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2em;
   }
 
   .help-box {
-    font-size: 0.95em;
-    bottom: 78px;
-    right: 10px;
-    padding: 16px;
+    font-size: 0.9em;
+    padding: 12px;
+    bottom: 80px;
   }
 
-  .main-container {
-    transform: translate(-50%, -50%);
-    gap: 20px;
+  .mago-img {
+    width: 200px;
   }
 }

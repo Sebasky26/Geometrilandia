@@ -1,4 +1,3 @@
-/* Fuente personalizada */
 @font-face {
   font-family: 'MiFuentePersonalizada';
   src: url('../fonts/28 Days Later.ttf') format('truetype');
@@ -6,71 +5,77 @@
   font-style: normal;
 }
 
-body {
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
   font-family: 'Fredoka', sans-serif;
-  overflow: hidden; /* Elimina scroll */
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f0f4ff;
 }
 
 /* Fondo */
 .background {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-}
-
-.background-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   z-index: -1;
 }
 
-/* Contenedor del formulario */
+.background-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenedor del formulario estilo Bootstrap container */
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 20px 30px;
+  padding: 2rem;
   border-radius: 25px;
-  width: 90vw;
-  max-width: 520px;
+  width: 100%;
+  max-width: 540px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 1.4rem;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
+/* Título */
 .title {
-  font-size: 3.8em;
+  font-family: 'MiFuentePersonalizada', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
   color: #ffd740;
   background: #6a1b9a;
-  padding: 15px 35px;
+  padding: 1rem 2rem;
   border-radius: 20px;
   text-align: center;
   line-height: 1.2;
   box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.3);
-  font-family: 'MiFuentePersonalizada', sans-serif;
 }
 
+/* Formulario */
 .registro-form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 14px;
+  gap: 1rem;
 }
 
 .registro-form label {
-  font-size: 1.1em;
+  font-size: 1rem;
   color: #4e342e;
   font-weight: bold;
 }
@@ -78,11 +83,12 @@ body {
 .registro-form input,
 .registro-form select {
   padding: 10px;
-  font-size: 1.1em;
+  font-size: 1rem;
   border: 2px solid #a1887f;
   border-radius: 10px;
   outline: none;
   background-color: #fffde7;
+  width: 100%;
 }
 
 /* Botón guardar */
@@ -90,12 +96,13 @@ body {
   background-color: #4caf50;
   color: white;
   width: 100%;
-  font-size: 1.4em;
+  font-size: 1.2rem;
   border: none;
-  padding: 12px 0;
+  padding: 12px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
+  transition: transform 0.2s ease;
 }
 
 .guardar-btn:hover {
@@ -108,9 +115,9 @@ body {
   position: absolute;
   bottom: 0;
   right: 2%;
-  width: 360px;
-  height: auto;
+  width: clamp(180px, 30vw, 360px);
   animation: mago-bounce 3s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes mago-bounce {
@@ -130,13 +137,14 @@ body {
   background-color: #29b6f6;
   color: white;
   border: none;
-  font-size: 2em;
+  font-size: 2rem;
   border-radius: 50%;
   width: 65px;
   height: 65px;
   cursor: pointer;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 3;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .help-btn:hover {
@@ -150,26 +158,31 @@ body {
   bottom: 90px;
   right: 20px;
   background-color: #fff9c4;
-  padding: 12px;
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  max-width: 300px;
-  font-size: 1em;
+  max-width: 90vw;
+  font-size: 1rem;
   z-index: 2;
   color: #5d4037;
+  display: none;
+}
+
+.help-box.visible {
+  display: block;
 }
 
 /* Botón volver */
 .back-button {
   position: absolute;
   top: 15px;
-  left: 30px;
+  left: 20px;
   padding: 10px 14px;
   background-color: rgb(234, 103, 38);
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 1.1rem;
   font-family: 'Fredoka', sans-serif;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -179,72 +192,97 @@ body {
   background-color: rgb(255, 81, 1);
 }
 
-/* 🔽 RESPONSIVE DESIGN 🔽 */
-@media (max-width: 768px) {
+/* RESPONSIVE - BOOTSTRAP STYLE */
+
+/* lg - desktops */
+@media (max-width: 992px) {
   .form-container {
-    padding: 16px 20px;
-    gap: 16px;
-    border-radius: 18px;
+    padding: 1.8rem;
   }
 
   .title {
-    font-size: 2.6em;
-    padding: 10px 20px;
-  }
-
-  .registro-form label {
-    font-size: 1em;
-  }
-
-  .registro-form input,
-  .registro-form select {
-    font-size: 1em;
-    padding: 8px;
-  }
-
-  .guardar-btn {
-    font-size: 1.2em;
-    padding: 10px 0;
+    font-size: clamp(1.8rem, 5vw, 3rem);
   }
 
   .mago-img {
-    width: 240px;
-    right: 10px;
+    width: 280px;
   }
 
   .help-btn {
-    width: 58px;
-    height: 58px;
-    font-size: 1.7em;
+    width: 60px;
+    height: 60px;
+    font-size: 1.6rem;
   }
 
   .help-box {
-    max-width: 85%;
-    right: 10px;
-    font-size: 0.95em;
+    font-size: 0.95rem;
   }
 
   .back-button {
-    font-size: 1em;
+    font-size: 1rem;
     padding: 8px 12px;
   }
 }
 
-@media (max-width: 480px) {
+/* md - tablets */
+@media (max-width: 768px) {
   .form-container {
-    width: 92vw;
-    padding: 14px 18px;
-    gap: 14px;
+    width: 94%;
+    padding: 1.6rem;
+    gap: 1.2rem;
   }
 
   .title {
-    font-size: 2.2em;
-    padding: 8px 14px;
+    font-size: clamp(1.6rem, 6vw, 2.6rem);
+    padding: 0.8rem 1.5rem;
   }
 
   .guardar-btn {
-    font-size: 1em;
-    padding: 10px 0;
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+
+  .mago-img {
+    width: 220px;
+    right: 10px;
+  }
+
+  .help-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 1.4rem;
+  }
+
+  .back-button {
+    font-size: 0.95rem;
+  }
+}
+
+/* sm - phones */
+@media (max-width: 576px) {
+  .form-container {
+    width: 95%;
+    padding: 1.2rem;
+  }
+
+  .title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    padding: 0.6rem 1rem;
+  }
+
+  .registro-form label {
+    font-size: 0.95rem;
+  }
+
+  .registro-form input,
+  .registro-form select {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .guardar-btn {
+    font-size: 1rem;
+    padding: 10px;
   }
 
   .mago-img {
@@ -253,21 +291,22 @@ body {
   }
 
   .help-btn {
-    width: 52px;
-    height: 52px;
-    font-size: 1.5em;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
   }
 
   .help-box {
-    bottom: 80px;
-    font-size: 0.9em;
-    padding: 10px;
+    bottom: 70px;
+    right: 10px;
+    font-size: 0.9rem;
+    padding: 0.8rem;
   }
 
   .back-button {
-    font-size: 0.95em;
+    font-size: 0.9rem;
     padding: 6px 10px;
     top: 10px;
-    left: 15px;
+    left: 10px;
   }
 }
