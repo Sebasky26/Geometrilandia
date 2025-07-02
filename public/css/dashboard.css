@@ -146,8 +146,6 @@ body {
   padding: 10px;
 }
 
-
-
 .flip-card-back {
   transform: rotateY(180deg);
   background-color: #3949ab;
@@ -234,21 +232,19 @@ body {
   }
 }
 
-/* Mago animado, no bloquea clics */
+/* Mago animado */
 .mago-img {
   position: fixed;
   bottom: 10px;
   right: 50px;
-  width: 400px;
+  width: 300px;
   z-index: 10;
   animation: magoBounce 3s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes magoBounce {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
 
@@ -257,7 +253,7 @@ body {
   }
 }
 
-/* Cerrar sesión */
+/* Botón cerrar sesión */
 .logout-btn {
   position: fixed;
   top: 20px;
@@ -278,7 +274,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Botón de ayuda visible y funcional */
+/* Botón de ayuda */
 .help-btn {
   position: fixed;
   bottom: 10px;
@@ -315,4 +311,109 @@ body {
   z-index: 21;
   color: #5d4037;
   display: none;
+}
+
+/* 🔽 RESPONSIVE DESIGN 🔽 */
+@media (max-width: 768px) {
+  .modo-icono {
+    width: 70px;
+    height: 70px;
+  }
+
+  .flip-card {
+    height: 180px;
+  }
+
+  .flip-card-back p {
+    font-size: 0.85rem;
+  }
+
+  .flip-card-back button {
+    font-size: 0.9rem;
+    padding: 6px 14px;
+  }
+
+  .mago-img {
+    width: 250px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .logout-btn {
+    font-size: 1em;
+    padding: 8px 14px;
+  }
+
+  .help-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.6em;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .help-box {
+    max-width: 90%;
+    right: 5%;
+    bottom: 85px;
+    font-size: 0.95em;
+  }
+
+  .dashboard-container {
+    padding: 30px 10px 10px;
+  }
+
+  .title {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    padding: 14px 24px;
+  }
+
+  #welcomeMessage {
+    font-size: clamp(1rem, 4vw, 1.6rem);
+    padding: 8px 16px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 0 5px;
+  }
+
+  .stats-section {
+    width: 95%;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flip-card {
+    height: 160px;
+  }
+
+  .flip-card-back p {
+    font-size: 0.75rem;
+  }
+
+  .flip-card-back button {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .mago-img {
+    width: 180px;
+  }
+
+  .logout-btn {
+    font-size: 0.9em;
+    padding: 6px 12px;
+  }
+
+  .help-box {
+    font-size: 0.9em;
+    bottom: 80px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
 }
