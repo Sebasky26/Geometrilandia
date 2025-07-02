@@ -9,10 +9,10 @@ const figuras = [
   { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.png", color: "#fe970e", forma: "estrella", colorTexto: "naranja", genero: "la" },
   { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.png", color: "#fdd835", forma: "circulo", colorTexto: "amarillo", genero: "el" },
   { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.png", color: "#40e0d0", forma: "circulo", colorTexto: "turquesa", genero: "el" },
-  { nombre: "RECTANGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5", forma: "rectangulo", colorTexto: "azul", genero: "el" },
-  { nombre: "RECTANGULO VERDE", src: "/img/rectangulo_verde.png", color: "#43a047", forma: "rectangulo", colorTexto: "verde", genero: "el" },
+  { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5", forma: "rectangulo", colorTexto: "azul", genero: "el" },
+  { nombre: "RECTÁNGULO VERDE", src: "/img/rectangulo_verde.png", color: "#43a047", forma: "rectangulo", colorTexto: "verde", genero: "el" },
   { nombre: "CORAZON AZUL", src: "/img/corazon_azul.png", color: "#1e88e5", forma: "corazon", colorTexto: "azul", genero: "el" },
-  { nombre: "RECTANGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0", forma: "rectangulo", colorTexto: "turquesa", genero: "el" },
+  { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0", forma: "rectangulo", colorTexto: "turquesa", genero: "el" },
   { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.png", color: "#e53935", forma: "corazon", colorTexto: "rojo", genero: "el" },
   { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.png", color: "#43a047", forma: "triangulo", colorTexto: "verde", genero: "el" },
   { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#fe970e", forma: "triangulo", colorTexto: "naranja", genero: "el" },
@@ -38,15 +38,29 @@ document.querySelector(".content-box").insertBefore(mensaje, document.querySelec
 function hablar(texto) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
+
     const voces = window.speechSynthesis.getVoices();
-    const vozNatural = voces.find(v => v.name.includes("Google") || v.name.includes("Soledad")) || voces[0];
+
+    // Intenta seleccionar una voz más agradable (ajustable según navegador y SO)
+    const vozNatural = 
+      voces.find(v => v.name.includes("Google español")) ||
+      voces.find(v => v.name.includes("Microsoft Sabina")) ||
+      voces.find(v => v.lang === "es-ES") ||
+      voces[0];
+
     const msg = new SpeechSynthesisUtterance(texto);
     msg.voice = vozNatural;
     msg.lang = 'es-ES';
-    msg.rate = 0.85;
+    msg.volume = 1.0;   // volumen al máximo
+    msg.rate = 0.95;    // velocidad ligeramente reducida para claridad
+    msg.pitch = 1.1;    // un poco más agudo para sonar más cálido y alegre
+
     window.speechSynthesis.speak(msg);
+  } else {
+    console.warn("La síntesis de voz no es compatible con este navegador.");
   }
 }
+
 
 function actualizarFigura() {
   const figura = figurasMezcladas[indiceActual];

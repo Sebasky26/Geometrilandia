@@ -77,7 +77,7 @@
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         const music = document.getElementById('fondoLibre');
-        music.volume = 0.2; // volumen bajo
+        music.volume = 0.1; // volumen bajo
         music.play().catch((e) => {
             console.warn("Autoplay bloqueado, espera interacción del usuario.");
         });
@@ -89,10 +89,6 @@
         music.currentTime = 0;
     }
 });
-window.onload = function() {
-  hablar("¡Acerca una figura al lector y descubre que es!");
-};
-
 </script>
 
 </body>

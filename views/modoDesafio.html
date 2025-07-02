@@ -49,24 +49,7 @@
     <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
 
     <!-- Botón de prueba (solo para desarrollo) -->
-    <button
-      id="btnPrueba"
-      onclick="simularLectura()"
-      style="
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1000;
-        padding: 10px;
-        background: #ff5722;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      "
-    >
-      🧪 Simular Lectura
-    </button>
+
     <audio id="fondoDesafio" loop>
       <source src="/audio/desafio.mp3" type="audio/mpeg" />
     </audio>
@@ -75,7 +58,7 @@
 
       function iniciarMusicaFondo() {
         if (!music) return;
-        music.volume = 0.2;
+        music.volume = 0.06;
 
         // Intenta reproducir inmediatamente
         music.play().catch(() => {

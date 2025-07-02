@@ -1,83 +1,108 @@
-// Elementos de la interfaz
-const imgElement = document.getElementById("figuraImage");
-const nameElement = document.getElementById("figuraName");
-const displayElement = document.getElementById("figura-content");
-const feedback = document.getElementById("feedbackMessage");
-const detectSound = document.getElementById("detectSound");
-const instruction= document.getElementsById("instrucciones");
-const successSound = document.getElementById("successSound");
+  // FIGURAS
+  const figuras = [
+    { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.png", color: "#40e0d0", forma: "estrella", colorTexto: "turquesa", genero: "la" },
+    { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.png", color: "#1e88e5", forma: "cuadrado", colorTexto: "azul", genero: "el" },
+    { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rojo.png", color: "#e53935", forma: "cuadrado", colorTexto: "rojo", genero: "el" },
+    { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.png", color: "#fdd835", forma: "estrella", colorTexto: "amarilla", genero: "la" },
+    { nombre: "CORAZON VERDE", src: "/img/corazon_verde.png", color: "#43a047", forma: "corazon", colorTexto: "verde", genero: "el" },
+    { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png", color: "#fbc02d", forma: "cuadrado", colorTexto: "amarillo", genero: "el" },
+    { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.png", color: "#fe970e", forma: "estrella", colorTexto: "naranja", genero: "la" },
+    { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.png", color: "#fdd835", forma: "circulo", colorTexto: "amarillo", genero: "el" },
+    { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.png", color: "#40e0d0", forma: "circulo", colorTexto: "turquesa", genero: "el" },
+    { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5", forma: "rectángulo", colorTexto: "azul", genero: "el" },
+    { nombre: "RECTÁNGULO VERDE", src: "/img/rectangulo_verde.png", color: "#43a047", forma: "rectángulo", colorTexto: "verde", genero: "el" },
+    { nombre: "CORAZON AZUL", src: "/img/corazon_azul.png", color: "#1e88e5", forma: "corazon", colorTexto: "azul", genero: "el" },
+    { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0", forma: "rectángulo", colorTexto: "turquesa", genero: "el" },
+    { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.png", color: "#e53935", forma: "corazon", colorTexto: "rojo", genero: "el" },
+    { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.png", color: "#43a047", forma: "triángulo", colorTexto: "verde", genero: "el" },
+    { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#fe970e", forma: "triángulo", colorTexto: "naranja", genero: "el" },
+    { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.png", color: "#e53935", forma: "triángulo", colorTexto: "rojo", genero: "el" },
+    { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.png", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
+  ];
 
-// Estado inicial: imagen incógnita
-imgElement.alt = "Figura desconocida";
-nameElement.textContent = "";
-displayElement.classList.remove("success", "error");
-feedback.textContent = "";
+  // Elementos de la interfaz
+  const imgElement = document.getElementById("figuraImage");
+  const nameElement = document.getElementById("figuraName");
+  const displayElement = document.getElementById("figura-content");
+  const feedback = document.getElementById("feedbackMessage");
+  const detectSound = document.getElementById("detectSound");
+  const instruction = document.getElementById("instrucciones");
+  const successSound = document.getElementById("successSound");
 
-// Mostrar figura leída
-function mostrarFigura(nombre) {
-  const figura = figuras.find(f => f.nombre === nombre);
-  if (!figura) {
-    hablar(`Figura no reconocida`);
-    mostrarError("Figura no reconocida");
-    return;
+  // Voz
+  function hablar(texto) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance(texto);
+      msg.lang = 'es-ES';
+      msg.rate = 0.9;
+      msg.pitch = 1.1;
+      msg.volume = 1.0;
+      const voces = window.speechSynthesis.getVoices();
+      const vozSuave = voces.find(v => v.name.toLowerCase().includes("google") || v.name.toLowerCase().includes("soledad"));
+      if (vozSuave) msg.voice = vozSuave;
+      window.speechSynthesis.speak(msg);
+    }
   }
 
-  detectSound.currentTime = 0;
-  detectSound.play();
+  // Mostrar figura detectada
+  function mostrarFigura(nombre) {
+    const figura = figuras.find(f => f.nombre === nombre);
+    if (!figura) {
+      mostrarError("Figura no reconocida");
+      hablar("Figura no reconocida");
+      return;
+    }
 
-  imgElement.src = figura.src;
-  imgElement.alt = `Figura: ${figura.nombre}`;
-  nameElement.textContent = figura.nombre;
-  nameElement.style.color = figura.color;
+    detectSound.currentTime = 0;
+    detectSound.play();
 
-  displayElement.classList.remove("error");
-  displayElement.classList.add("success");
+    imgElement.src = figura.src;
+    imgElement.alt = `Figura: ${figura.nombre}`;
+    nameElement.textContent = figura.nombre;
+    nameElement.style.color = figura.color;
 
-  feedback.textContent = `¡Has detectado un ${figura.nombre}!`;
-  hablar(`¡Muy bien! ¡La figura es un ${figura.nombre}! y su color es ${figura.colorTexto}!`);
-  feedback.className = "feedback-message feedback-success show";
+    displayElement.classList.remove("error");
+    displayElement.classList.add("success");
 
-  successSound.currentTime = 0;
-  successSound.play();
+    feedback.textContent = `¡Has detectado un ${figura.nombre}!`;
+    feedback.className = "feedback-message feedback-success show";
 
-  setTimeout(() => {
-    feedback.classList.remove("show");
-  }, 3000);
-}
+    // Mensaje hablado
+    let mensaje = `Has detectado ${figura.genero || 'el'} ${figura.forma || figura.nombre}`;
+    if (figura.colorTexto) {
+      mensaje += ` de color ${figura.colorTexto}`;
+    }
+    hablar(mensaje);
 
-// Mostrar error
-function mostrarError(mensaje) {
-  imgElement.src = "/img/error.png";
-  imgElement.alt = "Error de figura";
-  nameElement.textContent = "";
-  displayElement.classList.remove("success");
-  displayElement.classList.add("error");
+    successSound.currentTime = 0;
+    successSound.play();
 
-  feedback.textContent = mensaje;
-  feedback.className = "feedback-message feedback-error show";
-
-  setTimeout(() => {
-    feedback.classList.remove("show");
-  }, 3000);
-}
-
-function hablar(texto) {
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const msg = new SpeechSynthesisUtterance(texto);
-    msg.lang = 'es-ES';
-    msg.rate = 0.85;
-    const voces = window.speechSynthesis.getVoices();
-    const vozSuave = voces.find(v => v.name.toLowerCase().includes("google") || v.name.toLowerCase().includes("soledad"));
-    if (vozSuave) msg.voice = vozSuave;
-    window.speechSynthesis.speak(msg);
+    setTimeout(() => {
+      feedback.classList.remove("show");
+    }, 3000);
   }
-}
 
-// WebSocket
-const socket = io();
+  // Mostrar error
+  function mostrarError(mensaje) {
+    imgElement.src = "/img/error.png";
+    imgElement.alt = "Error de figura";
+    nameElement.textContent = "";
+    displayElement.classList.remove("success");
+    displayElement.classList.add("error");
 
-socket.on("nuevaFigura", (nombre) => {
-  console.log("🟢 Figura detectada:", nombre);
-  mostrarFigura(nombre);
-});
+    feedback.textContent = mensaje;
+    feedback.className = "feedback-message feedback-error show";
+
+    setTimeout(() => {
+      feedback.classList.remove("show");
+    }, 3000);
+  }
+
+  // WebSocket
+  const socket = io();
+
+  socket.on("nuevaFigura", (nombre) => {
+    console.log("🟢 Figura detectada:", nombre);
+    mostrarFigura(nombre);
+  });
