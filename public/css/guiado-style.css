@@ -160,3 +160,112 @@ body {
         transform: translateY(-8px);
     }
 }
+
+/* Responsive Design para Modo Guiado */
+
+/* Tablets grandes y PC */
+@media (min-width: 1024px) {
+.instruction-text {
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+}
+
+.stars {
+    font-size: 2.2rem;
+}
+
+.figura-img {
+    max-width: 280px;
+}
+
+.content-box {
+    padding: 50px 30px;
+}
+}
+
+/* Tablets medianos */
+@media (max-width: 1023px) {
+.back-button {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+}
+
+.stars {
+    font-size: 1.8rem;
+}
+
+.progress-container {
+    height: 25px;
+}
+
+.instruction-text {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+}
+
+.figura-img {
+    max-width: 220px;
+}
+
+.content-box {
+    padding: 30px 20px;
+}
+}
+
+/* Móviles grandes */
+@media (max-width: 767px) {
+.stars {
+    font-size: 1.5rem;
+}
+
+.progress-container {
+    height: 20px;
+}
+
+.instruction-text {
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
+}
+
+.figura-img {
+    max-width: 180px;
+}
+
+.mago-img {
+    width: min(180px, 25vw);
+    bottom: -5px;
+    right: -5px;
+}
+
+.top-bar {
+    padding: 0 15px;
+}
+
+.content-box {
+    padding: 25px 15px;
+    gap: 16px;
+}
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+.stars {
+    font-size: 1.3rem;
+    gap: 8px;
+}
+
+.instruction-text {
+    font-size: clamp(1rem, 4.5vw, 1.5rem);
+}
+
+.figura-img {
+    max-width: 150px;
+}
+
+.content-box {
+    padding: 20px 10px;
+    gap: 14px;
+}
+
+.back-button {
+    font-size: 1rem;
+    padding: 6px 12px;
+}
+}
