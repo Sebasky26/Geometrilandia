@@ -5,7 +5,7 @@ const figuras = [
   { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.png", color: "#fdd835" },
   { nombre: "CORAZON VERDE", src: "/img/corazon_verde.png", color: "#43a047" },
   { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png", color: "#fbc02d" },
-  { nombre: "ESTRELLA MARRON", src: "/img/estrella_marron.png", color: "#8d6e63" },
+  { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.png", color: "#8d6e63" },
   { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.png", color: "#fdd835" },
   { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.png", color: "#40e0d0" },
   { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5" },
@@ -14,9 +14,9 @@ const figuras = [
   { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0" },
   { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.png", color: "#e53935" },
   { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.png", color: "#43a047" },
-  { nombre: "TRIANGULO MARRON", src: "/img/triangulo_marron.png", color: "#8d6e63" },
+  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#8d6e63" },
   { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.png", color: "#e53935" },
-  { nombre: "CIRCULO MARRON", src: "/img/circulo_marron.png", color: "#8d6e63" }
+  { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.png", color: "#8d6e63" }
 ];
 
 
