@@ -1,4 +1,3 @@
-// FIGURAS
 const figuras = [
   { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.png", color: "#40e0d0", forma: "estrella", colorTexto: "turquesa", genero: "la" },
   { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.png", color: "#1e88e5", forma: "cuadrado", colorTexto: "azul", genero: "el" },
@@ -21,8 +20,7 @@ const figuras = [
 ];
 
 function obtenerDiezAleatorias(array) {
-  const mezclado = array.sort(() => Math.random() - 0.5);
-  return mezclado.slice(0, 10);
+  return array.sort(() => Math.random() - 0.5).slice(0, 10);
 }
 
 let figurasMezcladas = obtenerDiezAleatorias([...figuras]);
@@ -35,14 +33,11 @@ const mensaje = document.createElement("p");
 mensaje.className = "instruction-text";
 document.querySelector(".content-box").insertBefore(mensaje, document.querySelector(".figura-display"));
 
-function hablar(texto) {
+function hablarConRetardo(texto, callback = null) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
-
     const voces = window.speechSynthesis.getVoices();
-
-    // Intenta seleccionar una voz más agradable (ajustable según navegador y SO)
-    const vozNatural = 
+    const vozNatural =
       voces.find(v => v.name.includes("Google español")) ||
       voces.find(v => v.name.includes("Microsoft Sabina")) ||
       voces.find(v => v.lang === "es-ES") ||
@@ -51,22 +46,27 @@ function hablar(texto) {
     const msg = new SpeechSynthesisUtterance(texto);
     msg.voice = vozNatural;
     msg.lang = 'es-ES';
-    msg.volume = 1.0;   // volumen al máximo
-    msg.rate = 0.95;    // velocidad ligeramente reducida para claridad
-    msg.pitch = 1.1;    // un poco más agudo para sonar más cálido y alegre
+    msg.volume = 1.0;
+    msg.rate = 0.95;
+    msg.pitch = 1.1;
+
+    if (callback) {
+      msg.onend = () => {
+        setTimeout(callback, 300); // Pequeña pausa después de hablar
+      };
+    }
 
     window.speechSynthesis.speak(msg);
   } else {
-    console.warn("La síntesis de voz no es compatible con este navegador.");
+    if (callback) setTimeout(callback, 2000);
   }
 }
-
 
 function actualizarFigura() {
   const figura = figurasMezcladas[indiceActual];
   img.src = figura.src;
   img.alt = `Figura ${figura.nombre}`;
-  progress.style.width = `${((indiceActual) / figurasMezcladas.length) * 100}%`;
+  progress.style.width = `${(indiceActual / figurasMezcladas.length) * 100}%`;
 
   const esFemenino = figura.genero === "la";
   const esteEsta = esFemenino ? "Esta" : "Este";
@@ -76,101 +76,116 @@ function actualizarFigura() {
   mensaje.innerHTML = `${esteEsta} es ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>. Acerca${loLa} a la caja para que te ${loLa} lea.`;
   mensaje.style.color = "#ffffff";
 
-  hablar(texto);
+  hablarConRetardo(texto);
   actualizarEstrellas();
 }
 
-function mostrarMensaje(texto, color, temporal = false, repetir = true) {
-  mensaje.textContent = texto;
-  mensaje.style.color = color;
-  hablar(texto);
-
-  if (temporal) {
-    setTimeout(() => {
-      if (indiceActual < figurasMezcladas.length) {
-        const figura = figurasMezcladas[indiceActual];
-        const esFemenino = figura.genero === "la";
-        const esteEsta = esFemenino ? "Esta" : "Este";
-        const loLa = esFemenino ? "la" : "lo";
-
-        mensaje.innerHTML = `${esteEsta} es ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>. Acérca${loLa} a la caja para que te ${loLa} lea.`;
-        mensaje.style.color = "#ffffff";
-
-        if (repetir) {
-          const texto = `${esteEsta} es ${figura.genero} ${figura.forma} ${figura.colorTexto}. Acerca${loLa} a la caja para que te ${loLa} lea.`;
-          hablar(texto);
-        }
-      }
-    }, 3000);
-  }
-}
-
-
-function marcarEstrella() {
-  const total = figurasMezcladas.length;
-  const completado = indiceActual;
-  const progreso = completado / total;
+function actualizarEstrellas() {
+  const progreso = indiceActual / figurasMezcladas.length;
   const totalEstrellas = stars.length;
-
   stars.forEach((estrella, i) => {
     const umbral = (i + 1) / totalEstrellas;
     estrella.classList.toggle("active", progreso >= umbral);
   });
 }
 
-function actualizarEstrellas() {
-  marcarEstrella();
-}
-
-function verificarFigura(nombre) {
+function verificarFigura(nombreDetectado) {
   const figuraEsperada = figurasMezcladas[indiceActual];
+  const figuraMostrada = figuras.find(f => f.nombre === nombreDetectado);
 
-  if (nombre === figuraEsperada.nombre) {
-    mostrarMensaje("¡Muy bien! Lo hiciste excelente", "#00e676", true);
-    indiceActual++;
+  if (nombreDetectado === figuraEsperada.nombre) {
+    const texto = "¡Correcto, lo hiciste muy bien! ¡Sigue así!";
+    mensaje.textContent = texto;
+    mensaje.style.color = "#00e676";
+    hablarConRetardo(texto, () => {
+      indiceActual++;
+      if (indiceActual < figurasMezcladas.length) {
+        actualizarFigura();
+      } else {
+        finalizarJuego();
+      }
+    });
+  } else if (figuraMostrada) {
+    const articulo = figuraMostrada.genero === "la" ? "una" : "un";
+    const texto = `Lo siento, esta es la figura incorrecta. La figura mostrada es ${articulo} ${figuraMostrada.forma} ${figuraMostrada.colorTexto}.`;
+    mensaje.textContent = texto;
+    mensaje.style.color = "#ff1744";
 
-    if (indiceActual < figurasMezcladas.length) {
-      setTimeout(actualizarFigura, 3500);
-    } else {
-      img.src = "/img/finalizado.png";
-      img.alt = "Juego completado";
-      img.style.maxWidth = "280px";
-      img.style.width = "80%";
-      img.style.marginTop = "20px";
-      img.style.borderRadius = "20px";
-      img.style.boxShadow = "0 6px 20px rgba(0,0,0,0.3)";
-      mensaje.textContent = "¡Felicidades! Completaste todas las figuras";
-      mensaje.style.color = "#00e676";
-      hablar("Felicidades! Completaste todas las figuras");
-      progress.style.width = "100%";
-      actualizarEstrellas();
-    }
+    const imagenCorrecta = figurasMezcladas[indiceActual].src;
+    const altCorrecto = figurasMezcladas[indiceActual].nombre;
+
+    img.src = figuraMostrada.src;
+    img.alt = figuraMostrada.nombre;
+
+    hablarConRetardo(texto, () => {
+      img.src = imagenCorrecta;
+      img.alt = altCorrecto;
+      actualizarFigura(); // Refuerza la instrucción original
+    });
   } else {
-    mostrarMensaje("Ups, intenta otra vez. Tú puedes hacerlo mejor", "#ff1744", true);
+    const texto = "Figura no reconocida.";
+    mensaje.textContent = texto;
+    mensaje.style.color = "#ff1744";
+    hablarConRetardo(texto);
   }
 }
+
+function finalizarJuego() {
+  img.src = "/img/finalizado.png";
+  img.alt = "Juego completado";
+  img.style.maxWidth = "280px";
+  img.style.width = "80%";
+  img.style.marginTop = "20px";
+  img.style.borderRadius = "20px";
+  img.style.boxShadow = "0 6px 20px rgba(0,0,0,0.3)";
+  mensaje.textContent = "¡Felicidades! Completaste todas las figuras";
+  mensaje.style.color = "#00e676";
+  hablarConRetardo("Felicidades, completaste todas las figuras");
+  progress.style.width = "100%";
+  actualizarEstrellas();
+}
+
+function obtenerNombreIncorrecto(nombreCorrecto) {
+  const otras = figuras.filter(f => f.nombre !== nombreCorrecto);
+  return otras[Math.floor(Math.random() * otras.length)].nombre;
+}
+
+/*
+function simularJuego() {
+  indiceActual = 0;
+  figurasMezcladas = obtenerDiezAleatorias([...figuras]);
+  actualizarFigura();
+
+  function intentarFigura() {
+    if (indiceActual >= figurasMezcladas.length) return;
+
+    const figuraActual = figurasMezcladas[indiceActual];
+    const acierta = Math.random() > 0.4;
+    const nombreSimulado = acierta
+      ? figuraActual.nombre
+      : obtenerNombreIncorrecto(figuraActual.nombre);
+
+    verificarFigura(nombreSimulado);
+  }
+
+  const intervalo = setInterval(() => {
+    if (indiceActual >= figurasMezcladas.length) {
+      clearInterval(intervalo);
+    } else if (!window.speechSynthesis.speaking) {
+      intentarFigura();
+    }
+  }, 500);
+}
+*/
 
 window.addEventListener("DOMContentLoaded", () => {
   actualizarFigura();
 
-  // Animación visual a la imagen
-  img.style.transition = "transform 0.3s ease, filter 0.3s ease";
-  img.style.display = "block";
-  img.style.margin = "0 auto";
-  img.style.border = "none";
-  img.style.background = "none";
-  img.style.boxShadow = "none";
-
-  img.addEventListener("mouseenter", () => {
-    img.style.transform = "scale(1.05)";
-    img.style.filter = "drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4))";
-  });
-
-  img.addEventListener("mouseleave", () => {
-    img.style.transform = "scale(1)";
-    img.style.filter = "none";
-  });
-
+  const btnSimular = document.createElement("button");
+  btnSimular.textContent = "Simular Juego Automático";
+  btnSimular.style = "margin-top:20px; padding:10px 20px; font-size:16px;";
+  document.querySelector(".content-box").appendChild(btnSimular);
+  btnSimular.addEventListener("click", simularJuego);
 
   const socket = io();
   socket.on("nuevaFigura", (nombre) => {
