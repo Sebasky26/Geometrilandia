@@ -45,43 +45,54 @@
     }
   }
 
-  // Mostrar figura detectada
+
   function mostrarFigura(nombre) {
-    const figura = figuras.find(f => f.nombre === nombre);
-    if (!figura) {
-      mostrarError("Figura no reconocida");
-      hablar("Figura no reconocida");
-      return;
-    }
-
-    detectSound.currentTime = 0;
-    detectSound.play();
-
-    imgElement.src = figura.src;
-    imgElement.alt = `Figura: ${figura.nombre}`;
-    nameElement.textContent = figura.nombre;
-    nameElement.style.color = figura.color;
-
-    displayElement.classList.remove("error");
-    displayElement.classList.add("success");
-
-    feedback.textContent = `¡Has detectado un ${figura.nombre}!`;
-    feedback.className = "feedback-message feedback-success show";
-
-    // Mensaje hablado
-    let mensaje = `Has detectado ${figura.genero || 'el'} ${figura.forma || figura.nombre}`;
-    if (figura.colorTexto) {
-      mensaje += ` de color ${figura.colorTexto}`;
-    }
-    hablar(mensaje);
-
-    successSound.currentTime = 0;
-    successSound.play();
-
-    setTimeout(() => {
-      feedback.classList.remove("show");
-    }, 3000);
+  const figura = figuras.find(f => f.nombre === nombre);
+  if (!figura) {
+    mostrarError("Figura no reconocida");
+    hablar("Figura no reconocida");
+    return;
   }
+
+  detectSound.currentTime = 0;
+  detectSound.play();
+
+  // Mostrar figura detectada
+  imgElement.src = figura.src;
+  imgElement.alt = `Figura: ${figura.nombre}`;
+  nameElement.textContent = figura.nombre;
+  nameElement.style.color = figura.color;
+
+  displayElement.classList.remove("error");
+  displayElement.classList.add("success");
+
+  // Retroalimentación visual y hablada
+  feedback.textContent = `¡Excelente! Has detectado ${figura.genero} ${figura.forma} de color ${figura.colorTexto}.`;
+  feedback.className = "feedback-message feedback-success show";
+
+  let mensaje = `Has detectado ${figura.genero || 'el'} ${figura.forma || figura.nombre}`;
+  if (figura.colorTexto) mensaje += ` de color ${figura.colorTexto}`;
+  hablar(mensaje);
+
+  successSound.currentTime = 0;
+  successSound.play();
+
+  // Volver a incógnita tras 3.5s
+  setTimeout(() => {
+    feedback.classList.remove("show");
+    resetFigura();
+  }, 3000);
+}
+
+// Función auxiliar para volver a la figura de incógnita
+function resetFigura() {
+  imgElement.src = "/img/incognita.png";
+  imgElement.alt = "Figura desconocida";
+  nameElement.textContent = "";
+  nameElement.style.color = "#000"; // color neutro
+  displayElement.classList.remove("success", "error");
+}
+
 
   // Mostrar error
   function mostrarError(mensaje) {
@@ -98,7 +109,6 @@
       feedback.classList.remove("show");
     }, 3000);
   }
-
   // WebSocket
   const socket = io();
 
