@@ -110,6 +110,75 @@ body {
   transition: width 0.3s ease-in-out;
 }
 
+/* Contenedor principal en 2 columnas para el contador y area de juego */
+.layout-juego {
+  display: flex;
+  width: 100%;
+  height: calc(100% - 200px); /* ajustar si tienes margen arriba */
+  padding: 20px;
+  gap: 10px;
+}
+
+/* Columna izquierda: contador */
+.columna-contador {
+  flex: 1;
+  max-width: 17%;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-top: 30px;
+}
+
+/* Estilo del contador */
+.contador-tiempo {
+  background-color: #6e53b7f9;
+  color: white;
+  border-radius: 25px;
+  padding: 40px 20px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: "MiFuentePersonalizada", sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1.5rem);
+}
+
+/* Imagen de reloj debajo del contador */
+.reloj {
+  width: clamp(180px, 20vw, 250px);
+  height: auto;
+  animation: relojBounce 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes relojBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Columna derecha: área de juego */
+.columna-juego {
+  flex: 3;
+  max-width: 70%;
+}
+.message-time {
+  font-family: "MiFuentePersonalizada", sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1.5rem);
+  line-height: 1.3;
+  color: #fff;
+  background-color: #6e53b7f9;
+}
+
 /* Área del juego */
 .game-area {
   display: flex;
@@ -142,27 +211,46 @@ body {
 
 .figura-display {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  margin-top: 10px;
 }
 
 .figura-img {
-  max-width: 250px;
+  max-width: 100px;
+  max-height: 200px;
   width: 100%;
   height: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
+  cursor: pointer;
+  border: 4px solid transparent;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .figura-img:hover {
   transform: scale(1.05);
+  border-color: #fff176;
+}
+
+@media (max-width: 300px) {
+  .figura-img {
+    max-width: 60px;
+  }
+
+  .figura-display {
+    gap: 12px;
+  }
 }
 
 /* Mago */
 .mago-img {
   position: absolute;
   bottom: 0;
-  right: 40px;
+  right: 1px;
   width: clamp(250px, 25vw, 450px);
   height: auto;
   animation: magoBounce 3s ease-in-out infinite;
@@ -250,14 +338,16 @@ body {
   z-index: 1000;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: 4px solid #fff;
-  width: 100%;
-  max-width: 440px;
-  min-width: 260px;
+  width: 90%;
+  max-width: 600px; /* Se adapta mejor a pantallas más anchas */
+  min-width: 280px;
+  max-height: 400px;
+  min-height: 280px;
   border-radius: 25px;
-  padding: 32px 28px;
+  padding: 3vh 3vw;
   margin: 0 auto;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
-  animation: resultadoPop 0.5s;
+  animation: resultadoPop 0.5s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -265,7 +355,7 @@ body {
 
 @keyframes resultadoPop {
   0% {
-    transform: scale(0.8);
+    transform: scale(0.85);
     opacity: 0;
   }
   60% {
@@ -287,54 +377,45 @@ body {
 
 .resultado-titulo {
   font-family: "MiFuentePersonalizada", sans-serif;
-  font-size: clamp(2rem, 6vw, 2.5rem);
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
   color: white;
-  margin-bottom: 18px;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
+  margin-bottom: 1rem;
   text-align: center;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .resultado-texto {
   font-family: "Fredoka", sans-serif;
-  font-size: clamp(1.1rem, 4vw, 1.3rem);
+  font-size: clamp(1rem, 3.5vw, 1.4rem);
   color: white;
-  margin-bottom: 22px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  line-height: 1.4;
+  margin-bottom: 1.5rem;
   text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .resultado-stats {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 15px;
-  padding: 16px 10px;
-  margin-bottom: 22px;
-  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
   width: 100%;
-  max-width: 340px;
+  max-width: 90%;
 }
 
 .stat-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: clamp(1rem, 3vw, 1.1rem);
+  margin-bottom: 0.75rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   color: white;
 }
 
-.stat-item:last-child {
-  margin-bottom: 0;
-}
-
 .stat-label {
-  font-weight: bold;
-  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
 }
 
 .stat-value {
-  font-size: clamp(1.1rem, 3vw, 1.2rem);
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -342,63 +423,44 @@ body {
 /* Botones alineados horizontalmente SIEMPRE */
 .resultado-botones {
   display: flex;
-  flex-direction: row !important;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 0;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
 }
 
 .btn-reiniciar,
 .btn-menu {
-  font-size: clamp(1.1rem, 4vw, 1.2rem);
-  padding: 14px 0;
+  font-family: "MiFuentePersonalizada", sans-serif;
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  padding: 0.8em 1.5em;
   border-radius: 18px;
   border: none;
-  outline: none;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
   font-weight: bold;
-  letter-spacing: 1px;
-  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
-  font-family: "MiFuentePersonalizada", sans-serif;
+  transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  min-width: 140px;
-  max-width: 180px;
-  width: 45%;
-  margin: 0;
+  width: clamp(120px, 40%, 180px);
   text-align: center;
-}
-
-.btn-reiniciar:focus,
-.btn-menu:focus {
-  outline: 3px solid #ffd000;
-  outline-offset: 2px;
-  box-shadow: 0 0 0 6px rgba(255, 208, 0, 0.25);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn-reiniciar {
   background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-  color: white;
 }
 
 .btn-reiniciar:hover {
   background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
 }
 
 .btn-menu {
   background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  color: white;
 }
 
 .btn-menu:hover {
   background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
 }
 
 /* Responsive Design Mejorado */

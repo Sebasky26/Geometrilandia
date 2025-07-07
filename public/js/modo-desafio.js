@@ -1,63 +1,243 @@
 const figuras = [
-  { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.png", color: "#40e0d0" },
-  { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.png", color: "#1e88e5" },
-  { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rojo.png", color: "#e53935" },
-  { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.png", color: "#fdd835" },
-  { nombre: "CORAZON VERDE", src: "/img/corazon_verde.png", color: "#43a047" },
-  { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.png", color: "#fbc02d" },
-  { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.png", color: "#fe970e" },
-  { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.png", color: "#fdd835" },
-  { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.png", color: "#40e0d0" },
-  { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.png", color: "#1e88e5" },
-  { nombre: "RECTÁNGULO VERDE", src: "/img/rectangulo_verde.png", color: "#43a047" },
-  { nombre: "CORAZON AZUL", src: "/img/corazon_azul.png", color: "#1e88e5" },
-  { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.png", color: "#40e0d0" },
-  { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.png", color: "#e53935" },
-  { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.png", color: "#43a047" },
-  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.png", color: "#fe970e" },
-  { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.png", color: "#e53935" },
-  { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.png", color: "#fe970e" }
+  {
+    nombre: "ESTRELLA TURQUESA",
+    src: "/img/estrella_turquesa.png",
+    color: "#40e0d0",
+    forma: "estrella",
+    colorTexto: "turquesa",
+    genero: "la",
+  },
+  {
+    nombre: "CUADRADO AZUL",
+    src: "/img/cuadrado_azul.png",
+    color: "#1e88e5",
+    forma: "cuadrado",
+    colorTexto: "azul",
+    genero: "el",
+  },
+  {
+    nombre: "CUADRADO ROJO",
+    src: "/img/cuadrado_rojo.png",
+    color: "#e53935",
+    forma: "cuadrado",
+    colorTexto: "rojo",
+    genero: "el",
+  },
+  {
+    nombre: "ESTRELLA AMARILLA",
+    src: "/img/estrella_amarilla.png",
+    color: "#fdd835",
+    forma: "estrella",
+    colorTexto: "amarilla",
+    genero: "la",
+  },
+  {
+    nombre: "CORAZON VERDE",
+    src: "/img/corazon_verde.png",
+    color: "#43a047",
+    forma: "corazon",
+    colorTexto: "verde",
+    genero: "el",
+  },
+  {
+    nombre: "CUADRADO AMARILLO",
+    src: "/img/cuadrado_amarillo.png",
+    color: "#fbc02d",
+    forma: "cuadrado",
+    colorTexto: "amarillo",
+    genero: "el",
+  },
+  {
+    nombre: "ESTRELLA NARANJA",
+    src: "/img/estrella_naranja.png",
+    color: "#fe970e",
+    forma: "estrella",
+    colorTexto: "naranja",
+    genero: "la",
+  },
+  {
+    nombre: "CIRCULO AMARILLO",
+    src: "/img/circulo_amarillo.png",
+    color: "#fdd835",
+    forma: "circulo",
+    colorTexto: "amarillo",
+    genero: "el",
+  },
+  {
+    nombre: "CIRCULO TURQUESA",
+    src: "/img/circulo_turquesa.png",
+    color: "#40e0d0",
+    forma: "circulo",
+    colorTexto: "turquesa",
+    genero: "el",
+  },
+  {
+    nombre: "RECTÁNGULO AZUL",
+    src: "/img/rectangulo_azul.png",
+    color: "#1e88e5",
+    forma: "rectangulo",
+    colorTexto: "azul",
+    genero: "el",
+  },
+  {
+    nombre: "RECTÁNGULO VERDE",
+    src: "/img/rectangulo_verde.png",
+    color: "#43a047",
+    forma: "rectangulo",
+    colorTexto: "verde",
+    genero: "el",
+  },
+  {
+    nombre: "CORAZON AZUL",
+    src: "/img/corazon_azul.png",
+    color: "#1e88e5",
+    forma: "corazon",
+    colorTexto: "azul",
+    genero: "el",
+  },
+  {
+    nombre: "RECTÁNGULO TURQUESA",
+    src: "/img/rectangulo_turquesa.png",
+    color: "#40e0d0",
+    forma: "rectangulo",
+    colorTexto: "turquesa",
+    genero: "el",
+  },
+  {
+    nombre: "CORAZON ROJO",
+    src: "/img/corazon_rojo.png",
+    color: "#e53935",
+    forma: "corazon",
+    colorTexto: "rojo",
+    genero: "el",
+  },
+  {
+    nombre: "TRIANGULO VERDE",
+    src: "/img/triangulo_verde.png",
+    color: "#43a047",
+    forma: "triangulo",
+    colorTexto: "verde",
+    genero: "el",
+  },
+  {
+    nombre: "TRIANGULO NARANJA",
+    src: "/img/triangulo_naranja.png",
+    color: "#fe970e",
+    forma: "triangulo",
+    colorTexto: "naranja",
+    genero: "el",
+  },
+  {
+    nombre: "TRIANGULO ROJO",
+    src: "/img/triangulo_rojo.png",
+    color: "#e53935",
+    forma: "triangulo",
+    colorTexto: "rojo",
+    genero: "el",
+  },
+  {
+    nombre: "CIRCULO NARANJA",
+    src: "/img/circulo_naranja.png",
+    color: "#fe970e",
+    forma: "circulo",
+    colorTexto: "naranja",
+    genero: "el",
+  },
 ];
 
+// Variables globales
+let tiempoRestante = 15; // Tiempo en segundos
+let intervaloTemporizador = null;
 
-// Estado del juego
 let gameState = {
   vidas: 3,
   aciertos: 0,
-  figuraActual: null,
+  figurasMostradas: [],
+  figuraObjetivo: null,
   juegoActivo: true,
   socket: null,
   tiempoInicio: null,
 };
 
-// Función para obtener figura aleatoria
-function getFiguraAleatoria() {
-  const indiceAleatorio = Math.floor(Math.random() * figuras.length);
-  return figuras[indiceAleatorio];
+// Logica para manejar el conteo regresivo del temporizador
+function iniciarTemporizador() {
+  clearInterval(intervaloTemporizador);
+  tiempoRestante = 15;
+  actualizarContadorVisual();
+
+  intervaloTemporizador = setInterval(() => {
+    tiempoRestante--;
+    actualizarContadorVisual();
+
+    if (tiempoRestante <= 0) {
+      clearInterval(intervaloTemporizador);
+      manejarTiempoAgotado();
+    }
+  }, 1000);
 }
 
-// Función para mostrar nueva figura
+function actualizarContadorVisual() {
+  const contador = document.getElementById("contadorTiempo");
+  if (contador) contador.textContent = tiempoRestante;
+}
+
+function manejarTiempoAgotado() {
+  console.log("⏰ Tiempo agotado");
+  gameState.vidas--;
+  mostrarFeedback("¡Se acabó el tiempo! ⏳", "error");
+  actualizarVidas();
+
+  if (gameState.vidas <= 0) {
+    mostrarPantallaDerrota();
+  } else {
+    setTimeout(() => {
+      mostrarNuevaFigura();
+    }, 1500);
+  }
+}
+
+function getFigurasAleatorias(cantidad) {
+  const copia = [...figuras];
+  const seleccionadas = [];
+  while (seleccionadas.length < cantidad && copia.length > 0) {
+    const indice = Math.floor(Math.random() * copia.length);
+    seleccionadas.push(copia.splice(indice, 1)[0]);
+  }
+  return seleccionadas;
+}
+
 function mostrarNuevaFigura() {
   if (!gameState.juegoActivo) return;
 
-  gameState.figuraActual = getFiguraAleatoria();
+  const figurasAleatorias = getFigurasAleatorias(3);
+  gameState.figurasMostradas = figurasAleatorias;
+  const indiceObjetivo = Math.floor(Math.random() * 3);
+  const figuraObjetivo = figurasAleatorias[indiceObjetivo];
+  gameState.figuraObjetivo = figuraObjetivo;
+
   const display = document.getElementById("figuraDisplay");
-  display.innerHTML = `
-    <img src="${gameState.figuraActual.src}" class="figura-img" alt="${gameState.figuraActual.nombre}" />
-  `;
+  display.innerHTML = figurasAleatorias
+    .map(
+      (figura) => `
+    <img src="${figura.src}" 
+         class="figura-img" 
+         alt="${figura.nombre}" 
+         data-nombre="${figura.nombre}" />
+  `
+    )
+    .join("");
 
-  // Actualizar texto de instrucción
   const instructionText = document.querySelector(".instruction-text");
-  instructionText.textContent = `¡Encuentra: ${gameState.figuraActual.nombre}!`;
+  instructionText.textContent = `¡Encuentra: ${figuraObjetivo.nombre}!`;
 
-  console.log(`🎯 Nueva figura a encontrar: ${gameState.figuraActual.nombre}`);
+  console.log(`🎯 Nueva figura objetivo: ${figuraObjetivo.nombre}`);
+
+  iniciarTemporizador();
 }
 
-// Función para actualizar vidas en la UI
 function actualizarVidas() {
   const vidasContainer = document.getElementById("vidasContainer");
   if (!vidasContainer) {
-    // Crear contenedor de vidas si no existe
     const topBar = document.querySelector(".top-bar");
     const vidasDiv = document.createElement("div");
     vidasDiv.id = "vidasContainer";
@@ -65,12 +245,10 @@ function actualizarVidas() {
     vidasDiv.innerHTML = "❤️❤️❤️";
     topBar.appendChild(vidasDiv);
   } else {
-    // Actualizar vidas existentes
     vidasContainer.innerHTML = "❤️".repeat(gameState.vidas);
   }
 }
 
-// Función para actualizar estrellas
 function actualizarEstrellas() {
   const stars = document.querySelectorAll(".star");
   stars.forEach((star, index) => {
@@ -82,206 +260,145 @@ function actualizarEstrellas() {
   });
 }
 
-// Función para actualizar barra de progreso
 function actualizarProgreso() {
   const progress = document.getElementById("progressBar");
   const percent = (gameState.aciertos / 5) * 100;
   progress.style.width = percent + "%";
 }
 
-// Función para procesar respuesta correcta
 function respuestaCorrecta() {
+  clearInterval(intervaloTemporizador);
+  console.log("🎉 Respuesta correcta");
   gameState.aciertos++;
   console.log(`✅ ¡Correcto! Aciertos: ${gameState.aciertos}/5`);
-
-  // Mostrar feedback positivo
   mostrarFeedback("¡Correcto! 🎉", "success");
-
   actualizarEstrellas();
   actualizarProgreso();
 
-  // Verificar si ganó
   if (gameState.aciertos >= 5) {
-    setTimeout(() => {
-      mostrarPantallaVictoria();
-    }, 1500);
+    setTimeout(() => mostrarPantallaVictoria(), 1500);
   } else {
-    // Mostrar siguiente figura después de un delay
-    setTimeout(() => {
-      mostrarNuevaFigura();
-    }, 2000);
+    setTimeout(() => mostrarNuevaFigura(), 2000);
   }
 }
 
-// Función para procesar respuesta incorrecta
 function respuestaIncorrecta(figuraDetectada) {
   gameState.vidas--;
   console.log(`❌ Incorrecto. Vidas restantes: ${gameState.vidas}`);
-
-  // Mostrar feedback negativo
   mostrarFeedback(
-    `Incorrecto 😞<br>Era: ${gameState.figuraActual.nombre}`,
+    `Incorrecto 😞<br>Era: ${gameState.figuraObjetivo.nombre}`,
     "error"
   );
-
   actualizarVidas();
 
-  // Verificar si perdió
   if (gameState.vidas <= 0) {
-    setTimeout(() => {
-      mostrarPantallaDerrota();
-    }, 1500);
+    setTimeout(() => mostrarPantallaDerrota(), 1500);
   } else {
-    // Mostrar la misma figura después de un delay
     setTimeout(() => {
       const instructionText = document.querySelector(".instruction-text");
-      instructionText.textContent = `¡Encuentra: ${gameState.figuraActual.nombre}!`;
+      instructionText.textContent = `¡Encuentra: ${gameState.figuraObjetivo.nombre}!`;
     }, 2000);
   }
 }
 
-// Función para mostrar feedback temporal
 function mostrarFeedback(mensaje, tipo) {
-  // Remover feedback anterior si existe
-  const feedbackAnterior = document.querySelector(".feedback-temporal");
-  if (feedbackAnterior) {
-    feedbackAnterior.remove();
-  }
+  const anterior = document.querySelector(".feedback-temporal");
+  if (anterior) anterior.remove();
 
   const feedback = document.createElement("div");
   feedback.className = `feedback-temporal ${tipo}`;
   feedback.innerHTML = mensaje;
 
-  const gameArea = document.querySelector(".game-area");
-  gameArea.appendChild(feedback);
-
-  // Remover después de 2 segundos
-  setTimeout(() => {
-    if (feedback.parentNode) {
-      feedback.remove();
-    }
-  }, 2000);
+  document.querySelector(".game-area").appendChild(feedback);
+  setTimeout(() => feedback.remove(), 2000);
 }
 
-// Función para mostrar pantalla de victoria
 function mostrarPantallaVictoria() {
   gameState.juegoActivo = false;
-
-  // Guardar resultado
   guardarResultadoFinal();
-
   const gameArea = document.querySelector(".game-area");
   gameArea.innerHTML = `
     <div class="content-box resultado-box victoria">
       <h2 class="resultado-titulo">¡FELICIDADES! 🎉</h2>
       <p class="resultado-texto">¡Has completado el desafío!</p>
       <div class="resultado-stats">
-        <div class="stat-item">
-          <span class="stat-label">Estrellas obtenidas:</span>
-          <span class="stat-value">⭐⭐⭐⭐⭐</span>
-        </div>
+        <div class="stat-item"><span class="stat-label">Estrellas obtenidas:</span><span class="stat-value">⭐⭐⭐⭐⭐</span></div>
       </div>
       <div class="resultado-botones">
         <button class="btn-reiniciar" onclick="reiniciarJuego()">🔄 Jugar de nuevo</button>
         <button class="btn-menu" onclick="volverAlMenu()">🏠 Menú principal</button>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-// Función para mostrar pantalla de derrota
 function mostrarPantallaDerrota() {
   gameState.juegoActivo = false;
-
-  // Guardar resultado
   guardarResultadoFinal();
-
   const gameArea = document.querySelector(".game-area");
   gameArea.innerHTML = `
     <div class="content-box resultado-box derrota">
       <h2 class="resultado-titulo">¡Inténtalo de nuevo! 😊</h2>
       <p class="resultado-texto">Te quedaste sin vidas, pero puedes intentarlo otra vez</p>
       <div class="resultado-stats">
-        <div class="stat-item">
-          <span class="stat-label">Estrellas obtenidas:</span>
-          <span class="stat-value">${"⭐".repeat(
-            gameState.aciertos
-          )}${"☆".repeat(5 - gameState.aciertos)}</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Progreso:</span>
-          <span class="stat-value">${gameState.aciertos}/5</span>
-        </div>
+        <div class="stat-item"><span class="stat-label">Estrellas obtenidas:</span><span class="stat-value">${"⭐".repeat(
+          gameState.aciertos
+        )}${"✰".repeat(5 - gameState.aciertos)}</span></div>
+        <div class="stat-item"><span class="stat-label">Progreso:</span><span class="stat-value">${
+          gameState.aciertos
+        }/5</span></div>
       </div>
       <div class="resultado-botones">
         <button class="btn-reiniciar" onclick="reiniciarJuego()">🔄 Intentar de nuevo</button>
         <button class="btn-menu" onclick="volverAlMenu()">🏠 Menú principal</button>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-// Función para reiniciar el juego
 function reiniciarJuego() {
   gameState = {
     vidas: 3,
     aciertos: 0,
-    figuraActual: null,
+    figurasMostradas: [],
+    figuraObjetivo: null,
     juegoActivo: true,
     socket: gameState.socket,
     tiempoInicio: Date.now(),
   };
 
-  // Restaurar HTML original del área de juego
-  const gameArea = document.querySelector(".game-area");
-  gameArea.innerHTML = `
+  document.querySelector(".game-area").innerHTML = `
     <div class="content-box">
       <p class="instruction-text">¡Encuentra las figuras!</p>
-      <div class="figura-display" id="figuraDisplay">
-        <!-- Las figuras se insertarán dinámicamente -->
-      </div>
-    </div>
-  `;
+      <div class="figura-display" id="figuraDisplay"></div>
+    </div>`;
 
-  // Reiniciar UI
   actualizarVidas();
   actualizarEstrellas();
   actualizarProgreso();
-
-  // Mostrar primera figura
   mostrarNuevaFigura();
-
   console.log("🔄 Juego reiniciado");
 }
 
-// Función para volver al menú
 function volverAlMenu() {
   window.location.href = "/dashboard";
 }
 
-// Función para procesar lectura RFID
 function procesarLecturaRFID(figuraDetectada) {
-  if (!gameState.juegoActivo || !gameState.figuraActual) return;
+  if (!gameState.juegoActivo || !gameState.figuraObjetivo) return;
 
   console.log(`📡 RFID detectado: ${figuraDetectada}`);
-  console.log(`🎯 Figura esperada: ${gameState.figuraActual.nombre}`);
-
-  // Enviar datos al backend para validación
+  console.log(`🎯 Figura esperada: ${gameState.figuraObjetivo.nombre}`);
   enviarDatosBackend(figuraDetectada);
 }
 
-// Función para enviar datos al backend
 async function enviarDatosBackend(figuraDetectada) {
   try {
     const response = await fetch("/api/figura/rfid", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        codigo_rfid: figuraDetectada, // En tu caso real, esto sería el código RFID
+        codigo_rfid: figuraDetectada,
         modo: "desafio",
-        figura_esperada: gameState.figuraActual.nombre,
+        figura_esperada: gameState.figuraObjetivo.nombre,
         vidas_restantes: gameState.vidas,
         aciertos_actuales: gameState.aciertos,
       }),
@@ -296,21 +413,15 @@ async function enviarDatosBackend(figuraDetectada) {
         respuestaIncorrecta(data.figura.nombre);
       }
 
-      // Manejar estado del juego según respuesta del backend
       if (data.gameStatus === "victoria") {
-        setTimeout(() => {
-          mostrarPantallaVictoria();
-        }, 1500);
+        setTimeout(() => mostrarPantallaVictoria(), 1500);
       } else if (data.gameStatus === "game_over") {
-        setTimeout(() => {
-          mostrarPantallaDerrota();
-        }, 1500);
+        setTimeout(() => mostrarPantallaDerrota(), 1500);
       }
     }
   } catch (error) {
     console.error("Error enviando datos al backend:", error);
-    // Fallback: procesar localmente
-    if (figuraDetectada === gameState.figuraActual.nombre) {
+    if (figuraDetectada === gameState.figuraObjetivo.nombre) {
       respuestaCorrecta();
     } else {
       respuestaIncorrecta(figuraDetectada);
@@ -318,18 +429,14 @@ async function enviarDatosBackend(figuraDetectada) {
   }
 }
 
-// Función para guardar resultado final
 async function guardarResultadoFinal() {
   try {
     const tiempoTotal = Math.floor(
       (Date.now() - gameState.tiempoInicio) / 1000
     );
-
     await fetch("/api/desafio/resultado", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         aciertos: gameState.aciertos,
         tiempo_jugado: tiempoTotal,
@@ -341,7 +448,6 @@ async function guardarResultadoFinal() {
   }
 }
 
-// Función para conectar WebSocket
 function conectarWebSocket() {
   if (typeof io !== "undefined") {
     gameState.socket = io();
@@ -362,54 +468,41 @@ function conectarWebSocket() {
   }
 }
 
-// Inicialización cuando se carga la página
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🎮 Iniciando modo desafío...");
-
-  // Inicializar tiempo
   gameState.tiempoInicio = Date.now();
-
-  // Inicializar UI
   actualizarVidas();
   actualizarEstrellas();
   actualizarProgreso();
-
-  // Mostrar primera figura
   mostrarNuevaFigura();
-
-  // Conectar WebSocket
   conectarWebSocket();
+  iniciarTemporizador();
+  actualizarContadorVisual();
 
-  // Agregar event listener para botón de volver
   const backButton = document.querySelector(".back-button");
   if (backButton) {
     backButton.onclick = volverAlMenu;
   }
 });
 
-// Función de prueba para simular lecturas RFID (solo para desarrollo)
+// Solo para pruebas manuales
 function simularLectura() {
   if (!gameState.juegoActivo) return;
-
-  // Simular lectura aleatoria (50% de probabilidad de ser correcta)
-  const esCorrecta = Math.random() > 0.5;
+  const esCorrecta = Math.random() > 0.7; // 90% de probabilidad de ser correcta
   let figuraSimulada;
-
   if (esCorrecta) {
-    figuraSimulada = gameState.figuraActual.nombre;
+    figuraSimulada = gameState.figuraObjetivo.nombre;
   } else {
     const figurasIncorrectas = figuras.filter(
-      (f) => f.nombre !== gameState.figuraActual.nombre
+      (f) => f.nombre !== gameState.figuraObjetivo.nombre
     );
     figuraSimulada =
       figurasIncorrectas[Math.floor(Math.random() * figurasIncorrectas.length)]
         .nombre;
   }
-
   console.log(`🧪 Simulando lectura: ${figuraSimulada}`);
   procesarLecturaRFID(figuraSimulada);
 }
 
-// Agregar función de prueba al objeto global para depuración
 window.simularLectura = simularLectura;
 window.gameState = gameState;

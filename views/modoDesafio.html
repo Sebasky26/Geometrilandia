@@ -19,7 +19,7 @@
 
     <!-- Botón, vidas y estrellas -->
     <div class="top-bar">
-      <button class="back-button" onclick="volverAlMenu()">← Volver</button>
+      <button class="back-button" onclick="volverAlMenu()">⬅ Volver</button>
       <div class="vidas" id="vidasContainer">❤️❤️❤️</div>
       <div class="stars" id="starContainer">
         <span class="star">⭐</span>
@@ -35,12 +35,24 @@
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- Área de juego -->
-    <div class="game-area">
-      <div class="content-box">
-        <p class="instruction-text">¡Encuentra las figuras!</p>
-        <div class="figura-display" id="figuraDisplay">
-          <!-- Las figuras se insertarán dinámicamente -->
+    <!-- Contenedor principal dividido: contador + juego -->
+    <div class="layout-juego">
+      <!-- Columna izquierda: Contador -->
+      <div class="columna-contador">
+        <p class="message-time">Tiempo restante</p>
+        <div id="contadorTiempo" class="contador-tiempo">15</div>
+        <img src="/img/reloj.png" class="reloj" alt="reloj imagen" />
+      </div>
+
+      <!-- Columna derecha: Área de juego -->
+      <div class="columna-juego">
+        <div class="game-area">
+          <div class="content-box">
+            <p class="instruction-text">¡Encuentra las figuras!</p>
+            <div class="figura-display" id="figuraDisplay">
+              <!-- Las figuras se insertarán dinámicamente -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -48,7 +60,28 @@
     <!-- Mago -->
     <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
 
+    <!-- RELOJ -->
+    <!-- <img src="/img/victoria.png" alt="Reloj conteo" class="reloj" /> -->
+
     <!-- Botón de prueba (solo para desarrollo) -->
+    <button
+      id="btnPrueba"
+      onclick="simularLectura()"
+      style="
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        padding: 10px;
+        background: #ff5722;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      "
+    >
+      🧪 Simular Lectura
+    </button>
 
     <audio id="fondoDesafio" loop>
       <source src="/audio/desafio.mp3" type="audio/mpeg" />
