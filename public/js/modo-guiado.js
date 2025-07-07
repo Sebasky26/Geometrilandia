@@ -181,11 +181,11 @@ function simularJuego() {
 window.addEventListener("DOMContentLoaded", () => {
   actualizarFigura();
 
-  const btnSimular = document.createElement("button");
-  btnSimular.textContent = "Simular Juego Automático";
-  btnSimular.style = "margin-top:20px; padding:10px 20px; font-size:16px;";
-  document.querySelector(".content-box").appendChild(btnSimular);
-  btnSimular.addEventListener("click", simularJuego);
+  //const btnSimular = document.createElement("button");
+  //btnSimular.textContent = "Simular Juego Automático";
+  //btnSimular.style = "margin-top:20px; padding:10px 20px; font-size:16px;";
+  //document.querySelector(".content-box").appendChild(btnSimular);
+  //btnSimular.addEventListener("click", simularJuego);
 
   const socket = io();
   socket.on("nuevaFigura", (nombre) => {

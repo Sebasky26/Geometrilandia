@@ -32,20 +32,8 @@ body {
   object-fit: cover;
 }
 
-/* Barra superior: botón + vidas + estrellas */
-.top-bar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-  padding: 0 30px;
-}
-
 .back-button {
+  font-family: "MiFuentePersonalizada", sans-serif;
   background-color: rgb(234, 103, 38);
   color: white;
   border: none;
@@ -61,24 +49,37 @@ body {
   background-color: rgb(248, 84, 8);
 }
 
-/* Vidas mejoradas */
+.top-bar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  padding: 0 30px;
+  gap: 20px; /* Nueva separación entre elementos */
+}
+
 .vidas {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: clamp(1.8rem, 4vw, 2.2rem);
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 0; /* Quitamos 20px para centrar mejor */
   color: #ff4444;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Estrellas */
 .stars {
   display: flex;
   gap: 12px;
   font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-left: 20px; /* Separación entre corazones y estrellas */
 }
+
 
 .star {
   opacity: 0.3;
@@ -114,7 +115,8 @@ body {
 .layout-juego {
   display: flex;
   width: 100%;
-  height: calc(100% - 200px); /* ajustar si tienes margen arriba */
+  height: calc(100% - 200px);
+  /* ajustar si tienes margen arriba */
   padding: 20px;
   gap: 10px;
 }
@@ -133,34 +135,33 @@ body {
 
 /* Estilo del contador */
 .contador-tiempo {
-  background-color: #6e53b7f9;
-  color: white;
-  border-radius: 25px;
-  padding: 40px 20px;
-  max-width: 800px;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px #6e0080;
   width: 100%;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 20px;
   font-family: "MiFuentePersonalizada", sans-serif;
-  font-size: clamp(0.9rem, 2vw, 1.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
 }
+
 
 /* Imagen de reloj debajo del contador */
 .reloj {
   width: clamp(180px, 20vw, 250px);
-  height: auto;
+  height: 350px;
   animation: relojBounce 3s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes relojBounce {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-6px);
   }
@@ -171,12 +172,17 @@ body {
   flex: 3;
   max-width: 70%;
 }
+
 .message-time {
+  color: #ffffff;
+  text-shadow: 2px 2px 4px #6e0080;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   font-family: "MiFuentePersonalizada", sans-serif;
-  font-size: clamp(0.9rem, 2vw, 1.5rem);
-  line-height: 1.3;
-  color: #fff;
-  background-color: #6e53b7f9;
+  font-size: 35px;
 }
 
 /* Área del juego */
@@ -233,7 +239,7 @@ body {
 
 .figura-img:hover {
   transform: scale(1.05);
-  border-color: #fff176;
+  border-color: #7154c1f9;
 }
 
 @media (max-width: 300px) {
@@ -258,10 +264,12 @@ body {
 }
 
 @keyframes magoBounce {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -299,17 +307,17 @@ body {
     transform: translate(-50%, -50%) scale(0.5);
     opacity: 0;
   }
+
   50% {
     transform: translate(-50%, -50%) scale(1.1);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
 }
-
-/* ...existing code... */
 
 /* Fondo modal para la ventana de resultados */
 .resultado-modal-bg {
@@ -327,6 +335,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -339,7 +348,8 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: 4px solid #fff;
   width: 90%;
-  max-width: 600px; /* Se adapta mejor a pantallas más anchas */
+  max-width: 600px;
+  /* Se adapta mejor a pantallas más anchas */
   min-width: 280px;
   max-height: 400px;
   min-height: 280px;
@@ -358,10 +368,12 @@ body {
     transform: scale(0.85);
     opacity: 0;
   }
+
   60% {
     transform: scale(1.05);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
   }
@@ -470,19 +482,24 @@ body {
     min-width: 0;
     padding: 18px 6vw;
   }
+
   .resultado-stats {
     max-width: 98vw;
     padding: 12px 4vw;
   }
+
   .resultado-titulo {
     font-size: clamp(1.3rem, 7vw, 1.7rem);
   }
+
   .resultado-texto {
     font-size: clamp(1rem, 5vw, 1.1rem);
   }
+
   .resultado-botones {
     gap: 10px;
   }
+
   .btn-reiniciar,
   .btn-menu {
     min-width: 120px;

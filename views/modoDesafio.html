@@ -1,134 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modo Desafío - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/desafio-style.css" />
-    <script src="/socket.io/socket.io.js"></script>
-  </head>
-  <body>
-    <!-- Fondo -->
-    <div class="background">
-      <img
-        src="/img/background.png"
-        alt="Fondo colorido"
-        class="background-img"
-      />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modo Desafío - Geometrilandia</title>
+  <link rel="stylesheet" href="/css/desafio-style.css" />
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <!-- Fondo -->
+  <div class="background">
+    <img src="/img/background.png" alt="Fondo colorido" class="background-img" />
+  </div>
+
+  <!-- Botón, vidas y estrellas -->
+  <div class="top-bar">
+    <button class="back-button" onclick="volverAlMenu()">← Volver</button>
+    <div class="vidas" id="vidasContainer">❤️❤️❤️</div>
+    <div class="stars" id="starContainer">
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+    </div>
+  </div>
+
+  <!-- Barra de progreso -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Contenedor principal dividido: contador + juego -->
+  <div class="layout-juego">
+    <!-- Columna izquierda: Contador -->
+    <div class="columna-contador">
+      <p class="message-time">Tiempo restante</p>
+      <div id="contadorTiempo" class="contador-tiempo">15</div>
+      <img src="/img/reloj.png" class="reloj" alt="reloj imagen" />
     </div>
 
-    <!-- Botón, vidas y estrellas -->
-    <div class="top-bar">
-      <button class="back-button" onclick="volverAlMenu()">⬅ Volver</button>
-      <div class="vidas" id="vidasContainer">❤️❤️❤️</div>
-      <div class="stars" id="starContainer">
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-      </div>
-    </div>
-
-    <!-- Barra de progreso -->
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <!-- Contenedor principal dividido: contador + juego -->
-    <div class="layout-juego">
-      <!-- Columna izquierda: Contador -->
-      <div class="columna-contador">
-        <p class="message-time">Tiempo restante</p>
-        <div id="contadorTiempo" class="contador-tiempo">15</div>
-        <img src="/img/reloj.png" class="reloj" alt="reloj imagen" />
-      </div>
-
-      <!-- Columna derecha: Área de juego -->
-      <div class="columna-juego">
-        <div class="game-area">
-          <div class="content-box">
-            <p class="instruction-text">¡Encuentra las figuras!</p>
-            <div class="figura-display" id="figuraDisplay">
-              <!-- Las figuras se insertarán dinámicamente -->
-            </div>
+    <!-- Columna derecha: Área de juego -->
+    <div class="columna-juego">
+      <div class="game-area">
+        <div class="content-box">
+          <p class="instruction-text">¡Encuentra las figuras!</p>
+          <div class="figura-display" id="figuraDisplay">
+            <!-- Las figuras se insertarán dinámicamente -->
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Mago -->
-    <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+  <!-- Mago -->
+  <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+  <audio id="fondoDesafio" loop>
+    <source src="/audio/desafio.mp3" type="audio/mpeg" />
+  </audio>
+  <script>
+    const music = document.getElementById("fondoDesafio");
 
-    <!-- RELOJ -->
-    <!-- <img src="/img/victoria.png" alt="Reloj conteo" class="reloj" /> -->
+    function iniciarMusicaFondo() {
+      if (!music) return;
+      music.volume = 0.06;
 
-    <!-- Botón de prueba (solo para desarrollo) -->
-    <button
-      id="btnPrueba"
-      onclick="simularLectura()"
-      style="
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1000;
-        padding: 10px;
-        background: #ff5722;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      "
-    >
-      🧪 Simular Lectura
-    </button>
-
-    <audio id="fondoDesafio" loop>
-      <source src="/audio/desafio.mp3" type="audio/mpeg" />
-    </audio>
-    <script>
-      const music = document.getElementById("fondoDesafio");
-
-      function iniciarMusicaFondo() {
-        if (!music) return;
-        music.volume = 0.06;
-
-        // Intenta reproducir inmediatamente
-        music.play().catch(() => {
-          // Si falla (por política del navegador), espera a la primera interacción
-          document.addEventListener("click", reproducirTrasInteraccion, {
-            once: true,
-          });
-        });
-      }
-
-      function reproducirTrasInteraccion() {
-        music.play().catch((err) => {
-          console.warn("El navegador sigue bloqueando la reproducción:", err);
-        });
-      }
-
-      window.addEventListener("DOMContentLoaded", () => {
-        iniciarMusicaFondo();
-
-        // Si se vuelve al dashboard desde otro modo (tipo back/forward)
-        window.addEventListener("pageshow", (event) => {
-          const tipo = performance.getEntriesByType("navigation")[0]?.type;
-          if (event.persisted || tipo === "back_forward") {
-            iniciarMusicaFondo();
-          }
+      // Intenta reproducir inmediatamente
+      music.play().catch(() => {
+        // Si falla (por política del navegador), espera a la primera interacción
+        document.addEventListener("click", reproducirTrasInteraccion, {
+          once: true,
         });
       });
-      window.addEventListener("beforeunload", () => {
-        const music = document.getElementById("fondoDesafio");
-        if (music) {
-          music.pause();
-          music.currentTime = 0;
+    }
+
+    function reproducirTrasInteraccion() {
+      music.play().catch((err) => {
+        console.warn("El navegador sigue bloqueando la reproducción:", err);
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      iniciarMusicaFondo();
+
+      // Si se vuelve al dashboard desde otro modo (tipo back/forward)
+      window.addEventListener("pageshow", (event) => {
+        const tipo = performance.getEntriesByType("navigation")[0]?.type;
+        if (event.persisted || tipo === "back_forward") {
+          iniciarMusicaFondo();
         }
       });
-    </script>
+    });
+    window.addEventListener("beforeunload", () => {
+      const music = document.getElementById("fondoDesafio");
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
+    });
+  </script>
 
-    <!-- Script -->
-    <script src="/js/modo-desafio.js"></script>
-  </body>
+  <!-- Script -->
+  <script src="/js/modo-desafio.js"></script>
+</body>
+
 </html>

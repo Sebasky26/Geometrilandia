@@ -46,6 +46,7 @@ body {
 }
 
 .back-button {
+    font-family: "MiFuentePersonalizada", sans-serif;
     background-color: rgb(234, 103, 38);
     color: white;
     border: none;

@@ -92,6 +92,7 @@ body {
 /* Botón de regreso optimizado */
 .back-button {
   background-color: rgb(234, 103, 38);
+  font-family: "MiFuentePersonalizada", sans-serif;
   color: white;
   border: none;
   border-radius: 12px;

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crear Perfil - Geo Metrilandia</title>
   <link rel="stylesheet" href="/css/register-style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <div class="background">
     <img src="img/background.png" alt="Fondo" class="background-img" />
@@ -16,9 +18,9 @@
     <div class="form-container">
       <h1 class="title">Crear<br>Perfil</h1>
 
-      <form id="registerForm" class="registro-form">
+      <form id="registerForm" class="registro-form" novalidate>
         <label>Nombre del Niño</label>
-        <input type="text" name="nombre_nino" required />
+        <input type="text" name="nombre_nino" placeholder="Ej: Juan Pérez" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" />
 
         <label>Edad</label>
         <select name="edad" required>
@@ -29,10 +31,12 @@
         </select>
 
         <label>Nombre del Instructor</label>
-        <input type="text" name="nombre_instructor" required />
+        <input type="text" name="nombre_instructor" placeholder="Ej: María Valle" required
+          pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" />
 
         <label>Cédula del Instructor</label>
-        <input type="text" name="cedula_instructor" maxlength="10" pattern="\d{10}" required />
+        <input type="text" name="cedula_instructor" placeholder="Ej: 1726383519" maxlength="10" pattern="\d{10}"
+          required />
 
         <button type="submit" id="registerBtn" class="main-btn guardar-btn">Guardar Perfil</button>
       </form>
@@ -54,50 +58,13 @@
 
     <button class="help-btn" onclick="mostrarAyuda()">?</button>
   </div>
-   <audio id="fondoTablero" loop>
+
+  <audio id="fondoTablero" loop>
     <source src="/audio/tablero.mp3" type="audio/mpeg">
   </audio>
-<script>
-  const music = document.getElementById('fondoTablero');
-
-  function iniciarMusicaFondo() {
-    if (!music) return;
-    music.volume = 0.2;
-
-    // Intenta reproducir inmediatamente
-    music.play().catch(() => {
-      // Si falla (por política del navegador), espera a la primera interacción
-      document.addEventListener('click', reproducirTrasInteraccion, { once: true });
-    });
-  }
-
-  function reproducirTrasInteraccion() {
-    music.play().catch((err) => {
-      console.warn("El navegador sigue bloqueando la reproducción:", err);
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    iniciarMusicaFondo();
-
-    // Si se vuelve al dashboard desde otro modo (tipo back/forward)
-    window.addEventListener('pageshow', (event) => {
-      const tipo = performance.getEntriesByType("navigation")[0]?.type;
-      if (event.persisted || tipo === "back_forward") {
-        iniciarMusicaFondo();
-      }
-    });
-  });
-  window.addEventListener('beforeunload', () => {
-    const music = document.getElementById('fondoTablero');
-    if (music) {
-        music.pause();
-        music.currentTime = 0;
-    }
-});
-</script>
 
   <script src="/js/register.js"></script>
 
 </body>
+
 </html>

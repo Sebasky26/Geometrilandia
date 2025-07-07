@@ -255,6 +255,7 @@ body {
 
 /* Botón cerrar sesión */
 .logout-btn {
+  font-family: "MiFuentePersonalizada", sans-serif;
   position: fixed;
   top: 20px;
   left: 20px;
@@ -312,8 +313,6 @@ body {
   color: #5d4037;
   display: none;
 }
-
-/* 🌐 Bootstrap-style Responsive System */
 
 /* Breakpoints */
 @media (max-width: 1200px) {
