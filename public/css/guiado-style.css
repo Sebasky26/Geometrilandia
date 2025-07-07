@@ -18,6 +18,28 @@ body {
     overflow: hidden;
 }
 
+#tituloTutorial {
+    font-family: "MiFuentePersonalizada", sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: white;
+    text-align: center;
+    margin-right: 100px;
+    animation: aparecer 1s ease-in-out;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 /* Fondo */
 .background {
     position: absolute;
@@ -166,107 +188,107 @@ body {
 
 /* Tablets grandes y PC */
 @media (min-width: 1024px) {
-.instruction-text {
-    font-size: clamp(1.4rem, 3vw, 2.4rem);
-}
+    .instruction-text {
+        font-size: clamp(1.4rem, 3vw, 2.4rem);
+    }
 
-.stars {
-    font-size: 2.2rem;
-}
+    .stars {
+        font-size: 2.2rem;
+    }
 
-.figura-img {
-    max-width: 280px;
-}
+    .figura-img {
+        max-width: 280px;
+    }
 
-.content-box {
-    padding: 50px 30px;
-}
+    .content-box {
+        padding: 50px 30px;
+    }
 }
 
 /* Tablets medianos */
 @media (max-width: 1023px) {
-.back-button {
-    font-size: 1.2rem;
-    padding: 8px 16px;
-}
+    .back-button {
+        font-size: 1.2rem;
+        padding: 8px 16px;
+    }
 
-.stars {
-    font-size: 1.8rem;
-}
+    .stars {
+        font-size: 1.8rem;
+    }
 
-.progress-container {
-    height: 25px;
-}
+    .progress-container {
+        height: 25px;
+    }
 
-.instruction-text {
-    font-size: clamp(1.2rem, 4vw, 2rem);
-}
+    .instruction-text {
+        font-size: clamp(1.2rem, 4vw, 2rem);
+    }
 
-.figura-img {
-    max-width: 220px;
-}
+    .figura-img {
+        max-width: 220px;
+    }
 
-.content-box {
-    padding: 30px 20px;
-}
+    .content-box {
+        padding: 30px 20px;
+    }
 }
 
 /* Móviles grandes */
 @media (max-width: 767px) {
-.stars {
-    font-size: 1.5rem;
-}
+    .stars {
+        font-size: 1.5rem;
+    }
 
-.progress-container {
-    height: 20px;
-}
+    .progress-container {
+        height: 20px;
+    }
 
-.instruction-text {
-    font-size: clamp(1.1rem, 4vw, 1.8rem);
-}
+    .instruction-text {
+        font-size: clamp(1.1rem, 4vw, 1.8rem);
+    }
 
-.figura-img {
-    max-width: 180px;
-}
+    .figura-img {
+        max-width: 180px;
+    }
 
-.mago-img {
-    width: min(180px, 25vw);
-    bottom: -5px;
-    right: -5px;
-}
+    .mago-img {
+        width: min(180px, 25vw);
+        bottom: -5px;
+        right: -5px;
+    }
 
-.top-bar {
-    padding: 0 15px;
-}
+    .top-bar {
+        padding: 0 15px;
+    }
 
-.content-box {
-    padding: 25px 15px;
-    gap: 16px;
-}
+    .content-box {
+        padding: 25px 15px;
+        gap: 16px;
+    }
 }
 
 /* Móviles pequeños */
 @media (max-width: 480px) {
-.stars {
-    font-size: 1.3rem;
-    gap: 8px;
-}
+    .stars {
+        font-size: 1.3rem;
+        gap: 8px;
+    }
 
-.instruction-text {
-    font-size: clamp(1rem, 4.5vw, 1.5rem);
-}
+    .instruction-text {
+        font-size: clamp(1rem, 4.5vw, 1.5rem);
+    }
 
-.figura-img {
-    max-width: 150px;
-}
+    .figura-img {
+        max-width: 150px;
+    }
 
-.content-box {
-    padding: 20px 10px;
-    gap: 14px;
-}
+    .content-box {
+        padding: 20px 10px;
+        gap: 14px;
+    }
 
-.back-button {
-    font-size: 1rem;
-    padding: 6px 12px;
-}
+    .back-button {
+        font-size: 1rem;
+        padding: 6px 12px;
+    }
 }

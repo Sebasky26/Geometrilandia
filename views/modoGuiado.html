@@ -34,17 +34,33 @@
   <!-- Área de juego -->
   <div class="game-area">
     <div class="content-box">
-      <p class="instruction-text"><span id="nombreFigura"></span></p>
 
+      <!-- TUTORIAL: Se muestra solo al inicio -->
+      <div class="figura-display" id="tutorialContainer">
+        <h2 id="tituloTutorial">Tutorial</h2>
+        <video id="tutorialVideo" width="50%" autoplay muted>
+          <source src="/video/tutorial.mp4" type="video/mp4">
+          Tu navegador no soporta la etiqueta de video.
+        </video>
+      </div>
 
-      <div class="figura-display">
+      <!-- INSTRUCCIÓN: Oculta al inicio -->
+      <p class="instruction-text" id="instruccionTexto" style="display: none;">
+        <span id="nombreFigura"></span>
+      </p>
+
+      <!-- FIGURA: Oculta al inicio -->
+      <div class="figura-display" id="figuraContainer" style="display: none;">
         <img src="/img/circulo_azul.png" alt="Figura CÍRCULO AZUL" class="figura-img" id="figuraImage" />
       </div>
+
     </div>
   </div>
 
   <!-- Mago -->
   <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
+
+  <!-- Música de fondo -->
   <audio id="fondoGuiado" loop>
     <source src="/audio/guiado.mp3" type="audio/mpeg">
   </audio>
@@ -55,16 +71,14 @@
   <!-- JS del modo guiado -->
   <script src="/js/modo-guiado.js"></script>
 
+  <!-- Inicialización -->
   <script>
     const music = document.getElementById('fondoGuiado');
 
     function iniciarMusicaFondo() {
       if (!music) return;
       music.volume = 0.03;
-
-      // Intenta reproducir inmediatamente
       music.play().catch(() => {
-        // Si falla (por política del navegador), espera a la primera interacción
         document.addEventListener('click', reproducirTrasInteraccion, { once: true });
       });
     }
@@ -78,23 +92,37 @@
     window.addEventListener('DOMContentLoaded', () => {
       iniciarMusicaFondo();
 
-      // Si se vuelve al dashboard desde otro modo (tipo back/forward)
-      window.addEventListener('pageshow', (event) => {
-        const tipo = performance.getEntriesByType("navigation")[0]?.type;
-        if (event.persisted || tipo === "back_forward") {
-          iniciarMusicaFondo();
+      const video = document.getElementById('tutorialVideo');
+      const tutorialContainer = document.getElementById('tutorialContainer');
+      const figuraContainer = document.getElementById('figuraContainer');
+      const instruccionTexto = document.getElementById('instruccionTexto');
+
+      // Ocultar contenido hasta que finalice el tutorial
+      video.onended = () => {
+        tutorialContainer.style.display = "none";
+        figuraContainer.style.display = "flex";
+        instruccionTexto.style.display = "block";
+
+        const titulo = document.getElementById('tituloTutorial');
+        if (titulo) titulo.style.display = "none"; // Ocultar título al finalizar el video
+
+        if (typeof actualizarFigura === 'function') {
+          actualizarFigura();
         }
-      });
+      };
+
+
+      // Detener narración si se cargó por error antes
+      window.speechSynthesis.cancel();
     });
+
     window.addEventListener('beforeunload', () => {
-      const music = document.getElementById('fondoGuiado');
       if (music) {
         music.pause();
         music.currentTime = 0;
       }
     });
   </script>
-
 </body>
 
 </html>

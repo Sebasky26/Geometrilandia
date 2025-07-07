@@ -25,6 +25,7 @@ function obtenerDiezAleatorias(array) {
 
 let figurasMezcladas = obtenerDiezAleatorias([...figuras]);
 let indiceActual = 0;
+let mostrarMensaje = false;
 
 const img = document.getElementById("figuraImage");
 const progress = document.getElementById("progressBar");
@@ -34,28 +35,18 @@ mensaje.className = "instruction-text";
 document.querySelector(".content-box").insertBefore(mensaje, document.querySelector(".figura-display"));
 
 function hablarConRetardo(texto, callback = null) {
+  if (!mostrarMensaje) return;
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
     const voces = window.speechSynthesis.getVoices();
-    const vozNatural =
-      voces.find(v => v.name.includes("Google español")) ||
-      voces.find(v => v.name.includes("Microsoft Sabina")) ||
-      voces.find(v => v.lang === "es-ES") ||
-      voces[0];
-
+    const vozNatural = voces.find(v => v.name.includes("es-ES") || v.name.includes("Google español")) || voces[0];
     const msg = new SpeechSynthesisUtterance(texto);
     msg.voice = vozNatural;
     msg.lang = 'es-ES';
     msg.volume = 1.0;
-    msg.rate = 0.95;
+    msg.rate = 0.9;
     msg.pitch = 1.1;
-
-    if (callback) {
-      msg.onend = () => {
-        setTimeout(callback, 300); // Pequeña pausa después de hablar
-      };
-    }
-
+    if (callback) msg.onend = () => setTimeout(callback, 300);
     window.speechSynthesis.speak(msg);
   } else {
     if (callback) setTimeout(callback, 2000);
@@ -67,15 +58,12 @@ function actualizarFigura() {
   img.src = figura.src;
   img.alt = `Figura ${figura.nombre}`;
   progress.style.width = `${(indiceActual / figurasMezcladas.length) * 100}%`;
-
   const esFemenino = figura.genero === "la";
   const esteEsta = esFemenino ? "Esta" : "Este";
   const loLa = esFemenino ? "la" : "lo";
-
   const texto = `${esteEsta} es ${figura.genero} ${figura.forma} ${figura.colorTexto}. Acerca${loLa} a la caja para que te ${loLa} lea.`;
   mensaje.innerHTML = `${esteEsta} es ${figura.genero} <strong style="color:${figura.color};">${figura.forma} ${figura.colorTexto}</strong>. Acerca${loLa} a la caja para que te ${loLa} lea.`;
   mensaje.style.color = "#ffffff";
-
   hablarConRetardo(texto);
   actualizarEstrellas();
 }
@@ -90,6 +78,7 @@ function actualizarEstrellas() {
 }
 
 function verificarFigura(nombreDetectado) {
+  if (!mostrarMensaje) return;
   const figuraEsperada = figurasMezcladas[indiceActual];
   const figuraMostrada = figuras.find(f => f.nombre === nombreDetectado);
 
@@ -99,28 +88,22 @@ function verificarFigura(nombreDetectado) {
     mensaje.style.color = "#00e676";
     hablarConRetardo(texto, () => {
       indiceActual++;
-      if (indiceActual < figurasMezcladas.length) {
-        actualizarFigura();
-      } else {
-        finalizarJuego();
-      }
+      if (indiceActual < figurasMezcladas.length) actualizarFigura();
+      else finalizarJuego();
     });
   } else if (figuraMostrada) {
     const articulo = figuraMostrada.genero === "la" ? "una" : "un";
     const texto = `Lo siento, esta es la figura incorrecta. La figura mostrada es ${articulo} ${figuraMostrada.forma} ${figuraMostrada.colorTexto}.`;
     mensaje.textContent = texto;
     mensaje.style.color = "#ff1744";
-
     const imagenCorrecta = figurasMezcladas[indiceActual].src;
     const altCorrecto = figurasMezcladas[indiceActual].nombre;
-
     img.src = figuraMostrada.src;
     img.alt = figuraMostrada.nombre;
-
     hablarConRetardo(texto, () => {
       img.src = imagenCorrecta;
       img.alt = altCorrecto;
-      actualizarFigura(); // Refuerza la instrucción original
+      actualizarFigura();
     });
   } else {
     const texto = "Figura no reconocida.";
@@ -150,42 +133,31 @@ function obtenerNombreIncorrecto(nombreCorrecto) {
   return otras[Math.floor(Math.random() * otras.length)].nombre;
 }
 
-/*
-function simularJuego() {
-  indiceActual = 0;
-  figurasMezcladas = obtenerDiezAleatorias([...figuras]);
-  actualizarFigura();
+window.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("tutorialVideo");
+  const tutorialContainer = document.getElementById("tutorialContainer");
+  const figuraContainer = document.getElementById("figuraContainer");
 
-  function intentarFigura() {
-    if (indiceActual >= figurasMezcladas.length) return;
+  mostrarMensaje = false;
+  mensaje.textContent = "";
+  mensaje.style.display = "none";
 
-    const figuraActual = figurasMezcladas[indiceActual];
-    const acierta = Math.random() > 0.4;
-    const nombreSimulado = acierta
-      ? figuraActual.nombre
-      : obtenerNombreIncorrecto(figuraActual.nombre);
-
-    verificarFigura(nombreSimulado);
+  function iniciarJuego() {
+    tutorialContainer.style.display = "none";
+    figuraContainer.style.display = "flex";
+    mostrarMensaje = true;
+    mensaje.style.display = "block";
+    actualizarFigura();
   }
 
-  const intervalo = setInterval(() => {
-    if (indiceActual >= figurasMezcladas.length) {
-      clearInterval(intervalo);
-    } else if (!window.speechSynthesis.speaking) {
-      intentarFigura();
-    }
-  }, 500);
-}
-*/
-
-window.addEventListener("DOMContentLoaded", () => {
-  actualizarFigura();
-
-  //const btnSimular = document.createElement("button");
-  //btnSimular.textContent = "Simular Juego Automático";
-  //btnSimular.style = "margin-top:20px; padding:10px 20px; font-size:16px;";
-  //document.querySelector(".content-box").appendChild(btnSimular);
-  //btnSimular.addEventListener("click", simularJuego);
+  if (video) {
+    video.addEventListener("ended", iniciarJuego);
+    setTimeout(() => {
+      if (!mostrarMensaje) iniciarJuego();
+    }, 7000);
+  } else {
+    iniciarJuego();
+  }
 
   const socket = io();
   socket.on("nuevaFigura", (nombre) => {
