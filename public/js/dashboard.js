@@ -4,11 +4,11 @@ async function initDashboard() {
   const welcome = document.getElementById("welcomeMessage");
 
   try {
-    const res = await fetch("/current-user");
-    const data = await res.json();
+    const resUser = await fetch("/current-user");
+    const userData = await resUser.json();
 
-    if (data.success) {
-      welcome.textContent = `Hola ${data.user.nombre} (Edad ${data.user.edad}) 👋`;
+    if (userData.success) {
+      welcome.textContent = `Hola ${userData.user.nombre} (Edad ${userData.user.edad}) 👋`;
       loadStats();
     } else {
       welcome.textContent = "No se pudo cargar el perfil";
@@ -60,32 +60,30 @@ async function loadStats() {
     const container = document.getElementById("statsContainer");
     container.innerHTML = "";
 
-    if (data.success && data.resumen_sesiones.length > 0) {
-      const fechas = [];
-      const aciertos = [];
+    if (data.success && data.resumen_sesiones) {
+      const resumen = data.resumen_sesiones;
 
-      data.resumen_sesiones.forEach((sesion) => {
-        const div = document.createElement("div");
-        div.classList.add("sesion-card");
-        div.innerHTML = `
-          <h4>📅 ${sesion.fecha}</h4>
-          <p><strong>Modo más usado:</strong> ${sesion.modo_mas_usado || 'N/A'}</p>
-          <p><strong>Aciertos:</strong> ${sesion.aciertos}</p>
-          <p><strong>Errores:</strong> ${sesion.errores}</p>
-          <p><strong>Tiempo promedio por figura:</strong> ${sesion.tiempo_promedio ?? '0'}s</p>
-          <p><strong>Intentos totales:</strong> ${sesion.total_interacciones}</p>
-        `;
-        container.appendChild(div);
+      const div = document.createElement("div");
+      div.classList.add("sesion-card");
+      div.innerHTML = `
+        <h4>📈 Resumen General</h4>
+        <p><strong>Total de sesiones:</strong> ${resumen.sesiones_totales}</p>
+        <p><strong>Total de interacciones:</strong> ${resumen.total_interacciones}</p>
+        <p><strong>Aciertos:</strong> ${resumen.total_aciertos}</p>
+        <p><strong>Errores:</strong> ${resumen.total_errores}</p>
+        <p><strong>Promedio de tiempo por figura:</strong> ${resumen.tiempo_promedio ?? 0}s</p>
+        <p><strong>Última actividad:</strong> ${new Date(resumen.ultima_interaccion).toLocaleDateString()}</p>
+      `;
+      container.appendChild(div);
 
-        fechas.push(sesion.fecha);
-        aciertos.push(sesion.aciertos);
-      });
-
-      renderChart(fechas, aciertos);
+      // Para gráfica (dummy temporal si no hay múltiples sesiones)
+      renderChart(
+        ["Aciertos", "Errores"],
+        [resumen.total_aciertos, resumen.total_errores]
+      );
     } else {
-      container.textContent = "No hay sesiones registradas aún.";
+      container.textContent = "No hay datos aún.";
     }
-
   } catch (err) {
     console.error("Error cargando estadísticas:", err);
     document.getElementById("statsContainer").textContent = "Error al cargar estadísticas.";
@@ -100,15 +98,13 @@ function renderChart(labels, data) {
   }
 
   chartInstance = new Chart(ctx, {
-    type: "line",
+    type: "bar",
     data: {
       labels: labels,
       datasets: [{
-        label: "Aciertos por sesión",
+        label: "Rendimiento General",
         data: data,
-        fill: false,
-        borderColor: "rgba(54, 162, 235, 1)",
-        tension: 0.3
+        backgroundColor: ["#4caf50", "#f44336"]
       }]
     },
     options: {
@@ -116,7 +112,7 @@ function renderChart(labels, data) {
       plugins: {
         title: {
           display: true,
-          text: "Progreso de Aciertos por Sesión"
+          text: "Resumen del Rendimiento General"
         }
       },
       scales: {

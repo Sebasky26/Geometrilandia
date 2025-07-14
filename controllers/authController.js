@@ -1,103 +1,82 @@
-const NinoModel = require("../models/ninoModel")
-const InstructorModel = require("../models/instructorModel")
+const NinoModel = require("../models/ninoModel");
+const InstructorModel = require("../models/instructorModel");
 
 class AuthController {
-  // Mostrar formulario para registrar perfil
   static showRegister(req, res) {
-    res.sendFile("register.html", { root: "./views" })
+    res.sendFile("register.html", { root: "./views" });
   }
 
-  // Mostrar pantalla principal (donde se selecciona niño)
   static showLogin(req, res) {
-    res.sendFile("login.html", { root: "./views" })
+    res.sendFile("login.html", { root: "./views" });
   }
 
-  // Registrar niño e instructor
   static async register(req, res) {
     try {
-      const { nombre_nino, edad, nombre_instructor, cedula_instructor } = req.body
+      const { nombre_nino, edad, nombre_instructor, cedula_instructor } = req.body;
 
-      // Validaciones mínimas
       if (!nombre_nino || !edad || !nombre_instructor || !cedula_instructor) {
-        return res.status(400).json({ success: false, message: "Todos los campos son obligatorios" })
+        return res.status(400).json({ success: false, message: "Todos los campos son obligatorios" });
       }
 
       if (edad < 2 || edad > 4) {
-        return res.status(400).json({ success: false, message: "La edad debe estar entre 2 y 4 años" })
+        return res.status(400).json({ success: false, message: "La edad debe estar entre 2 y 4 años" });
       }
 
-      // Verificar si el instructor ya existe
-      let instructor = await InstructorModel.findByCedula(cedula_instructor)
-
-      // Si no existe, lo crea
+      let instructor = await InstructorModel.findByCedula(cedula_instructor);
       if (!instructor) {
-        const newInstructorId = await InstructorModel.create({ nombre: nombre_instructor, cedula: cedula_instructor })
-        instructor = { id: newInstructorId }
+        const newInstructorId = await InstructorModel.create({ nombre: nombre_instructor, cedula: cedula_instructor });
+        instructor = { id: newInstructorId };
       }
 
-      // Crear niño asociado a ese instructor
       await NinoModel.create({
         nombre: nombre_nino,
         edad,
-        instructor_id: instructor.id
-      })
+        instructor_id: instructor.id,
+      });
 
-      res.json({ success: true, message: "Perfil creado exitosamente" })
+      res.json({ success: true, message: "Perfil creado exitosamente" });
     } catch (error) {
-      console.error("Error en registro:", error)
-      res.status(500).json({ success: false, message: "Error interno del servidor" })
+      console.error("Error en registro:", error);
+      res.status(500).json({ success: false, message: "Error interno del servidor" });
     }
   }
 
-  // "Login": seleccionar niño existente
-static async login(req, res) {
-  try {
-    const { nino_id } = req.body;
+  static async login(req, res) {
+    try {
+      const { nino_id } = req.body;
 
-    if (!nino_id) {
-      return res.status(400).json({
-        success: false,
-        message: "Debes seleccionar un niño",
-      });
+      if (!nino_id) {
+        return res.status(400).json({ success: false, message: "Debes seleccionar un niño" });
+      }
+
+      const nino = await NinoModel.findById(nino_id);
+      if (!nino) {
+        return res.status(404).json({ success: false, message: "Niño no encontrado" });
+      }
+
+      req.session.ninoId = nino.id;
+      req.session.nombreNino = nino.nombre;
+      req.session.edad = nino.edad;
+
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error en login:", error);
+      res.status(500).json({ success: false, message: "Error interno del servidor" });
     }
-
-    const nino = await NinoModel.findById(nino_id);
-    if (!nino) {
-      return res.status(404).json({
-        success: false,
-        message: "Niño no encontrado",
-      });
-    }
-
-    req.session.ninoId = nino.id;
-    req.session.nombreNino = nino.nombre;
-    req.session.edad = nino.edad;
-
-    return res.json({ success: true });
-  } catch (error) {
-    console.error("Error en login:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Error interno del servidor",
-    });
   }
-}
 
-
-  // Cerrar sesión
   static logout(req, res) {
     req.session.destroy((err) => {
       if (err) {
-        return res.status(500).json({ success: false, message: "Error al cerrar sesión" })
+        return res.status(500).json({ success: false, message: "Error al cerrar sesión" });
       }
-      res.json({ success: true, message: "Sesión cerrada correctamente" })
-    })
+      res.json({ success: true, message: "Sesión cerrada correctamente" });
+    });
   }
 
-  // Obtener niño actual en sesión
   static getCurrentUser(req, res) {
     if (!req.session.ninoId) {
-      return res.status(401).json({ success: false, message: "No hay sesión activa" })
+      return res.status(401).json({ success: false, message: "No hay sesión activa" });
     }
 
     res.json({
@@ -107,8 +86,8 @@ static async login(req, res) {
         nombre: req.session.nombreNino,
         edad: req.session.edad,
       },
-    })
+    });
   }
 }
 
-module.exports = AuthController
+module.exports = AuthController;

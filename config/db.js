@@ -59,7 +59,7 @@ const createTables = () => {
     CREATE TABLE IF NOT EXISTS interacciones (
       id INT AUTO_INCREMENT PRIMARY KEY,
       nino_id INT NOT NULL,
-      figura_id INT NOT NULL,
+      figura_id INT,
       modo_id INT NOT NULL,
       resultado ENUM('correcto', 'incorrecto') NOT NULL,
       aciertos_total INT DEFAULT 0,

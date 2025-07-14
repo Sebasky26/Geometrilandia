@@ -3,44 +3,67 @@ const db = require("../config/db");
 
 const InteraccionModel = {
   insertarInteraccion: async (interaccion) => {
-    const sql = `
-      INSERT INTO interacciones (
-        nino_id,
-        figura_id,
-        modo_id,
-        resultado,
-        aciertos_total,
-        errores_total,
-        tiempo_promedio_por_figura,
-        sesiones_totales,
-        rendimiento_ultima_sesion,
-        progreso_general
-      )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    const {
+      nino_id,
+      figura_id,
+      modo_id,
+      resultado,
+      aciertos_total = 0,
+      errores_total = 0,
+      tiempo_promedio_por_figura = 0,
+      sesiones_totales = 0,
+      rendimiento_ultima_sesion = 0,
+      progreso_general = 0
+    } = interaccion;
 
-    const values = [
-      interaccion.nino_id,
-      interaccion.figura_id,
-      interaccion.modo_id,
-      interaccion.resultado,
-      interaccion.aciertos_total,
-      interaccion.errores_total,
-      interaccion.tiempo_promedio_por_figura,
-      interaccion.sesiones_totales,
-      interaccion.rendimiento_ultima_sesion,
-      interaccion.progreso_general
+    // ❗ Validación básica: no insertar si falta info clave
+    if (!nino_id || !modo_id || !resultado) {
+      console.warn("⚠️ Interacción omitida por datos faltantes:", interaccion);
+      return null;
+    }
+
+    const campos = [
+      "nino_id",
+      "modo_id",
+      "resultado",
+      "aciertos_total",
+      "errores_total",
+      "tiempo_promedio_por_figura",
+      "sesiones_totales",
+      "rendimiento_ultima_sesion",
+      "progreso_general"
     ];
 
+    const valores = [
+      nino_id,
+      modo_id,
+      resultado,
+      aciertos_total,
+      errores_total,
+      tiempo_promedio_por_figura,
+      sesiones_totales,
+      rendimiento_ultima_sesion,
+      progreso_general
+    ];
+
+    // 👉 Solo agregar figura_id si está definido y no es null
+    if (figura_id !== undefined && figura_id !== null) {
+      campos.splice(1, 0, "figura_id");      // insertarlo después de nino_id
+      valores.splice(1, 0, figura_id);
+    }
+
+    const placeholders = campos.map(() => "?").join(", ");
+    const sql = `INSERT INTO interacciones (${campos.join(", ")}) VALUES (${placeholders})`;
+
     try {
-      const [results] = await db.promise().query(sql, values);
+      const [results] = await db.promise().query(sql, valores);
       return results;
     } catch (error) {
+      console.error("❌ Error al insertar interacción en la BD:", error);
       throw error;
     }
   },
 
-  // Opcional: método para estadísticas por sesión
   getResumenPorSesion: async (ninoId) => {
     const sql = `
       SELECT 
@@ -60,6 +83,7 @@ const InteraccionModel = {
       const [rows] = await db.promise().query(sql, [ninoId]);
       return rows;
     } catch (error) {
+      console.error("❌ Error al obtener resumen de sesiones:", error);
       throw error;
     }
   }
