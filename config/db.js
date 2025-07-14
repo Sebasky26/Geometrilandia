@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
 require("dotenv").config();
 
-// Conexión a la base de datos
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -9,7 +8,6 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-// Intentar conexión
 connection.connect((err) => {
   if (err) {
     console.error("❌ Error conectando a la base de datos:", err.stack);
@@ -18,7 +16,6 @@ connection.connect((err) => {
   console.log("✅ Conectado a la base de datos como ID " + connection.threadId);
 });
 
-// Crear tablas
 const createTables = () => {
   const createInstructoresTable = `
     CREATE TABLE IF NOT EXISTS instructores (
@@ -52,7 +49,7 @@ const createTables = () => {
   const createModosJuegoTable = `
     CREATE TABLE IF NOT EXISTS modos_juego (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      nombre VARCHAR(50) NOT NULL,
+      nombre VARCHAR(50) NOT NULL UNIQUE,
       descripcion TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
@@ -85,28 +82,6 @@ const createTables = () => {
   connection.query(createInteraccionesTable, handleError("interacciones"));
 };
 
-// Función para insertar modos de juego
-const insertModosJuego = () => {
-  const modos = [
-    ['Libre', 'Exploración libre del entorno.'],
-    ['Guiado', 'Aprendizaje con ayuda del sistema.'],
-    ['Desafío', 'Retos para evaluar el aprendizaje.'],
-    ['Inteligente', 'Modo adaptativo según el desempeño.']
-  ];
-
-  modos.forEach(([nombre, descripcion]) => {
-    const query = `
-      INSERT IGNORE INTO modos_juego (nombre, descripcion) 
-      VALUES (?, ?)
-    `;
-    connection.query(query, [nombre, descripcion], (err) => {
-      if (err) console.error(`❌ Error insertando modo ${nombre}:`, err);
-      else console.log(`✅ Modo ${nombre} insertado o ya existe`);
-    });
-  });
-};
-
-// Función para imprimir errores
 function handleError(tabla) {
   return (err) => {
     if (err) console.error(`❌ Error creando tabla ${tabla}:`, err);
@@ -114,47 +89,76 @@ function handleError(tabla) {
   };
 }
 
-// Ejecutar
-createTables();
-insertModosJuego();
+// SOLO insertar si la tabla está vacía
+const insertModosJuego = () => {
+  connection.query("SELECT COUNT(*) AS count FROM modos_juego", (err, results) => {
+    if (err) return console.error("❌ Error al contar modos_juego:", err);
 
-// Insertar figuras si no existen
-const insertFiguras = () => {
-  const mapaRFID = {
-    "F6FE0885": "ESTRELLA TURQUESA",
-    "B39DD90D": "CUADRADO AZUL",
-    "E1B7A07B": "CUADRADO ROJO",
-    "55754239": "ESTRELLA AMARILLA",
-    "4CA16D3B": "CORAZON VERDE",
-    "F74B6E3B": "CUADRADO AMARILLO",
-    "BC124D39": "ESTRELLA NARANJA",
-    "22614239": "CIRCULO AMARILLO",
-    "8CAB6D3B": "CIRCULO TURQUESA",
-    "F7934D39": "RECTANGULO AZUL",
-    "65EA4139": "RECTANGULO VERDE",
-    "BB5F4239": "CORAZON AZUL",
-    "E7BD4239": "RECTANGULO TURQUESA",
-    "896A4D39": "CORAZON ROJO",
-    "AE9E4239": "TRIANGULO VERDE",
-    "B0DE6D3B": "TRIANGULO NARANJA",
-    "91275D7B": "TRIANGULO ROJO",
-    "C6770785": "CIRCULO NARANJA"
-  };
+    if (results[0].count === 0) {
+      const modos = [
+        ['Libre', 'Exploración libre del entorno.'],
+        ['Guiado', 'Aprendizaje con ayuda del sistema.'],
+        ['Desafío', 'Retos para evaluar el aprendizaje.'],
+        ['Inteligente', 'Modo adaptativo según el desempeño.']
+      ];
 
-  Object.entries(mapaRFID).forEach(([rfid, nombre]) => {
-    const query = `
-      INSERT IGNORE INTO figuras (nombre, codigo_rfid)
-      VALUES (?, ?)
-    `;
-    connection.query(query, [nombre, rfid], (err) => {
-      if (err) console.error(`❌ Error insertando figura ${nombre}:`, err);
-      else console.log(`✅ Figura ${nombre} insertada o ya existe`);
-    });
+      modos.forEach(([nombre, descripcion]) => {
+        const query = `INSERT INTO modos_juego (nombre, descripcion) VALUES (?, ?)`;
+        connection.query(query, [nombre, descripcion], (err) => {
+          if (err) console.error(`❌ Error insertando modo ${nombre}:`, err);
+          else console.log(`✅ Modo ${nombre} insertado`);
+        });
+      });
+    } else {
+      console.log("ℹ️ Modos de juego ya existentes. No se insertan nuevamente.");
+    }
   });
 };
 
-// Llamar a la función
-insertFiguras();
+const insertFiguras = () => {
+  connection.query("SELECT COUNT(*) AS count FROM figuras", (err, results) => {
+    if (err) return console.error("❌ Error al contar figuras:", err);
 
+    if (results[0].count === 0) {
+      const mapaRFID = {
+        "F6FE0885": "ESTRELLA TURQUESA",
+        "B39DD90D": "CUADRADO AZUL",
+        "E1B7A07B": "CUADRADO ROJO",
+        "55754239": "ESTRELLA AMARILLA",
+        "4CA16D3B": "CORAZON VERDE",
+        "F74B6E3B": "CUADRADO AMARILLO",
+        "BC124D39": "ESTRELLA NARANJA",
+        "22614239": "CIRCULO AMARILLO",
+        "8CAB6D3B": "CIRCULO TURQUESA",
+        "F7934D39": "RECTANGULO AZUL",
+        "65EA4139": "RECTANGULO VERDE",
+        "BB5F4239": "CORAZON AZUL",
+        "E7BD4239": "RECTANGULO TURQUESA",
+        "896A4D39": "CORAZON ROJO",
+        "AE9E4239": "TRIANGULO VERDE",
+        "B0DE6D3B": "TRIANGULO NARANJA",
+        "91275D7B": "TRIANGULO ROJO",
+        "C6770785": "CIRCULO NARANJA"
+      };
+
+      Object.entries(mapaRFID).forEach(([rfid, nombre]) => {
+        const query = `INSERT INTO figuras (nombre, codigo_rfid) VALUES (?, ?)`;
+        connection.query(query, [nombre, rfid], (err) => {
+          if (err) console.error(`❌ Error insertando figura ${nombre}:`, err);
+          else console.log(`✅ Figura ${nombre} insertada`);
+        });
+      });
+    } else {
+      console.log("ℹ️ Figuras ya existentes. No se insertan nuevamente.");
+    }
+  });
+};
+
+// Ejecutar creación de tablas
+createTables();
+
+// Ejecutar inserciones SOLO si están vacías
+insertModosJuego();
+insertFiguras();
 
 module.exports = connection;

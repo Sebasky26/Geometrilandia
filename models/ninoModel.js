@@ -37,7 +37,32 @@ class NinoModel {
     });
   }
 
-  // Obtener estadísticas agrupadas por figura y modo
+  // Obtener resumen general de sesiones para estadísticas
+static getResumenSesiones(ninoId) {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT 
+        COUNT(*) AS total_interacciones,
+        SUM(CASE WHEN resultado = 'correcto' THEN 1 ELSE 0 END) AS total_aciertos,
+        SUM(CASE WHEN resultado = 'incorrecto' THEN 1 ELSE 0 END) AS total_errores,
+        ROUND(AVG(tiempo_promedio_por_figura), 1) AS tiempo_promedio,
+        COUNT(DISTINCT DATE(timestamp)) AS sesiones_totales,
+        MAX(timestamp) AS ultima_interaccion
+      FROM interacciones
+      WHERE nino_id = ?
+    `;
+    db.query(query, [ninoId], (err, results) => {
+      if (err) {
+        console.error("❌ Error en getResumenSesiones:", err);
+        reject(err);
+      } else {
+        resolve(results[0]);
+      }
+    });
+  });
+}
+
+  // Obtener estadísticas por figura y modo
   static getStats(ninoId) {
     return new Promise((resolve, reject) => {
       const query = `
@@ -60,7 +85,7 @@ class NinoModel {
     });
   }
 
-  // === NUEVAS FUNCIONES PARA MODO INTELIGENTE ===
+  // === FUNCIONES PARA MODO INTELIGENTE ===
 
   // Aciertos totales
   static getAciertosTotales(ninoId) {
@@ -92,14 +117,31 @@ class NinoModel {
     });
   }
 
-  // Tiempo promedio entre interacciones
-  // Tiempo promedio entre interacciones (temporalmente simplificado)
-static getTiempoPromedio(ninoId) {
-  return Promise.resolve(0); // ← temporalmente retornamos 0
-}
+  // Tiempo promedio real entre interacciones
+  static getTiempoPromedio(ninoId) {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT 
+          AVG(diferencia) AS tiempo_promedio
+        FROM (
+          SELECT 
+            TIMESTAMPDIFF(SECOND, 
+              LAG(timestamp) OVER (ORDER BY timestamp), 
+              timestamp) AS diferencia
+          FROM interacciones
+          WHERE nino_id = ?
+        ) AS diferencias
+        WHERE diferencia IS NOT NULL
+      `;
+      db.query(query, [ninoId], (err, results) => {
+        if (err) return reject(err);
+        const tiempo = results[0]?.tiempo_promedio;
+        resolve(tiempo ? Math.round(tiempo) : 0);
+      });
+    });
+  }
 
-
-  // Número de sesiones (por día)
+  // Sesiones totales (por día)
   static getSesionesTotales(ninoId) {
     return new Promise((resolve, reject) => {
       const query = `
@@ -129,15 +171,13 @@ static getTiempoPromedio(ninoId) {
       `;
       db.query(query, [ninoId, ninoId], (err, results) => {
         if (err) reject(err);
-        else {
-          const { aciertos, total } = results[0];
-          resolve(total > 0 ? (aciertos / total) * 100 : 0);
-        }
+        const { aciertos, total } = results[0];
+        resolve(total > 0 ? Math.round((aciertos / total) * 100) : 0);
       });
     });
   }
 
-  // Progreso (número de figuras diferentes acertadas)
+  // Progreso general (número de figuras distintas acertadas)
   static getProgresoGeneral(ninoId) {
     return new Promise((resolve, reject) => {
       const query = `

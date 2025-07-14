@@ -157,9 +157,10 @@ let gameState = {
   juegoActivo: true,
   socket: null,
   tiempoInicio: null,
+  tiempoInicioFigura: null,
+  tiemposPorFigura: [],
 };
 
-// Logica para manejar el conteo regresivo del temporizador
 function iniciarTemporizador() {
   clearInterval(intervaloTemporizador);
   tiempoRestante = 15;
@@ -183,6 +184,10 @@ function actualizarContadorVisual() {
 
 function manejarTiempoAgotado() {
   console.log("⏰ Tiempo agotado");
+
+  const tiempoFigura = (Date.now() - gameState.tiempoInicioFigura) / 1000;
+  gameState.tiemposPorFigura.push(tiempoFigura);
+
   gameState.vidas--;
   mostrarFeedback("¡Se acabó el tiempo! ⏳", "error");
   actualizarVidas();
@@ -232,6 +237,7 @@ function mostrarNuevaFigura() {
 
   console.log(`🎯 Nueva figura objetivo: ${figuraObjetivo.nombre}`);
 
+  gameState.tiempoInicioFigura = Date.now();
   iniciarTemporizador();
 }
 
@@ -268,9 +274,12 @@ function actualizarProgreso() {
 
 function respuestaCorrecta() {
   clearInterval(intervaloTemporizador);
+
+  const tiempoFigura = (Date.now() - gameState.tiempoInicioFigura) / 1000;
+  gameState.tiemposPorFigura.push(tiempoFigura);
+
   console.log("🎉 Respuesta correcta");
   gameState.aciertos++;
-  console.log(`✅ ¡Correcto! Aciertos: ${gameState.aciertos}/5`);
   mostrarFeedback("¡Correcto! 🎉", "success");
   actualizarEstrellas();
   actualizarProgreso();
@@ -283,8 +292,12 @@ function respuestaCorrecta() {
 }
 
 function respuestaIncorrecta(figuraDetectada) {
+  clearInterval(intervaloTemporizador);
+
+  const tiempoFigura = (Date.now() - gameState.tiempoInicioFigura) / 1000;
+  gameState.tiemposPorFigura.push(tiempoFigura);
+
   gameState.vidas--;
-  console.log(`❌ Incorrecto. Vidas restantes: ${gameState.vidas}`);
   mostrarFeedback(
     `Incorrecto 😞<br>Era: ${gameState.figuraObjetivo.nombre}`,
     "error"
@@ -340,12 +353,8 @@ function mostrarPantallaDerrota() {
       <h2 class="resultado-titulo">¡Inténtalo de nuevo! 😊</h2>
       <p class="resultado-texto">Te quedaste sin vidas, pero puedes intentarlo otra vez</p>
       <div class="resultado-stats">
-        <div class="stat-item"><span class="stat-label">Estrellas obtenidas:</span><span class="stat-value">${"⭐".repeat(
-          gameState.aciertos
-        )}${"✰".repeat(5 - gameState.aciertos)}</span></div>
-        <div class="stat-item"><span class="stat-label">Progreso:</span><span class="stat-value">${
-          gameState.aciertos
-        }/5</span></div>
+        <div class="stat-item"><span class="stat-label">Estrellas obtenidas:</span><span class="stat-value">${"⭐".repeat(gameState.aciertos)}${"✰".repeat(5 - gameState.aciertos)}</span></div>
+        <div class="stat-item"><span class="stat-label">Progreso:</span><span class="stat-value">${gameState.aciertos}/5</span></div>
       </div>
       <div class="resultado-botones">
         <button class="btn-reiniciar" onclick="reiniciarJuego()">🔄 Intentar de nuevo</button>
@@ -363,6 +372,8 @@ function reiniciarJuego() {
     juegoActivo: true,
     socket: gameState.socket,
     tiempoInicio: Date.now(),
+    tiempoInicioFigura: null,
+    tiemposPorFigura: [],
   };
 
   document.querySelector(".game-area").innerHTML = `
@@ -431,15 +442,16 @@ async function enviarDatosBackend(figuraDetectada) {
 
 async function guardarResultadoFinal() {
   try {
-    const tiempoTotal = Math.floor(
-      (Date.now() - gameState.tiempoInicio) / 1000
-    );
+    const tiempoPromedio = gameState.tiemposPorFigura.length > 0
+      ? gameState.tiemposPorFigura.reduce((a, b) => a + b, 0) / gameState.tiemposPorFigura.length
+      : 0;
+
     await fetch("/api/desafio/resultado", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         aciertos: gameState.aciertos,
-        tiempo_jugado: tiempoTotal,
+        tiempo_jugado: tiempoPromedio.toFixed(2),
         completado: gameState.aciertos >= 5,
       }),
     });
@@ -485,10 +497,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Solo para pruebas manuales
 function simularLectura() {
   if (!gameState.juegoActivo) return;
-  const esCorrecta = Math.random() > 0.7; // 90% de probabilidad de ser correcta
+  const esCorrecta = Math.random() > 0.7;
   let figuraSimulada;
   if (esCorrecta) {
     figuraSimulada = gameState.figuraObjetivo.nombre;

@@ -1,4 +1,6 @@
 const NinoModel = require("../models/ninoModel");
+const InteraccionModel = require("../models/interaccionModel");
+const connection = require("../config/db");
 const fetch = require("node-fetch");
 
 class InteligenciaController {
@@ -10,26 +12,42 @@ class InteligenciaController {
     }
 
     try {
-      // Obtener datos del niño
+      // Obtener datos básicos del niño
       const nino = await NinoModel.findById(ninoId);
       if (!nino) {
         return res.status(404).json({ success: false, message: "Niño no encontrado" });
       }
 
       // Calcular estadísticas
-      const [aciertos_total, errores_total, tiempo_promedio_por_figura, sesiones_totales, rendimiento_ultima_sesion, progreso_general] =
-        await Promise.all([
-          NinoModel.getAciertosTotales(ninoId),
-          NinoModel.getErroresTotales(ninoId),
-          NinoModel.getTiempoPromedio(ninoId),
-          NinoModel.getSesionesTotales(ninoId),
-          NinoModel.getRendimientoUltimaSesion(ninoId),
-          NinoModel.getProgresoGeneral(ninoId),
-        ]);
+      const [
+        aciertos_total,
+        errores_total,
+        tiempo_promedio_por_figura,
+        sesiones_totales,
+        rendimiento_ultima_sesion,
+        progreso_general
+      ] = await Promise.all([
+        NinoModel.getAciertosTotales(ninoId),
+        NinoModel.getErroresTotales(ninoId),
+        NinoModel.getTiempoPromedio(ninoId),
+        NinoModel.getSesionesTotales(ninoId),
+        NinoModel.getRendimientoUltimaSesion(ninoId),
+        NinoModel.getProgresoGeneral(ninoId)
+      ]);
 
-      // ⚠️ Ajustar manualmente el último modo usado (puedes cambiar esto)
-      const modo_usado_ultima_sesion = "Guiado"; // ⚠️ Temporalmente fijo, luego puedes consultarlo de la BD
+      // 🔎 Obtener modo usado en la última sesión desde interacciones
+      const [ultimoModo] = await connection.promise().query(`
+        SELECT mj.nombre 
+        FROM interacciones i
+        JOIN modos_juego mj ON i.modo_id = mj.id
+        WHERE i.nino_id = ?
+        ORDER BY i.timestamp DESC
+        LIMIT 1
+      `, [ninoId]);
 
+      const modo_usado_ultima_sesion = ultimoModo[0]?.nombre || "Libre";
+
+      // Armar payload para la IA
       const payload = {
         edad: nino.edad,
         aciertos_total,
@@ -41,7 +59,7 @@ class InteligenciaController {
         progreso_general
       };
 
-      // Llamar al modelo Flask
+      // Enviar a Flask
       const response = await fetch("http://localhost:5000/predecir", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,15 +67,35 @@ class InteligenciaController {
       });
 
       const resultado = await response.json();
+      if (!resultado.success) throw new Error(resultado.error || "Error del modelo IA");
 
-      if (!resultado.success) {
-        throw new Error(resultado.error || "Error del modelo");
-      }
+      const modo_sugerido = resultado.modo_sugerido;
 
-      res.json({ success: true, modo: resultado.modo_sugerido });
+      // 🔐 Obtener ID del modo sugerido
+      const [modoRow] = await connection.promise().query(
+        `SELECT id FROM modos_juego WHERE nombre = ?`,
+        [modo_sugerido]
+      );
+      const modo_id = modoRow[0]?.id;
+
+      // ✅ Registrar la sugerencia en interacciones (con figura_id NULL)
+      await InteraccionModel.insertarInteraccion({
+        nino_id: ninoId,
+        figura_id: null,
+        modo_id,
+        resultado: "correcto",
+        aciertos_total,
+        errores_total,
+        tiempo_promedio_por_figura,
+        sesiones_totales,
+        rendimiento_ultima_sesion,
+        progreso_general
+      });
+
+      return res.json({ success: true, modo: modo_sugerido });
 
     } catch (err) {
-      console.error("❌ Error en modo inteligente:", err.message);
+      console.error("❌ Error en modo inteligente:", err);
       res.status(500).json({ success: false, message: "Error al predecir el modo" });
     }
   }

@@ -30,7 +30,7 @@ function goToMode(modo) {
       .then((res) => res.json())
       .then((json) => {
         if (json.success && json.modo_sugerido) {
-          const sugerido = json.modo_sugerido.toLowerCase(); // "libre", "guiado", "desafio"
+          const sugerido = json.modo_sugerido.toLowerCase();
           window.location.href = `/modo-${sugerido}`;
         } else {
           alert("No se pudo obtener el modo sugerido.");
@@ -60,35 +60,39 @@ async function loadStats() {
     const container = document.getElementById("statsContainer");
     container.innerHTML = "";
 
-    if (data.success && data.stats.length > 0) {
-      const labels = [];
-      const correctos = [];
-      const totales = [];
+    if (data.success && data.resumen_sesiones.length > 0) {
+      const fechas = [];
+      const aciertos = [];
 
-      data.stats.forEach(stat => {
-        const label = `${stat.figura} (${stat.modo})`;
-        labels.push(label);
-        correctos.push(stat.aciertos);
-        totales.push(stat.total_intentos);
-
+      data.resumen_sesiones.forEach((sesion) => {
         const div = document.createElement("div");
+        div.classList.add("sesion-card");
         div.innerHTML = `
-          <strong>${stat.figura}</strong> (${stat.modo}): ${stat.aciertos} aciertos de ${stat.total_intentos} intentos
+          <h4>📅 ${sesion.fecha}</h4>
+          <p><strong>Modo más usado:</strong> ${sesion.modo_mas_usado || 'N/A'}</p>
+          <p><strong>Aciertos:</strong> ${sesion.aciertos}</p>
+          <p><strong>Errores:</strong> ${sesion.errores}</p>
+          <p><strong>Tiempo promedio por figura:</strong> ${sesion.tiempo_promedio ?? '0'}s</p>
+          <p><strong>Intentos totales:</strong> ${sesion.total_interacciones}</p>
         `;
-        div.style.marginBottom = "8px";
         container.appendChild(div);
+
+        fechas.push(sesion.fecha);
+        aciertos.push(sesion.aciertos);
       });
 
-      renderChart(labels, correctos, totales);
+      renderChart(fechas, aciertos);
     } else {
-      container.textContent = "No hay estadísticas aún.";
+      container.textContent = "No hay sesiones registradas aún.";
     }
+
   } catch (err) {
+    console.error("Error cargando estadísticas:", err);
     document.getElementById("statsContainer").textContent = "Error al cargar estadísticas.";
   }
 }
 
-function renderChart(labels, aciertos, intentos) {
+function renderChart(labels, data) {
   const ctx = document.getElementById("graficoAprendizaje").getContext("2d");
 
   if (chartInstance) {
@@ -96,38 +100,31 @@ function renderChart(labels, aciertos, intentos) {
   }
 
   chartInstance = new Chart(ctx, {
-    type: "bar",
+    type: "line",
     data: {
       labels: labels,
-      datasets: [
-        {
-          label: "Aciertos",
-          data: aciertos,
-          backgroundColor: "rgba(75, 192, 192, 0.7)",
-          borderColor: "rgba(75, 192, 192, 1)",
-          borderWidth: 1
-        },
-        {
-          label: "Intentos Totales",
-          data: intentos,
-          backgroundColor: "rgba(153, 102, 255, 0.7)",
-          borderColor: "rgba(153, 102, 255, 1)",
-          borderWidth: 1
-        }
-      ]
+      datasets: [{
+        label: "Aciertos por sesión",
+        data: data,
+        fill: false,
+        borderColor: "rgba(54, 162, 235, 1)",
+        tension: 0.3
+      }]
     },
     options: {
       responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          precision: 0
-        }
-      },
       plugins: {
         title: {
           display: true,
-          text: "Progreso por figura y modo"
+          text: "Progreso de Aciertos por Sesión"
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            precision: 0
+          }
         }
       }
     }

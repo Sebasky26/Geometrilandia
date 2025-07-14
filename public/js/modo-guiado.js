@@ -26,6 +26,7 @@ function obtenerDiezAleatorias(array) {
 let figurasMezcladas = obtenerDiezAleatorias([...figuras]);
 let indiceActual = 0;
 let mostrarMensaje = false;
+let tiempoInicio = null;
 
 const img = document.getElementById("figuraImage");
 const progress = document.getElementById("progressBar");
@@ -126,11 +127,22 @@ function finalizarJuego() {
   hablarConRetardo("Felicidades, completaste todas las figuras");
   progress.style.width = "100%";
   actualizarEstrellas();
+  guardarResultadoFinal();
 }
 
-function obtenerNombreIncorrecto(nombreCorrecto) {
-  const otras = figuras.filter(f => f.nombre !== nombreCorrecto);
-  return otras[Math.floor(Math.random() * otras.length)].nombre;
+function guardarResultadoFinal() {
+  const tiempoTotal = Math.floor((Date.now() - tiempoInicio) / 1000);
+  fetch("/api/guiado/resultado", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      aciertos: figurasMezcladas.length,
+      tiempo_jugado: tiempoTotal,
+      completado: true,
+    }),
+  }).catch((err) => {
+    console.error("Error guardando resultado del modo guiado:", err);
+  });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -147,6 +159,7 @@ window.addEventListener("DOMContentLoaded", () => {
     figuraContainer.style.display = "flex";
     mostrarMensaje = true;
     mensaje.style.display = "block";
+    tiempoInicio = Date.now();
     actualizarFigura();
   }
 
