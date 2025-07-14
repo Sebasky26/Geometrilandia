@@ -80,7 +80,6 @@ body {
   margin-left: 20px; /* Separación entre corazones y estrellas */
 }
 
-
 .star {
   opacity: 0.3;
   transition: opacity 0.3s;
@@ -146,7 +145,6 @@ body {
   font-size: clamp(2.5rem, 6vw, 4rem);
 }
 
-
 /* Imagen de reloj debajo del contador */
 .reloj {
   width: clamp(180px, 20vw, 250px);
@@ -156,7 +154,6 @@ body {
 }
 
 @keyframes relojBounce {
-
   0%,
   100% {
     transform: translateY(0);
@@ -217,17 +214,17 @@ body {
 
 .figura-display {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   gap: 10px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   margin-top: 10px;
 }
 
 .figura-img {
   max-width: 100px;
   max-height: 200px;
-  width: 100%;
+  width: 50%;
   height: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
@@ -238,13 +235,13 @@ body {
 }
 
 .figura-img:hover {
-  transform: scale(1.05);
+  transform: scale(1);
   border-color: #7154c1f9;
 }
 
-@media (max-width: 300px) {
+@media (max-width: 50px) {
   .figura-img {
-    max-width: 60px;
+    max-width: 50px;
   }
 
   .figura-display {
@@ -264,7 +261,6 @@ body {
 }
 
 @keyframes magoBounce {
-
   0%,
   100% {
     transform: translateY(0);
