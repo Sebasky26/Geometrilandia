@@ -32,10 +32,19 @@
                 <div id="welcomeScreen" class="game-screen show">
                     <!-- Display de figura con mejor estructura semántica -->
                     <div class="figura-display" id="figuraDisplay" role="img" aria-labelledby="figura-description">
-                        <!-- Icono y nombre de figura -->
-                        <div class="figura-content">
+                        <!-- TUTORIAL: Se muestra solo al inicio -->
+                        <div class="figura-display" id="tutorialContainer">
+                            <h2 id="tituloTutorial">Tutorial</h2>
+                            <video id="tutorialVideo" width="90%" autoplay muted>
+                                <source src="/video/tutorial.mp4" type="video/mp4">
+                                Tu navegador no soporta la etiqueta de video.
+                            </video>
+                        </div>  
+                    
+                        <!-- Icono y nombre de figura -->                       
+                        <div class="figura-content" id="figuraContainer" style="display: none;">
                             <div class="figura-icon" id="figuraIcon" aria-hidden="true">
-                                <img id="figuraImage" src="/img/incognita.png" alt="" style="width: 100%; height: 100%;" />
+                                <img id="figuraImage" src="/img/incognita.png" alt="" style="width: 80%; height: 80%;" />
                             </div>
                             <div class="figura-name" id="figuraName" aria-live="polite"></div>
                         </div>
@@ -74,21 +83,55 @@
 <script src="/js/modo-libre.js"></script>
 <!-- Script para iniciar la música -->
 <script>
+    const music = document.getElementById('fondoGuiado');
+
+    function iniciarMusicaFondo() {
+      if (!music) return;
+      music.volume = 0.03;
+      music.play().catch(() => {
+        document.addEventListener('click', reproducirTrasInteraccion, { once: true });
+      });
+    }
+
+    function reproducirTrasInteraccion() {
+      music.play().catch((err) => {
+        console.warn("El navegador sigue bloqueando la reproducción:", err);
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-        const music = document.getElementById('fondoLibre');
-        music.volume = 0.1; // volumen bajo
-        music.play().catch((e) => {
-            console.warn("Autoplay bloqueado, espera interacción del usuario.");
-        });
+      iniciarMusicaFondo();
+
+      const video = document.getElementById('tutorialVideo');
+      const tutorialContainer = document.getElementById('tutorialContainer');
+      const figuraContainer = document.getElementById('figuraContainer');
+
+      // Ocultar contenido hasta que finalice el tutorial
+      video.onended = () => {
+        tutorialContainer.style.display = "none";
+        figuraContainer.style.display = "flex";
+
+
+        const titulo = document.getElementById('tituloTutorial');
+        if (titulo) titulo.style.display = "none"; // Ocultar título al finalizar el video
+
+        if (typeof actualizarFigura === 'function') {
+          actualizarFigura();
+        }
+      };
+
+
+      // Detener narración si se cargó por error antes
+      window.speechSynthesis.cancel();
     });
+
     window.addEventListener('beforeunload', () => {
-    const music = document.getElementById('fondoLibre');
-    if (music) {
+      if (music) {
         music.pause();
         music.currentTime = 0;
-    }
-});
-</script>
+      }
+    });
+  </script>
 
 </body>
 </html>

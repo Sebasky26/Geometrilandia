@@ -60,7 +60,13 @@ body {
   -ms-user-select: none;
   -webkit-text-size-adjust: 100%;
 }
-
+#tituloTutorial {
+    font-family: "MiFuentePersonalizada", sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: white;
+    text-align: center;
+    margin-right: 70px;
+}
 /* Header con elementos fijos */
 .header-controls {
   position: fixed;
@@ -193,10 +199,8 @@ body {
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-medium);
-  width: 100%;
-  max-width: 500px;
-  height: 100%;
-  max-height: var(--game-area-height);
+  width: 50%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,10 +211,8 @@ body {
 
 /* Display de figura optimizado */
 .figura-display {
-  width: min(250px, 40vw);
-  height: min(250px, 40vw);
-  max-width: 280px;
-  max-height: 280px;
+  width: 80%;
+  height: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,7 +248,9 @@ body {
 .figura-icon {
   font-size: clamp(3rem, 8vw, 6rem);
   color: var(--primary-purple);
-  line-height: 1;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 100%;
@@ -461,8 +465,8 @@ body {
   }
 
   .figura-display {
-    width: min(220px, 35vw);
-    height: min(220px, 35vw);
+  width: 80%;
+  height: 80%;
   }
 }
 
@@ -482,8 +486,8 @@ body {
   }
 
   .figura-display {
-    width: min(200px, 45vw);
-    height: min(200px, 45vw);
+      width: 80%;
+  height: 80%;
   }
 
 
@@ -516,8 +520,8 @@ body {
   }
 
   .figura-display {
-    width: min(180px, 50vw);
-    height: min(180px, 50vw);
+      width: 80%;
+  height: 80%;
     border-width: 3px;
   }
 
@@ -536,8 +540,8 @@ body {
   }
 
   .figura-display {
-    width: min(160px, 55vw);
-    height: min(160px, 55vw);
+      width: 80%;
+  height: 80%;
   }
 
 }
@@ -560,8 +564,8 @@ body {
   }
 
   .figura-display {
-    width: min(150px, 30vh);
-    height: min(150px, 30vh);
+     width: 80%;
+  height: 80%;
   }
 
 
