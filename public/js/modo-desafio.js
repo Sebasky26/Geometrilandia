@@ -1,7 +1,7 @@
 const figuras = [
   {
     nombre: "ESTRELLA TURQUESA",
-    src: "/img/estrella_turquesa.png",
+    src: "/img/estrella_turquesa.gif",
     color: "#40e0d0",
     forma: "estrella",
     colorTexto: "turquesa",
@@ -9,7 +9,7 @@ const figuras = [
   },
   {
     nombre: "CUADRADO AZUL",
-    src: "/img/cuadrado_azul.png",
+    src: "/img/cuadrado_azul.gif",
     color: "#1e88e5",
     forma: "cuadrado",
     colorTexto: "azul",
@@ -17,7 +17,7 @@ const figuras = [
   },
   {
     nombre: "CUADRADO ROJO",
-    src: "/img/cuadrado_rojo.png",
+    src: "/img/cuadrado_rojo.gif",
     color: "#e53935",
     forma: "cuadrado",
     colorTexto: "rojo",
@@ -25,7 +25,7 @@ const figuras = [
   },
   {
     nombre: "ESTRELLA AMARILLA",
-    src: "/img/estrella_amarilla.png",
+    src: "/img/estrella_amarilla.gif",
     color: "#fdd835",
     forma: "estrella",
     colorTexto: "amarilla",
@@ -33,7 +33,7 @@ const figuras = [
   },
   {
     nombre: "CORAZON VERDE",
-    src: "/img/corazon_verde.png",
+    src: "/img/corazon_verde.gif",
     color: "#43a047",
     forma: "corazon",
     colorTexto: "verde",
@@ -41,7 +41,7 @@ const figuras = [
   },
   {
     nombre: "CUADRADO AMARILLO",
-    src: "/img/cuadrado_amarillo.png",
+    src: "/img/cuadrado_amarillo.gif",
     color: "#fbc02d",
     forma: "cuadrado",
     colorTexto: "amarillo",
@@ -49,7 +49,7 @@ const figuras = [
   },
   {
     nombre: "ESTRELLA NARANJA",
-    src: "/img/estrella_naranja.png",
+    src: "/img/estrella_naranja.gif",
     color: "#fe970e",
     forma: "estrella",
     colorTexto: "naranja",
@@ -57,7 +57,7 @@ const figuras = [
   },
   {
     nombre: "CIRCULO AMARILLO",
-    src: "/img/circulo_amarillo.png",
+    src: "/img/circulo_amarillo.gif",
     color: "#fdd835",
     forma: "circulo",
     colorTexto: "amarillo",
@@ -65,7 +65,7 @@ const figuras = [
   },
   {
     nombre: "CIRCULO TURQUESA",
-    src: "/img/circulo_turquesa.png",
+    src: "/img/circulo_turquesa.gif",
     color: "#40e0d0",
     forma: "circulo",
     colorTexto: "turquesa",
@@ -73,7 +73,7 @@ const figuras = [
   },
   {
     nombre: "RECTÁNGULO AZUL",
-    src: "/img/rectangulo_azul.png",
+    src: "/img/rectangulo_azul.gif",
     color: "#1e88e5",
     forma: "rectangulo",
     colorTexto: "azul",
@@ -81,7 +81,7 @@ const figuras = [
   },
   {
     nombre: "RECTÁNGULO VERDE",
-    src: "/img/rectangulo_verde.png",
+    src: "/img/rectangulo_verde.gif",
     color: "#43a047",
     forma: "rectangulo",
     colorTexto: "verde",
@@ -89,7 +89,7 @@ const figuras = [
   },
   {
     nombre: "CORAZON AZUL",
-    src: "/img/corazon_azul.png",
+    src: "/img/corazon_azul.gif",
     color: "#1e88e5",
     forma: "corazon",
     colorTexto: "azul",
@@ -97,7 +97,7 @@ const figuras = [
   },
   {
     nombre: "RECTÁNGULO TURQUESA",
-    src: "/img/rectangulo_turquesa.png",
+    src: "/img/rectangulo_turquesa.gif",
     color: "#40e0d0",
     forma: "rectangulo",
     colorTexto: "turquesa",
@@ -105,7 +105,7 @@ const figuras = [
   },
   {
     nombre: "CORAZON ROJO",
-    src: "/img/corazon_rojo.png",
+    src: "/img/corazon_rojo.gif",
     color: "#e53935",
     forma: "corazon",
     colorTexto: "rojo",
@@ -113,7 +113,7 @@ const figuras = [
   },
   {
     nombre: "TRIANGULO VERDE",
-    src: "/img/triangulo_verde.png",
+    src: "/img/triangulo_verde.gif",
     color: "#43a047",
     forma: "triangulo",
     colorTexto: "verde",
@@ -121,7 +121,7 @@ const figuras = [
   },
   {
     nombre: "TRIANGULO NARANJA",
-    src: "/img/triangulo_naranja.png",
+    src: "/img/triangulo_naranja.gif",
     color: "#fe970e",
     forma: "triangulo",
     colorTexto: "naranja",
@@ -129,7 +129,7 @@ const figuras = [
   },
   {
     nombre: "TRIANGULO ROJO",
-    src: "/img/triangulo_rojo.png",
+    src: "/img/triangulo_rojo.gif",
     color: "#e53935",
     forma: "triangulo",
     colorTexto: "rojo",
@@ -137,7 +137,7 @@ const figuras = [
   },
   {
     nombre: "CIRCULO NARANJA",
-    src: "/img/circulo_naranja.png",
+    src: "/img/circulo_naranja.gif",
     color: "#fe970e",
     forma: "circulo",
     colorTexto: "naranja",
