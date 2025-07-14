@@ -92,7 +92,7 @@ parser.on("data", (line) => {
   const figura = mapaRFID[uid];
 
   if (figura) {
-    console.log("🎯 UID ${uid} → Figura: ${figura}");
+    console.log(`🎯 UID ${uid} → Figura: ${figura}`);
     io.emit("nuevaFigura", figura);
   } else {
     console.warn("⚠ UID no reconocido: ${uid}");

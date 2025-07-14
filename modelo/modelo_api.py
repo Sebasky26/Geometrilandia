@@ -17,7 +17,10 @@ def predecir():
         datos = request.json
         df = pd.DataFrame([datos])
 
-        # Codificar campo categórico
+        # Normalizar a mayúscula inicial para que coincida con lo entrenado
+        df["modo_usado_ultima_sesion"] = df["modo_usado_ultima_sesion"].str.capitalize()
+
+        # Codificar el campo categórico
         df["modo_usado_ultima_sesion"] = label_encoders["modo_usado_ultima_sesion"].transform(
             df["modo_usado_ultima_sesion"]
         )

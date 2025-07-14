@@ -93,23 +93,11 @@ class NinoModel {
   }
 
   // Tiempo promedio entre interacciones
-  static getTiempoPromedio(ninoId) {
-    return new Promise((resolve, reject) => {
-      const query = `
-        SELECT 
-          AVG(TIMESTAMPDIFF(SECOND, 
-            LAG(timestamp) OVER (ORDER BY timestamp), 
-            timestamp)) AS tiempo_promedio
-        FROM (
-          SELECT * FROM interacciones WHERE nino_id = ?
-        ) sub
-      `;
-      db.query(query, [ninoId], (err, results) => {
-        if (err) reject(err);
-        else resolve(results[0].tiempo_promedio || 0);
-      });
-    });
-  }
+  // Tiempo promedio entre interacciones (temporalmente simplificado)
+static getTiempoPromedio(ninoId) {
+  return Promise.resolve(0); // ← temporalmente retornamos 0
+}
+
 
   // Número de sesiones (por día)
   static getSesionesTotales(ninoId) {

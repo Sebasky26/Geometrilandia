@@ -78,12 +78,32 @@ const createTables = () => {
     )
   `;
 
-  // Crear tablas en orden correcto
   connection.query(createInstructoresTable, handleError("instructores"));
   connection.query(createNinosTable, handleError("ninos"));
   connection.query(createFigurasTable, handleError("figuras"));
   connection.query(createModosJuegoTable, handleError("modos_juego"));
   connection.query(createInteraccionesTable, handleError("interacciones"));
+};
+
+// Función para insertar modos de juego
+const insertModosJuego = () => {
+  const modos = [
+    ['Libre', 'Exploración libre del entorno.'],
+    ['Guiado', 'Aprendizaje con ayuda del sistema.'],
+    ['Desafío', 'Retos para evaluar el aprendizaje.'],
+    ['Inteligente', 'Modo adaptativo según el desempeño.']
+  ];
+
+  modos.forEach(([nombre, descripcion]) => {
+    const query = `
+      INSERT IGNORE INTO modos_juego (nombre, descripcion) 
+      VALUES (?, ?)
+    `;
+    connection.query(query, [nombre, descripcion], (err) => {
+      if (err) console.error(`❌ Error insertando modo ${nombre}:`, err);
+      else console.log(`✅ Modo ${nombre} insertado o ya existe`);
+    });
+  });
 };
 
 // Función para imprimir errores
@@ -96,5 +116,45 @@ function handleError(tabla) {
 
 // Ejecutar
 createTables();
+insertModosJuego();
+
+// Insertar figuras si no existen
+const insertFiguras = () => {
+  const mapaRFID = {
+    "F6FE0885": "ESTRELLA TURQUESA",
+    "B39DD90D": "CUADRADO AZUL",
+    "E1B7A07B": "CUADRADO ROJO",
+    "55754239": "ESTRELLA AMARILLA",
+    "4CA16D3B": "CORAZON VERDE",
+    "F74B6E3B": "CUADRADO AMARILLO",
+    "BC124D39": "ESTRELLA NARANJA",
+    "22614239": "CIRCULO AMARILLO",
+    "8CAB6D3B": "CIRCULO TURQUESA",
+    "F7934D39": "RECTANGULO AZUL",
+    "65EA4139": "RECTANGULO VERDE",
+    "BB5F4239": "CORAZON AZUL",
+    "E7BD4239": "RECTANGULO TURQUESA",
+    "896A4D39": "CORAZON ROJO",
+    "AE9E4239": "TRIANGULO VERDE",
+    "B0DE6D3B": "TRIANGULO NARANJA",
+    "91275D7B": "TRIANGULO ROJO",
+    "C6770785": "CIRCULO NARANJA"
+  };
+
+  Object.entries(mapaRFID).forEach(([rfid, nombre]) => {
+    const query = `
+      INSERT IGNORE INTO figuras (nombre, codigo_rfid)
+      VALUES (?, ?)
+    `;
+    connection.query(query, [nombre, rfid], (err) => {
+      if (err) console.error(`❌ Error insertando figura ${nombre}:`, err);
+      else console.log(`✅ Figura ${nombre} insertada o ya existe`);
+    });
+  });
+};
+
+// Llamar a la función
+insertFiguras();
+
 
 module.exports = connection;
