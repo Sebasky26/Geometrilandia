@@ -1,3 +1,4 @@
+// GameController.js
 const FiguraModel = require("../models/figuraModel");
 const NinoModel = require("../models/ninoModel");
 const InteraccionModel = require("../models/interaccionModel");
@@ -86,6 +87,10 @@ class GameController {
         req.session.aciertos++;
       }
 
+      const sesiones_totales = await NinoModel.getSesionesTotales(ninoId);
+      const progreso_general = await NinoModel.getProgresoGeneral(ninoId);
+      const rendimiento_ultima_sesion = calcularRendimiento(req.session.aciertos, req.session.errores);
+
       await InteraccionModel.insertarInteraccion({
         nino_id: ninoId,
         figura_id: figura.id,
@@ -94,9 +99,9 @@ class GameController {
         aciertos_total: req.session.aciertos,
         errores_total: req.session.errores,
         tiempo_promedio_por_figura: tiempoPromedio,
-        sesiones_totales: 1, // puedes implementar lógica real más adelante
-        rendimiento_ultima_sesion: calcularRendimiento(req.session.aciertos, req.session.errores),
-        progreso_general: 0, // lógica pendiente
+        sesiones_totales,
+        rendimiento_ultima_sesion,
+        progreso_general,
       });
 
       const response = {
@@ -142,24 +147,15 @@ class GameController {
         });
       }
 
-      // 🔧 Aquí estaba el error → corregido con NinoModel
       const resumen = await NinoModel.getResumenSesiones(userId);
-
-      res.json({
-        success: true,
-        resumen_sesiones: resumen,
-      });
+      res.json({ success: true, resumen_sesiones: resumen });
     } catch (error) {
       console.error("Error obteniendo estadísticas:", error);
-      res.status(500).json({
-        success: false,
-        message: "Error obteniendo estadísticas",
-      });
+      res.status(500).json({ success: false, message: "Error obteniendo estadísticas" });
     }
   }
 }
 
-// Helpers
 function getModoId(nombreModo) {
   const modos = {
     libre: 1,

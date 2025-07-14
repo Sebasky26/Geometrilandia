@@ -1,5 +1,4 @@
 const NinoModel = require("../models/ninoModel");
-const InteraccionModel = require("../models/interaccionModel");
 const connection = require("../config/db");
 const fetch = require("node-fetch");
 
@@ -12,13 +11,13 @@ class InteligenciaController {
     }
 
     try {
-      // Obtener datos básicos del niño
+      // Obtener datos del niño
       const nino = await NinoModel.findById(ninoId);
       if (!nino) {
         return res.status(404).json({ success: false, message: "Niño no encontrado" });
       }
 
-      // Calcular estadísticas
+      // Calcular estadísticas reales del niño
       const [
         aciertos_total,
         errores_total,
@@ -35,7 +34,7 @@ class InteligenciaController {
         NinoModel.getProgresoGeneral(ninoId)
       ]);
 
-      // 🔎 Obtener modo usado en la última sesión desde interacciones
+      // Consultar el último modo usado
       const [ultimoModo] = await connection.promise().query(`
         SELECT mj.nombre 
         FROM interacciones i
@@ -47,7 +46,7 @@ class InteligenciaController {
 
       const modo_usado_ultima_sesion = ultimoModo[0]?.nombre || "Libre";
 
-      // Armar payload para la IA
+      // Preparar payload para la IA
       const payload = {
         edad: nino.edad,
         aciertos_total,
@@ -59,44 +58,36 @@ class InteligenciaController {
         progreso_general
       };
 
-      // Enviar a Flask
+      // Solicitar predicción al modelo IA
       const response = await fetch("http://localhost:5000/predecir", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const resultado = await response.json();
-      if (!resultado.success) throw new Error(resultado.error || "Error del modelo IA");
+      if (!response.ok) {
+        throw new Error("Error al conectarse con el modelo IA");
+      }
 
+      const resultado = await response.json();
       const modo_sugerido = resultado.modo_sugerido;
 
-      // 🔐 Obtener ID del modo sugerido
+      // Verificar que el modo exista
       const [modoRow] = await connection.promise().query(
         `SELECT id FROM modos_juego WHERE nombre = ?`,
         [modo_sugerido]
       );
-      const modo_id = modoRow[0]?.id;
 
-      // ✅ Registrar la sugerencia en interacciones (con figura_id NULL)
-      await InteraccionModel.insertarInteraccion({
-        nino_id: ninoId,
-        figura_id: null,
-        modo_id,
-        resultado: "correcto",
-        aciertos_total,
-        errores_total,
-        tiempo_promedio_por_figura,
-        sesiones_totales,
-        rendimiento_ultima_sesion,
-        progreso_general
-      });
+      if (!modoRow.length) {
+        return res.status(404).json({ success: false, message: "Modo sugerido no encontrado" });
+      }
 
+      // 🎯 Devolver solo el nombre del modo sugerido
       return res.json({ success: true, modo: modo_sugerido });
 
     } catch (err) {
-      console.error("❌ Error en modo inteligente:", err);
-      res.status(500).json({ success: false, message: "Error al predecir el modo" });
+      console.error("❌ Error en modo inteligente:", err.message);
+      return res.status(500).json({ success: false, message: "Error al predecir el modo" });
     }
   }
 }

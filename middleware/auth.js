@@ -1,20 +1,19 @@
-// Middleware para verificar autenticación
+// middleware/auth.js
 const requireAuth = (req, res, next) => {
   if (!req.session.ninoId) {
-    return res.redirect("/login")
+    return res.redirect("/login");
   }
-  next()
-}
+  next();
+};
 
-// Middleware para redirigir si ya está autenticado
 const redirectIfAuth = (req, res, next) => {
   if (req.session.ninoId) {
-    return res.redirect("/dashboard")
+    return res.redirect("/dashboard");
   }
-  next()
-}
+  next();
+};
 
 module.exports = {
   requireAuth,
   redirectIfAuth,
-}
+};
