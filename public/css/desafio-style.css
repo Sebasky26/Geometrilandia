@@ -17,6 +17,14 @@ body {
   height: 100%;
   overflow: hidden;
 }
+#tituloTutorial {
+    font-family: "MiFuentePersonalizada", sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: white;
+    text-align: center;
+    margin-right: 70px;
+    animation: aparecer 1s ease-in-out;
+}
 
 /* Fondo */
 .background {

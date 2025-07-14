@@ -36,9 +36,9 @@
   <!-- Contenedor principal dividido: contador + juego -->
   <div class="layout-juego">
     <!-- Columna izquierda: Contador -->
-    <div class="columna-contador">
+    <div class="columna-contador" id="columna-contador">
       <p class="message-time">Tiempo restante</p>
-      <div id="contadorTiempo" class="contador-tiempo">15</div>
+      <div id="contadorTiempo" class="contador-tiempo" style="display: none;">15</div>
       <img src="/img/reloj.png" class="reloj" alt="reloj imagen" />
     </div>
 
@@ -46,8 +46,16 @@
     <div class="columna-juego">
       <div class="game-area">
         <div class="content-box">
-          <p class="instruction-text">¡Encuentra las figuras!</p>
-          <div class="figura-display" id="figuraDisplay">
+        <!-- TUTORIAL: Se muestra solo al inicio -->
+        <div class="figura-display" id="tutorialContainer">
+          <h2 id="tituloTutorial">Tutorial</h2>
+          <video id="tutorialVideo" width="70%" autoplay muted>
+            <source src="/video/tutorial.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+          </video>
+        </div>
+          <p class="instruction-text" id="instruction-text" style="display: none;">¡Encuentra las figuras!</p>
+          <div class="figura-display" id="figuraDisplay" style="display: none;">
             <!-- Las figuras se insertarán dinámicamente -->
           </div>
         </div>
@@ -60,19 +68,15 @@
   <audio id="fondoDesafio" loop>
     <source src="/audio/desafio.mp3" type="audio/mpeg" />
   </audio>
+  <!-- Inicialización -->
   <script>
-    const music = document.getElementById("fondoDesafio");
+    const music = document.getElementById('fondoDesafio');
 
     function iniciarMusicaFondo() {
       if (!music) return;
-      music.volume = 0.06;
-
-      // Intenta reproducir inmediatamente
+      music.volume = 0.03;
       music.play().catch(() => {
-        // Si falla (por política del navegador), espera a la primera interacción
-        document.addEventListener("click", reproducirTrasInteraccion, {
-          once: true,
-        });
+        document.addEventListener('click', reproducirTrasInteraccion, { once: true });
       });
     }
 
@@ -82,19 +86,37 @@
       });
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener('DOMContentLoaded', () => {
       iniciarMusicaFondo();
 
-      // Si se vuelve al dashboard desde otro modo (tipo back/forward)
-      window.addEventListener("pageshow", (event) => {
-        const tipo = performance.getEntriesByType("navigation")[0]?.type;
-        if (event.persisted || tipo === "back_forward") {
-          iniciarMusicaFondo();
+      const video = document.getElementById('tutorialVideo');
+      const tutorialContainer = document.getElementById('tutorialContainer');
+      const figuraContainer = document.getElementById('figuraDisplay');
+      const instruccionTexto = document.getElementById('instruction-text');
+      const contador = document.getElementById('contadorTiempo');
+
+      // Ocultar contenido hasta que finalice el tutorial
+      video.onended = () => {
+        tutorialContainer.style.display = "none";
+        figuraContainer.style.display = "flex";
+        instruccionTexto.style.display = "block";
+        contador.style.display = "block"; // Mostrar contador
+        iniciarTemporizador();
+
+        const titulo = document.getElementById('tituloTutorial');
+        if (titulo) titulo.style.display = "none"; // Ocultar título al finalizar el video
+
+        if (typeof actualizarFigura === 'function') {
+          actualizarFigura();
         }
-      });
+      };
+
+
+      // Detener narración si se cargó por error antes
+      window.speechSynthesis.cancel();
     });
-    window.addEventListener("beforeunload", () => {
-      const music = document.getElementById("fondoDesafio");
+
+    window.addEventListener('beforeunload', () => {
       if (music) {
         music.pause();
         music.currentTime = 0;
