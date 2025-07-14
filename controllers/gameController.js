@@ -1,5 +1,7 @@
 const FiguraModel = require("../models/figuraModel");
 const UserModel = require("../models/ninoModel");
+const InteraccionModel = require("../models/interaccionModel");
+
 
 class GameController {
   // Mostrar dashboard
@@ -92,12 +94,19 @@ class GameController {
       }
 
       // Registrar interacción
-      await FiguraModel.registrarInteraccion(
-        userId,
-        figura.id,
-        modo,
-        resultado
-      );
+      await InteraccionModel.insertarInteraccion({
+        nino_id: userId,
+        figura_id: figura.id,
+        modo_id: getModoId(modo),  // Función para convertir string a ID
+        resultado: resultado,
+        aciertos_total: await UserModel.getAciertosTotales(userId),
+        errores_total: await UserModel.getErroresTotales(userId),
+        tiempo_promedio_por_figura: await UserModel.getTiempoPromedio(userId),
+        sesiones_totales: await UserModel.getSesionesTotales(userId),
+        rendimiento_ultima_sesion: await UserModel.getRendimientoUltimaSesion(userId),
+        progreso_general: await UserModel.getProgresoGeneral(userId)
+      });
+
 
       // Respuesta completa para el modo desafío
       const response = {
@@ -256,5 +265,17 @@ class GameController {
     }
   }
 }
+
+// Utilidad para traducir nombre de modo a ID
+function getModoId(nombreModo) {
+  const modos = {
+    libre: 1,
+    guiado: 2,
+    desafio: 3,
+    inteligente: 4
+  };
+  return modos[nombreModo.toLowerCase()] || null;
+}
+
 
 module.exports = GameController;
