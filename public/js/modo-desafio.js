@@ -1,169 +1,23 @@
 const figuras = [
-  {
-    nombre: "ESTRELLA TURQUESA",
-    src: "/img/estrella_turquesa.gif",
-    color: "#40e0d0",
-    forma: "estrella",
-    colorTexto: "turquesa",
-    genero: "la",
-  },
-  {
-    nombre: "CUADRADO AZUL",
-    src: "/img/cuadrado_azul.gif",
-    color: "#1e88e5",
-    forma: "cuadrado",
-    colorTexto: "azul",
-    genero: "el",
-  },
-  {
-    nombre: "CUADRADO ROJO",
-    src: "/img/cuadrado_rojo.gif",
-    color: "#e53935",
-    forma: "cuadrado",
-    colorTexto: "rojo",
-    genero: "el",
-  },
-  {
-    nombre: "ESTRELLA AMARILLA",
-    src: "/img/estrella_amarilla.gif",
-    color: "#fdd835",
-    forma: "estrella",
-    colorTexto: "amarilla",
-    genero: "la",
-  },
-  {
-    nombre: "CORAZON VERDE",
-    src: "/img/corazon_verde.gif",
-    color: "#43a047",
-    forma: "corazon",
-    colorTexto: "verde",
-    genero: "el",
-  },
-  {
-    nombre: "CUADRADO AMARILLO",
-    src: "/img/cuadrado_amarillo.gif",
-    color: "#fbc02d",
-    forma: "cuadrado",
-    colorTexto: "amarillo",
-    genero: "el",
-  },
-  {
-    nombre: "ESTRELLA NARANJA",
-    src: "/img/estrella_naranja.gif",
-    color: "#fe970e",
-    forma: "estrella",
-    colorTexto: "naranja",
-    genero: "la",
-  },
-  {
-    nombre: "CIRCULO AMARILLO",
-    src: "/img/circulo_amarillo.gif",
-    color: "#fdd835",
-    forma: "circulo",
-    colorTexto: "amarillo",
-    genero: "el",
-  },
-  {
-    nombre: "CIRCULO TURQUESA",
-    src: "/img/circulo_turquesa.gif",
-    color: "#40e0d0",
-    forma: "circulo",
-    colorTexto: "turquesa",
-    genero: "el",
-  },
-  {
-    nombre: "RECTÁNGULO AZUL",
-    src: "/img/rectangulo_azul.gif",
-    color: "#1e88e5",
-    forma: "rectangulo",
-    colorTexto: "azul",
-    genero: "el",
-  },
-  {
-    nombre: "RECTÁNGULO VERDE",
-    src: "/img/rectangulo_verde.gif",
-    color: "#43a047",
-    forma: "rectangulo",
-    colorTexto: "verde",
-    genero: "el",
-  },
-  {
-    nombre: "CORAZON AZUL",
-    src: "/img/corazon_azul.gif",
-    color: "#1e88e5",
-    forma: "corazon",
-    colorTexto: "azul",
-    genero: "el",
-  },
-  {
-    nombre: "RECTÁNGULO TURQUESA",
-    src: "/img/rectangulo_turquesa.gif",
-    color: "#40e0d0",
-    forma: "rectangulo",
-    colorTexto: "turquesa",
-    genero: "el",
-  },
-  {
-    nombre: "CORAZON ROJO",
-    src: "/img/corazon_rojo.gif",
-    color: "#e53935",
-    forma: "corazon",
-    colorTexto: "rojo",
-    genero: "el",
-  },
-  {
-    nombre: "TRIANGULO VERDE",
-    src: "/img/triangulo_verde.gif",
-    color: "#43a047",
-    forma: "triangulo",
-    colorTexto: "verde",
-    genero: "el",
-  },
-  {
-    nombre: "TRIANGULO NARANJA",
-    src: "/img/triangulo_naranja.gif",
-    color: "#fe970e",
-    forma: "triangulo",
-    colorTexto: "naranja",
-    genero: "el",
-  },
-  {
-    nombre: "TRIANGULO ROJO",
-    src: "/img/triangulo_rojo.gif",
-    color: "#e53935",
-    forma: "triangulo",
-    colorTexto: "rojo",
-    genero: "el",
-  },
-  {
-    nombre: "CIRCULO NARANJA",
-    src: "/img/circulo_naranja.gif",
-    color: "#fe970e",
-    forma: "circulo",
-    colorTexto: "naranja",
-    genero: "el",
-  },
+  { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.gif", color: "#40e0d0", forma: "estrella", colorTexto: "turquesa", genero: "la" },
+  { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.gif", color: "#1e88e5", forma: "cuadrado", colorTexto: "azul", genero: "el" },
+  { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rojo.gif", color: "#e53935", forma: "cuadrado", colorTexto: "rojo", genero: "el" },
+  { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.gif", color: "#fdd835", forma: "estrella", colorTexto: "amarilla", genero: "la" },
+  { nombre: "CORAZON VERDE", src: "/img/corazon_verde.gif", color: "#43a047", forma: "corazon", colorTexto: "verde", genero: "el" },
+  { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.gif", color: "#fbc02d", forma: "cuadrado", colorTexto: "amarillo", genero: "el" },
+  { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.gif", color: "#fe970e", forma: "estrella", colorTexto: "naranja", genero: "la" },
+  { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.gif", color: "#fdd835", forma: "circulo", colorTexto: "amarillo", genero: "el" },
+  { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.gif", color: "#40e0d0", forma: "circulo", colorTexto: "turquesa", genero: "el" },
+  { nombre: "RECTANGULO AZUL", src: "/img/rectangulo_azul.gif", color: "#1e88e5", forma: "rectangulo", colorTexto: "azul", genero: "el" },
+  { nombre: "RECTANGULO VERDE", src: "/img/rectangulo_verde.gif", color: "#43a047", forma: "rectangulo", colorTexto: "verde", genero: "el" },
+  { nombre: "CORAZON AZUL", src: "/img/corazon_azul.gif", color: "#1e88e5", forma: "corazon", colorTexto: "azul", genero: "el" },
+  { nombre: "RECTANGULO TURQUESA", src: "/img/rectangulo_turquesa.gif", color: "#40e0d0", forma: "rectangulo", colorTexto: "turquesa", genero: "el" },
+  { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.gif", color: "#e53935", forma: "corazon", colorTexto: "rojo", genero: "el" },
+  { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.gif", color: "#43a047", forma: "triangulo", colorTexto: "verde", genero: "el" },
+  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.gif", color: "#fe970e", forma: "triangulo", colorTexto: "naranja", genero: "el" },
+  { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.gif", color: "#e53935", forma: "triangulo", colorTexto: "rojo", genero: "el" },
+  { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.gif", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
 ];
-const mapaRFIDSimulado = {
-  "F6FE0885": "ESTRELLA TURQUESA",
-  "B39DD90D": "CUADRADO AZUL",
-  "E1B7A07B": "CUADRADO ROJO",
-  "55754239": "ESTRELLA AMARILLA",
-  "4CA16D3B": "CORAZON VERDE",
-  "F74B6E3B": "CUADRADO AMARILLO",
-  "BC124D39": "ESTRELLA NARANJA",
-  "22614239": "CIRCULO AMARILLO",
-  "8CAB6D3B": "CIRCULO TURQUESA",
-  "F7934D39": "RECTÁNGULO AZUL",
-  "65EA4139": "RECTÁNGULO VERDE",
-  "BB5F4239": "CORAZON AZUL",
-  "E7BD4239": "RECTÁNGULO TURQUESA",
-  "896A4D39": "CORAZON ROJO",
-  "AE9E4239": "TRIANGULO VERDE",
-  "B0DE6D3B": "TRIANGULO NARANJA",
-  "91275D7B": "TRIANGULO ROJO",
-  "C6770785": "CIRCULO NARANJA"
-};
 
 // Variables globales
 let tiempoRestante = 15; // Tiempo en segundos
@@ -311,7 +165,7 @@ function respuestaCorrecta() {
   }
 }
 
-function respuestaIncorrecta(figuraDetectada) {
+function respuestaIncorrecta(nombre) {
   clearInterval(intervaloTemporizador);
 
   const tiempoFigura = (Date.now() - gameState.tiempoInicioFigura) / 1000;
@@ -413,21 +267,21 @@ function volverAlMenu() {
   window.location.href = "/dashboard";
 }
 
-function procesarLecturaRFID(figuraDetectada) {
+function procesarLecturaRFID(nombre) {
   if (!gameState.juegoActivo || !gameState.figuraObjetivo) return;
 
-  console.log(`📡 RFID detectado: ${figuraDetectada}`);
+  console.log(`📡 RFID detectado: ${nombre}`);
   console.log(`🎯 Figura esperada: ${gameState.figuraObjetivo.nombre}`);
-  enviarDatosBackend(figuraDetectada);
+  enviarDatosBackend(nombre);
 }
 
-async function enviarDatosBackend(figuraDetectada) {
+async function enviarDatosBackend(nombre) {
   try {
     const response = await fetch("/api/figura/rfid", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        codigo_rfid: figuraDetectada,
+        codigo_rfid: nombre,
         modo: "desafio",
         figura_esperada: gameState.figuraObjetivo.nombre,
         vidas_restantes: gameState.vidas,
@@ -452,10 +306,10 @@ async function enviarDatosBackend(figuraDetectada) {
     }
   } catch (error) {
     console.error("Error enviando datos al backend:", error);
-    if (figuraDetectada === gameState.figuraObjetivo.nombre) {
+    if (nombre === gameState.figuraObjetivo.nombre) {
       respuestaCorrecta();
     } else {
-      respuestaIncorrecta(figuraDetectada);
+      respuestaIncorrecta(nombre);
     }
   }
 }
@@ -481,54 +335,32 @@ async function guardarResultadoFinal() {
 }
 
 function conectarWebSocket() {
-    gameState.socket = io();
+  gameState.socket = io();
 
-    gameState.socket.on("connect", () => {
-      console.log("🔌 Conectado al servidor WebSocket");
-    });
+  gameState.socket.on("connect", () => {
+    console.log("🔌 Conectado al servidor WebSocket");
+  });
 
-    gameState.socket.on("nuevaFigura", ({figuraDetectada,codigo}) => {
-      procesarLecturaRFID(figuraDetectada);
-      fetch("/api/rfid", {
+  gameState.socket.on("nuevaFigura", ({ nombre, codigo }) => {
+    console.log(`📡 Nueva figura recibida: ${nombre} (Código: ${codigo})`);
+    procesarLecturaRFID(nombre);
+    fetch("/api/rfid", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         codigo_rfid: codigo,
         modo: "desafio",
-        figura_esperada: figuraDetectada
+        figura_esperada: nombre
       })
     }).catch((err) => {
       console.error("Error al guardar interacción RFID:", err);
     });
 
-    });
-    // 👇 Aquí va el nuevo bloque del simulador con menú
-  const selectSimulador = document.getElementById("selectSimulador");
-  Object.entries(mapaRFIDSimulado).forEach(([codigo, nombre]) => {
-    const option = document.createElement("option");
-    option.value = codigo;
-    option.textContent = nombre;
-    selectSimulador.appendChild(option);
   });
 
-  document.getElementById("btnSimular")?.addEventListener("click", () => {
-    const codigo = selectSimulador.value;
-    const figuraDetectada = mapaRFIDSimulado[codigo];
-
-    if (!figuraDetectada || !codigo) {
-      alert("Selecciona una figura válida para simular.");
-      return;
-    }
-
-    console.log(`🧪 Simulando figura: ${figuraDetectada} (${codigo})`);
-    gameState.socket.listeners("nuevaFigura").forEach((listener) =>
-      listener({ figuraDetectada, codigo })
-    );
+  gameState.socket.on("disconnect", () => {
+    console.log("🔌 Desconectado del servidor WebSocket");
   });
-
-    gameState.socket.on("disconnect", () => {
-      console.log("🔌 Desconectado del servidor WebSocket");
-    });
 
 }
 

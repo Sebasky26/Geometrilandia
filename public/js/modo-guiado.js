@@ -8,16 +8,17 @@ const figuras = [
   { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.gif", color: "#fe970e", forma: "estrella", colorTexto: "naranja", genero: "la" },
   { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.gif", color: "#fdd835", forma: "circulo", colorTexto: "amarillo", genero: "el" },
   { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.gif", color: "#40e0d0", forma: "circulo", colorTexto: "turquesa", genero: "el" },
-  { nombre: "RECTÁNGULO AZUL", src: "/img/rectangulo_azul.gif", color: "#1e88e5", forma: "rectangulo", colorTexto: "azul", genero: "el" },
-  { nombre: "RECTÁNGULO VERDE", src: "/img/rectangulo_verde.gif", color: "#43a047", forma: "rectangulo", colorTexto: "verde", genero: "el" },
+  { nombre: "RECTANGULO AZUL", src: "/img/rectangulo_azul.gif", color: "#1e88e5", forma: "rectangulo", colorTexto: "azul", genero: "el" },
+  { nombre: "RECTANGULO VERDE", src: "/img/rectangulo_verde.gif", color: "#43a047", forma: "rectangulo", colorTexto: "verde", genero: "el" },
   { nombre: "CORAZON AZUL", src: "/img/corazon_azul.gif", color: "#1e88e5", forma: "corazon", colorTexto: "azul", genero: "el" },
-  { nombre: "RECTÁNGULO TURQUESA", src: "/img/rectangulo_turquesa.gif", color: "#40e0d0", forma: "rectangulo", colorTexto: "turquesa", genero: "el" },
+  { nombre: "RECTANGULO TURQUESA", src: "/img/rectangulo_turquesa.gif", color: "#40e0d0", forma: "rectangulo", colorTexto: "turquesa", genero: "el" },
   { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.gif", color: "#e53935", forma: "corazon", colorTexto: "rojo", genero: "el" },
   { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.gif", color: "#43a047", forma: "triangulo", colorTexto: "verde", genero: "el" },
   { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.gif", color: "#fe970e", forma: "triangulo", colorTexto: "naranja", genero: "el" },
   { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.gif", color: "#e53935", forma: "triangulo", colorTexto: "rojo", genero: "el" },
   { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.gif", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
 ];
+
 const mapaRFIDSimulado = {
   "F6FE0885": "ESTRELLA TURQUESA",
   "B39DD90D": "CUADRADO AZUL",
