@@ -144,6 +144,26 @@ const figuras = [
     genero: "el",
   },
 ];
+const mapaRFIDSimulado = {
+  "F6FE0885": "ESTRELLA TURQUESA",
+  "B39DD90D": "CUADRADO AZUL",
+  "E1B7A07B": "CUADRADO ROJO",
+  "55754239": "ESTRELLA AMARILLA",
+  "4CA16D3B": "CORAZON VERDE",
+  "F74B6E3B": "CUADRADO AMARILLO",
+  "BC124D39": "ESTRELLA NARANJA",
+  "22614239": "CIRCULO AMARILLO",
+  "8CAB6D3B": "CIRCULO TURQUESA",
+  "F7934D39": "RECTÁNGULO AZUL",
+  "65EA4139": "RECTÁNGULO VERDE",
+  "BB5F4239": "CORAZON AZUL",
+  "E7BD4239": "RECTÁNGULO TURQUESA",
+  "896A4D39": "CORAZON ROJO",
+  "AE9E4239": "TRIANGULO VERDE",
+  "B0DE6D3B": "TRIANGULO NARANJA",
+  "91275D7B": "TRIANGULO ROJO",
+  "C6770785": "CIRCULO NARANJA"
+};
 
 // Variables globales
 let tiempoRestante = 15; // Tiempo en segundos
@@ -461,23 +481,55 @@ async function guardarResultadoFinal() {
 }
 
 function conectarWebSocket() {
-  if (typeof io !== "undefined") {
     gameState.socket = io();
 
     gameState.socket.on("connect", () => {
       console.log("🔌 Conectado al servidor WebSocket");
     });
 
-    gameState.socket.on("nuevaFigura", (figuraDetectada) => {
+    gameState.socket.on("nuevaFigura", ({figuraDetectada,codigo}) => {
       procesarLecturaRFID(figuraDetectada);
+      fetch("/api/rfid", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        codigo_rfid: codigo,
+        modo: "desafio",
+        figura_esperada: figuraDetectada
+      })
+    }).catch((err) => {
+      console.error("Error al guardar interacción RFID:", err);
     });
+
+    });
+    // 👇 Aquí va el nuevo bloque del simulador con menú
+  const selectSimulador = document.getElementById("selectSimulador");
+  Object.entries(mapaRFIDSimulado).forEach(([codigo, nombre]) => {
+    const option = document.createElement("option");
+    option.value = codigo;
+    option.textContent = nombre;
+    selectSimulador.appendChild(option);
+  });
+
+  document.getElementById("btnSimular")?.addEventListener("click", () => {
+    const codigo = selectSimulador.value;
+    const figuraDetectada = mapaRFIDSimulado[codigo];
+
+    if (!figuraDetectada || !codigo) {
+      alert("Selecciona una figura válida para simular.");
+      return;
+    }
+
+    console.log(`🧪 Simulando figura: ${figuraDetectada} (${codigo})`);
+    gameState.socket.listeners("nuevaFigura").forEach((listener) =>
+      listener({ figuraDetectada, codigo })
+    );
+  });
 
     gameState.socket.on("disconnect", () => {
       console.log("🔌 Desconectado del servidor WebSocket");
     });
-  } else {
-    console.warn("⚠️ Socket.IO no está disponible");
-  }
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {

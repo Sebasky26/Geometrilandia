@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -131,6 +132,7 @@
       });
     }
 
+
     window.addEventListener('DOMContentLoaded', () => {
       iniciarMusicaFondo();
 
@@ -148,6 +150,10 @@
         music.currentTime = 0;
       }
     });
+    function quitarTildes(texto) {
+      return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
 
     // Llamar a la IA y redirigir automáticamente
     document.addEventListener("DOMContentLoaded", () => {
@@ -157,12 +163,16 @@
         btn.addEventListener("click", async () => {
           try {
             const response = await fetch("/api/modo-inteligente", { method: "POST" });
+            console.log("🔄 Llamando a la IA para modo inteligente...");
             const data = await response.json();
+            console.log("🔄 Respuesta de la IA:", data);
 
             if (data.success) {
-              const modo = data.modo_sugerido.toLowerCase();
-              alert("🎯 Modo sugerido por la IA: " + modo);
-              window.location.href = `/modo-${modo}`;
+              const modoOriginal = data.modo || "";
+              const modoNormalizado = quitarTildes(modoOriginal.toLowerCase());
+
+              alert("🎯 Modo sugerido por la IA: " + modoOriginal);
+              window.location.href = `/modo-${modoNormalizado}`;
             } else {
               alert("⚠ No se pudo obtener el modo sugerido.");
             }
@@ -173,10 +183,12 @@
         });
       }
 
+
       initDashboard();
     });
   </script>
 
   <script src="/js/dashboard.js"></script>
 </body>
+
 </html>

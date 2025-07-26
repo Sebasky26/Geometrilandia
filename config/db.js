@@ -96,10 +96,10 @@ const insertModosJuego = () => {
 
     if (results[0].count === 0) {
       const modos = [
-        ['Libre', 'Exploración libre del entorno.'],
-        ['Guiado', 'Aprendizaje con ayuda del sistema.'],
-        ['Desafío', 'Retos para evaluar el aprendizaje.'],
-        ['Inteligente', 'Modo adaptativo según el desempeño.']
+        ['libre', 'Exploración libre del entorno.'],
+        ['guiado', 'Aprendizaje con ayuda del sistema.'],
+        ['desafio', 'Retos para evaluar el aprendizaje.'],
+        ['inteligente', 'Modo adaptativo según el desempeño.']
       ];
 
       modos.forEach(([nombre, descripcion]) => {

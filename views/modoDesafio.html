@@ -62,7 +62,16 @@
       </div>
     </div>
   </div>
-
+<!-- Simulador de lectura RFID manual -->
+<div style="position: fixed; bottom: 20px; right: 20px; background: white; padding: 12px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 999;">
+  <label for="selectSimulador" style="font-weight: bold;">Simular lectura:</label><br>
+  <select id="selectSimulador" style="padding: 6px; margin-top: 5px;">
+    <option value="">-- Selecciona una figura --</option>
+  </select>
+  <button id="btnSimular" style="margin-top: 10px; background-color: #2196f3; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+    Simular RFID
+  </button>
+</div>
   <!-- Mago -->
   <img src="/img/mago.png" alt="Mago sonriente" class="mago-img" />
   <audio id="fondoDesafio" loop>

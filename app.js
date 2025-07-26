@@ -93,7 +93,10 @@ parser.on("data", (line) => {
 
   if (figura) {
     console.log(`🎯 UID ${uid} → Figura: ${figura}`);
-    io.emit("nuevaFigura", figura);
+    io.emit("nuevaFigura", {
+    nombre: figura,
+    codigo: uid
+    });
   } else {
     console.warn("⚠ UID no reconocido: ${uid}");
   }

@@ -33,32 +33,33 @@ class GameController {
   static async processRFID(req, res) {
     try {
       const { codigo_rfid, modo, figura_esperada } = req.body;
+      //Usuario debe estar autenticado
       const ninoId = req.session.ninoId;
       if (!ninoId) return res.status(401).json({ success: false, message: "No hay sesión activa" });
-
+      //Verifica que el codigo de la figura sea válido y guarda en figura
       const figura = await FiguraModel.findByRFID(codigo_rfid);
       if (!figura) return res.status(404).json({ success: false, message: "Figura no encontrada" });
-
+      //Calcula cuánto tiempo ha pasado desde la última figura escaneada
       const ahora = Date.now();
       const tiempoFigura = req.session.ultimaInteraccion ? ahora - req.session.ultimaInteraccion : 0;
       req.session.ultimaInteraccion = ahora;
-
+      //Guarda el tiempo que tomó esta figura dentro de un array
       req.session.tiemposPorFigura = req.session.tiemposPorFigura || [];
       if (tiempoFigura > 0) {
         req.session.tiemposPorFigura.push(tiempoFigura);
       }
-
+      //Calcula el tiempo promedio por figura
       const tiempoPromedio = req.session.tiemposPorFigura.length > 0
         ? Math.round(req.session.tiemposPorFigura.reduce((a, b) => a + b, 0) / req.session.tiemposPorFigura.length)
         : 0;
-
+      // Inicializa los contadores de aciertos y errores en sesión
       req.session.aciertos = req.session.aciertos || 0;
       req.session.errores = req.session.errores || 0;
 
       let resultado = "correcto";
       let mensaje = `¡Es un ${figura.nombre}!`;
       let gameStatus = "continuar";
-
+      //Solo se evalúa si la respuesta fue correcta o incorrecta si hay una figura esperada, en los modos "guiado" o "desafio"
       if ((modo === "guiado" || modo === "desafio") && figura_esperada) {
         if (figura.nombre !== figura_esperada) {
           resultado = "incorrecto";

@@ -18,12 +18,31 @@ const figuras = [
   { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.gif", color: "#e53935", forma: "triángulo", colorTexto: "rojo", genero: "el" },
   { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.gif", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
 ];
+const mapaRFIDSimulado = {
+  "F6FE0885": "ESTRELLA TURQUESA",
+  "B39DD90D": "CUADRADO AZUL",
+  "E1B7A07B": "CUADRADO ROJO",
+  "55754239": "ESTRELLA AMARILLA",
+  "4CA16D3B": "CORAZON VERDE",
+  "F74B6E3B": "CUADRADO AMARILLO",
+  "BC124D39": "ESTRELLA NARANJA",
+  "22614239": "CIRCULO AMARILLO",
+  "8CAB6D3B": "CIRCULO TURQUESA",
+  "F7934D39": "RECTÁNGULO AZUL",
+  "65EA4139": "RECTÁNGULO VERDE",
+  "BB5F4239": "CORAZON AZUL",
+  "E7BD4239": "RECTÁNGULO TURQUESA",
+  "896A4D39": "CORAZON ROJO",
+  "AE9E4239": "TRIANGULO VERDE",
+  "B0DE6D3B": "TRIANGULO NARANJA",
+  "91275D7B": "TRIANGULO ROJO",
+  "C6770785": "CIRCULO NARANJA"
+};
 
 // Elementos
 const imgElement = document.getElementById("figuraImage");
 const nameElement = document.getElementById("figuraName");
-const displayElement = document.getElementById("figura-content");
-const feedback = document.getElementById("feedbackMessage");
+const displayElement = document.getElementById("figuraContainer");
 const detectSound = document.getElementById("detectSound");
 const instruction = document.getElementById("instrucciones");
 const successSound = document.getElementById("successSound");
@@ -50,11 +69,13 @@ function hablar(texto) {
 function mostrarFigura(nombre) {
   const figura = figuras.find(f => f.nombre === nombre);
   if (!figura) {
-    mostrarError("Figura no reconocida");
     hablar("Figura no reconocida");
     return;
   }
-
+    if (!displayElement || !imgElement || !nameElement ) {
+    console.warn("⚠️ Elemento HTML faltante");
+    return;
+    }
   detectSound.currentTime = 0;
   detectSound.play();
 
@@ -63,11 +84,7 @@ function mostrarFigura(nombre) {
   nameElement.textContent = figura.nombre;
   nameElement.style.color = figura.color;
 
-  displayElement.classList.remove("error");
-  displayElement.classList.add("success");
 
-  feedback.textContent = `¡Excelente! Has detectado ${figura.genero} ${figura.forma} de color ${figura.colorTexto}.`;
-  feedback.className = "feedback-message feedback-success show";
 
   let mensaje = `Has detectado ${figura.genero} ${figura.forma} de color ${figura.colorTexto}`;
   hablar(mensaje);
@@ -76,29 +93,10 @@ function mostrarFigura(nombre) {
   successSound.play();
 
   const tiempo_jugado = Math.floor((Date.now() - tiempoInicio) / 1000);
-  guardarRegistroFigura(figura, tiempo_jugado);
 
-  setTimeout(() => {
-    feedback.classList.remove("show");
-    resetFigura();
-  }, 3000);
 }
 
-// Guardar figura en la base de datos
-function guardarRegistroFigura(figura, tiempo_jugado) {
-  fetch("/api/libre/registro", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      nombre: figura.nombre,
-      forma: figura.forma,
-      color: figura.colorTexto,
-      tiempo_jugado
-    }),
-  }).catch((err) => {
-    console.error("❌ Error al guardar figura en modo libre:", err);
-  });
-}
+
 
 // Reset
 function resetFigura() {
@@ -109,25 +107,49 @@ function resetFigura() {
   displayElement.classList.remove("success", "error");
 }
 
-// Mostrar error
-function mostrarError(mensaje) {
-  imgElement.src = "/img/error.png";
-  imgElement.alt = "Error de figura";
-  nameElement.textContent = "";
-  displayElement.classList.remove("success");
-  displayElement.classList.add("error");
-
-  feedback.textContent = mensaje;
-  feedback.className = "feedback-message feedback-error show";
-
-  setTimeout(() => {
-    feedback.classList.remove("show");
-  }, 3000);
-}
 
 // WebSocket
 const socket = io();
-socket.on("nuevaFigura", (nombre) => {
-  console.log("🟢 Figura detectada:", nombre);
-  mostrarFigura(nombre);
-});
+  socket.on("nuevaFigura", ({ nombre, codigo }) => {
+    console.log("🧩 Figura recibida:", nombre, codigo);
+    mostrarFigura(nombre);
+
+    // Guardar interacción en el servidor
+    console.log("🔄 Enviando interacción al backend:", nombre, codigo);
+      fetch("/api/rfid", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        codigo_rfid: codigo,
+        modo: "libre",
+        figura_esperada: nombre
+      })
+    }).catch((err) => {
+      console.error("Error al guardar interacción RFID:", err);
+    });
+  });
+
+    // 👇 Aquí va el nuevo bloque del simulador con menú
+  const selectSimulador = document.getElementById("selectSimulador");
+  Object.entries(mapaRFIDSimulado).forEach(([codigo, nombre]) => {
+    const option = document.createElement("option");
+    option.value = codigo;
+    option.textContent = nombre;
+    selectSimulador.appendChild(option);
+  });
+    document.getElementById("btnSimular")?.addEventListener("click", () => {
+    const codigo = selectSimulador.value;
+    const nombre = mapaRFIDSimulado[codigo];
+
+    if (!codigo || !nombre) {
+      alert("Selecciona una figura válida para simular.");
+      return;
+    }
+
+    console.log(`🧪 Simulando figura: ${nombre} (${codigo})`);
+    socket.listeners("nuevaFigura").forEach((listener) =>
+      listener({ nombre, codigo })
+    );
+  });
+  
+
