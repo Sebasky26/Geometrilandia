@@ -1,11 +1,9 @@
-/* NUEVO: barra superior para botón */
 .top-bar {
   position: absolute;
   top: 20px;
   left: 20px;
   z-index: 999;
 }
-
 /* Botón con estilo armónico */
 .back-button {
   padding: 12px 20px;

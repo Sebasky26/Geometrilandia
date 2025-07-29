@@ -1,4 +1,3 @@
-// GameController.js
 const FiguraModel = require("../models/figuraModel");
 const NinoModel = require("../models/ninoModel");
 const InteraccionModel = require("../models/interaccionModel");
@@ -33,33 +32,47 @@ class GameController {
   static async processRFID(req, res) {
     try {
       const { codigo_rfid, modo, figura_esperada } = req.body;
-      //Usuario debe estar autenticado
+
       const ninoId = req.session.ninoId;
-      if (!ninoId) return res.status(401).json({ success: false, message: "No hay sesión activa" });
-      //Verifica que el codigo de la figura sea válido y guarda en figura
+      if (!ninoId) {
+        return res.status(401).json({ success: false, message: "No hay sesión activa" });
+      }
+
       const figura = await FiguraModel.findByRFID(codigo_rfid);
-      if (!figura) return res.status(404).json({ success: false, message: "Figura no encontrada" });
-      //Calcula cuánto tiempo ha pasado desde la última figura escaneada
+      if (!figura) {
+        return res.status(404).json({ success: false, message: "Figura no encontrada" });
+      }
+
+      // Calcular tiempo desde la última interacción (en segundos)
       const ahora = Date.now();
-      const tiempoFigura = req.session.ultimaInteraccion ? ahora - req.session.ultimaInteraccion : 0;
+      const tiempoFigura = req.session.ultimaInteraccion
+        ? Math.round((ahora - req.session.ultimaInteraccion) / 1000)
+        : 0;
+
       req.session.ultimaInteraccion = ahora;
-      //Guarda el tiempo que tomó esta figura dentro de un array
+
+      // Guardar tiempos por figura (solo para promedio si se requiere)
       req.session.tiemposPorFigura = req.session.tiemposPorFigura || [];
       if (tiempoFigura > 0) {
         req.session.tiemposPorFigura.push(tiempoFigura);
       }
-      //Calcula el tiempo promedio por figura
+
+      // Acumular tiempo total jugado en sesión
+      req.session.tiempo_total = (req.session.tiempo_total || 0) + tiempoFigura;
+
+      // Calcular promedio (si se desea usarlo más adelante)
       const tiempoPromedio = req.session.tiemposPorFigura.length > 0
         ? Math.round(req.session.tiemposPorFigura.reduce((a, b) => a + b, 0) / req.session.tiemposPorFigura.length)
         : 0;
-      // Inicializa los contadores de aciertos y errores en sesión
+
+      // Inicializar contadores
       req.session.aciertos = req.session.aciertos || 0;
       req.session.errores = req.session.errores || 0;
 
       let resultado = "correcto";
       let mensaje = `¡Es un ${figura.nombre}!`;
       let gameStatus = "continuar";
-      //Solo se evalúa si la respuesta fue correcta o incorrecta si hay una figura esperada, en los modos "guiado" o "desafio"
+
       if ((modo === "guiado" || modo === "desafio") && figura_esperada) {
         if (figura.nombre !== figura_esperada) {
           resultado = "incorrecto";
@@ -102,7 +115,7 @@ class GameController {
         tiempo_promedio_por_figura: tiempoPromedio,
         sesiones_totales,
         rendimiento_ultima_sesion,
-        progreso_general,
+        progreso_general
       });
 
       const response = {
@@ -110,14 +123,14 @@ class GameController {
         figura,
         resultado,
         mensaje,
-        gameStatus,
+        gameStatus
       };
 
       if (modo === "desafio") {
         response.desafioData = {
           vidas_restantes: req.session.vidas_restantes || 3,
           aciertos_actuales: req.session.aciertos_actuales || 0,
-          juego_terminado: gameStatus !== "continuar",
+          juego_terminado: gameStatus !== "continuar"
         };
       }
 
@@ -142,13 +155,16 @@ class GameController {
     try {
       const userId = req.session.ninoId;
       if (!userId) {
-        return res.status(401).json({
-          success: false,
-          message: "No hay sesión activa",
-        });
+        return res.status(401).json({ success: false, message: "No hay sesión activa" });
       }
 
       const resumen = await NinoModel.getResumenSesiones(userId);
+
+      // Agregar el tiempo total jugado de la sesión actual, si existe
+      if (req.session.tiempo_total) {
+        resumen.tiempo_total = (resumen.tiempo_total || 0) + req.session.tiempo_total;
+      }
+
       res.json({ success: true, resumen_sesiones: resumen });
     } catch (error) {
       console.error("Error obteniendo estadísticas:", error);
@@ -157,16 +173,18 @@ class GameController {
   }
 }
 
+// Traduce nombre de modo a ID
 function getModoId(nombreModo) {
   const modos = {
     libre: 1,
     guiado: 2,
     desafio: 3,
-    inteligente: 4,
+    inteligente: 4
   };
   return modos[nombreModo.toLowerCase()] || null;
 }
 
+// Calcula el porcentaje de aciertos
 function calcularRendimiento(aciertos, errores) {
   const total = aciertos + errores;
   return total > 0 ? Math.round((aciertos / total) * 100) : 0;

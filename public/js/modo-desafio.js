@@ -22,6 +22,8 @@ const figuras = [
 // Variables globales
 let tiempoRestante = 15; // Tiempo en segundos
 let intervaloTemporizador = null;
+let juegoIniciado = false;
+
 
 let gameState = {
   vidas: 3,
@@ -85,6 +87,48 @@ function getFigurasAleatorias(cantidad) {
   return seleccionadas;
 }
 
+function hablarConRetardo(texto, callback = null) {
+  if (!('speechSynthesis' in window)) {
+    if (callback) setTimeout(callback, 2000);
+    return;
+  }
+
+  const iniciarHabla = (voces) => {
+    window.speechSynthesis.cancel(); // Cancelar cualquier voz previa
+    const vozNatural = voces.find(v => v.name.includes("es-ES") || v.name.includes("Google español")) || voces[0];
+    const msg = new SpeechSynthesisUtterance(texto);
+    msg.voice = vozNatural;
+    msg.lang = 'es-ES';
+    msg.volume = 1.0;
+    msg.rate = 0.9;
+    msg.pitch = 1.1;
+
+    msg.onstart = () => console.log("🔊 Iniciando narración:", texto);
+
+    if (callback) {
+      msg.onend = () => {
+        console.log("✅ Narración terminada");
+        setTimeout(callback, 300);
+      };
+    }
+
+    window.speechSynthesis.speak(msg);
+  };
+
+  // Esperar a que las voces estén disponibles
+  let voces = window.speechSynthesis.getVoices();
+  if (voces.length > 0) {
+    iniciarHabla(voces);
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      voces = window.speechSynthesis.getVoices();
+      iniciarHabla(voces);
+    };
+  }
+}
+
+
+
 function mostrarNuevaFigura() {
   if (!gameState.juegoActivo) return;
 
@@ -98,21 +142,29 @@ function mostrarNuevaFigura() {
   display.innerHTML = figurasAleatorias
     .map(
       (figura) => `
-    <img src="${figura.src}" 
-         class="figura-img" 
-         alt="${figura.nombre}" 
-         data-nombre="${figura.nombre}" />
-  `
+        <img src="${figura.src}" 
+             class="figura-img" 
+             alt="${figura.nombre}" 
+             data-nombre="${figura.nombre}" />
+      `
     )
     .join("");
 
   const instructionText = document.querySelector(".instruction-text");
   instructionText.textContent = `¡Encuentra: ${figuraObjetivo.nombre}!`;
 
+  // ⚡️ NUEVA NARRACIÓN + iniciar temporizador solo al terminar
+  const genero = figuraObjetivo.genero === "la" ? "una" : "un";
+  const texto = `Encuentra ${genero} ${figuraObjetivo.forma} de color ${figuraObjetivo.colorTexto}.`;
+
   console.log(`🎯 Nueva figura objetivo: ${figuraObjetivo.nombre}`);
 
   gameState.tiempoInicioFigura = Date.now();
-  iniciarTemporizador();
+
+  // Narrar y luego iniciar temporizador
+  hablarConRetardo(texto, () => {
+    iniciarTemporizador(); // Solo cuando termina de hablar
+  });
 }
 
 function actualizarVidas() {
@@ -370,34 +422,35 @@ document.addEventListener("DOMContentLoaded", () => {
   actualizarVidas();
   actualizarEstrellas();
   actualizarProgreso();
-  mostrarNuevaFigura();
   conectarWebSocket();
-  iniciarTemporizador();
   actualizarContadorVisual();
 
   const backButton = document.querySelector(".back-button");
-  if (backButton) {
-    backButton.onclick = volverAlMenu;
+  if (backButton) backButton.onclick = volverAlMenu;
+
+  const video = document.getElementById("tutorialVideo");
+
+  const iniciarJuego = () => {
+    if (juegoIniciado) return; // ✅ previene múltiples inicios
+    juegoIniciado = true;
+    console.log("✅ Juego iniciado");
+    mostrarNuevaFigura();
+  };
+
+  if (video) {
+    console.log("⏳ Esperando a que termine el tutorial...");
+    video.addEventListener("ended", iniciarJuego);
+
+    setTimeout(() => {
+      if (!juegoIniciado && gameState.juegoActivo) {
+        console.log("⚠️ Continuando tras espera de seguridad...");
+        iniciarJuego();
+      }
+    }, 10000);
+  } else {
+    iniciarJuego();
   }
 });
 
-function simularLectura() {
-  if (!gameState.juegoActivo) return;
-  const esCorrecta = Math.random() > 0.7;
-  let figuraSimulada;
-  if (esCorrecta) {
-    figuraSimulada = gameState.figuraObjetivo.nombre;
-  } else {
-    const figurasIncorrectas = figuras.filter(
-      (f) => f.nombre !== gameState.figuraObjetivo.nombre
-    );
-    figuraSimulada =
-      figurasIncorrectas[Math.floor(Math.random() * figurasIncorrectas.length)]
-        .nombre;
-  }
-  console.log(`🧪 Simulando lectura: ${figuraSimulada}`);
-  procesarLecturaRFID(figuraSimulada);
-}
 
-window.simularLectura = simularLectura;
 window.gameState = gameState;

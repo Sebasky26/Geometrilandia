@@ -1,5 +1,6 @@
 let chartInstance = null;
 
+// Inicializa el dashboard al cargar la página
 async function initDashboard() {
   const welcome = document.getElementById("welcomeMessage");
 
@@ -8,7 +9,7 @@ async function initDashboard() {
     const userData = await resUser.json();
 
     if (userData.success) {
-      welcome.textContent = `Hola ${userData.user.nombre} (Edad ${userData.user.edad}) 👋`;
+      welcome.textContent = `Hola ${userData.user.nombre} (Edad ${userData.user.edad})`;
       loadStats();
     } else {
       welcome.textContent = "No se pudo cargar el perfil";
@@ -18,13 +19,12 @@ async function initDashboard() {
   }
 }
 
+// Redirige al modo de juego seleccionado
 function goToMode(modo) {
   if (modo === "inteligente") {
     fetch("/api/modo-inteligente", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({})
     })
       .then((res) => res.json())
@@ -45,14 +45,14 @@ function goToMode(modo) {
   }
 }
 
+// Cierra sesión del usuario
 function logout() {
-  fetch("/logout", {
-    method: "POST",
-  })
+  fetch("/logout", { method: "POST" })
     .then(() => window.location.href = "/login")
     .catch(() => alert("Error al cerrar sesión"));
 }
 
+// Carga y renderiza las estadísticas en el panel
 async function loadStats() {
   try {
     const res = await fetch("/api/stats");
@@ -63,24 +63,46 @@ async function loadStats() {
     if (data.success && data.resumen_sesiones) {
       const resumen = data.resumen_sesiones;
 
+      // Tiempo promedio por figura (minutos con un decimal)
+      const promedioMin = resumen.tiempo_promedio
+        ? (resumen.tiempo_promedio / 60).toFixed(1)
+        : "0.0";
+
+      // Tiempo total jugado (minutos y segundos)
+      const totalSegundos = resumen.tiempo_total ?? 0;
+      const min = Math.floor(totalSegundos / 60);
+      const sec = totalSegundos % 60;
+      const tiempoTotalFormateado = `${min} min ${sec}s`;
+
+      // Cálculo de precisión como porcentaje
+      const totalInt = resumen.total_interacciones || 0;
+      const totalAciertos = resumen.total_aciertos || 0;
+      const precision = totalInt > 0
+        ? ((totalAciertos / totalInt) * 100).toFixed(1)
+        : "0.0";
+
+      // Fecha de última actividad (formato local)
+      const ultimaActividad = resumen.ultima_interaccion
+        ? new Date(resumen.ultima_interaccion).toLocaleDateString()
+        : "Sin datos";
+
+      // Renderizar el resumen general
       const div = document.createElement("div");
       div.classList.add("sesion-card");
       div.innerHTML = `
         <h4>📈 Resumen General</h4>
         <p><strong>Total de sesiones:</strong> ${resumen.sesiones_totales}</p>
-        <p><strong>Total de interacciones:</strong> ${resumen.total_interacciones}</p>
-        <p><strong>Aciertos:</strong> ${resumen.total_aciertos}</p>
+        <p><strong>Total de interacciones:</strong> ${totalInt}</p>
+        <p><strong>Aciertos:</strong> ${totalAciertos}</p>
         <p><strong>Errores:</strong> ${resumen.total_errores}</p>
-        <p><strong>Promedio de tiempo por figura:</strong> ${resumen.tiempo_promedio ?? 0}s</p>
-        <p><strong>Última actividad:</strong> ${new Date(resumen.ultima_interaccion).toLocaleDateString()}</p>
+        <p><strong>Precisión:</strong> ${precision}%</p>
+        <p><strong>Tiempo total jugado:</strong> ${tiempoTotalFormateado}</p>
+        <p><strong>Última actividad:</strong> ${ultimaActividad}</p>
       `;
       container.appendChild(div);
 
-      // Para gráfica (dummy temporal si no hay múltiples sesiones)
-      renderChart(
-        ["Aciertos", "Errores"],
-        [resumen.total_aciertos, resumen.total_errores]
-      );
+      // Renderizar gráfico de barras (aciertos vs errores)
+      renderChart(["Aciertos", "Errores"], [totalAciertos, resumen.total_errores]);
     } else {
       container.textContent = "No hay datos aún.";
     }
@@ -90,6 +112,7 @@ async function loadStats() {
   }
 }
 
+// Dibuja el gráfico de barras con Chart.js
 function renderChart(labels, data) {
   const ctx = document.getElementById("graficoAprendizaje").getContext("2d");
 
@@ -100,10 +123,10 @@ function renderChart(labels, data) {
   chartInstance = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: labels,
+      labels,
       datasets: [{
         label: "Rendimiento General",
-        data: data,
+        data,
         backgroundColor: ["#4caf50", "#f44336"]
       }]
     },
@@ -118,15 +141,14 @@ function renderChart(labels, data) {
       scales: {
         y: {
           beginAtZero: true,
-          ticks: {
-            precision: 0
-          }
+          ticks: { precision: 0 }
         }
       }
     }
   });
 }
 
+// Muestra/oculta el cuadro de ayuda
 function mostrarAyuda() {
   const box = document.getElementById("helpBox");
   box.style.display = box.style.display === "none" ? "block" : "none";

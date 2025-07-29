@@ -1,147 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Modo Libre - Geometrilandia</title>
-    <link rel="stylesheet" href="/css/libre.css">
-    <!-- Preload critical resources -->
-    <link rel="preload" href="../fonts/28 Days Later.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="/img/mago.png" as="image">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Modo Libre - Geometrilandia</title>
+  <link rel="stylesheet" href="/css/libre.css">
+  <!-- Preload critical resources -->
+  <link rel="preload" href="../fonts/28 Days Later.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/img/mago.png" as="image">
 </head>
+
 <body>
-    <!-- Botón de regreso mejorado con mejor accesibilidad -->
-    <button class="back-button" onclick="volverAlMenu()">← Volver</button>
+  <!-- Botón de regreso mejorado con mejor accesibilidad -->
+  <button class="back-button" onclick="volverAlMenu()">← Volver</button>
 
-    <!-- Contenedor principal optimizado -->
-    <main class="kids-container" role="main">
-        <!-- Instrucciones claras y visibles -->
-        <section class="instructions-section" aria-labelledby="instructions-title">
-            <h1 id="instructions-title" class="sr-only">Instrucciones del juego</h1>
-            <div class="feedback-message feedback-info" role="banner">
-                <span class="sound-wave" aria-hidden="true"></span>
-                <span class="instruction-text" id = "instrucciones" >¡Acerca una figura al lector y descubre que es!</span>
-                <span class="sound-wave" aria-hidden="true"></span>
+  <!-- Contenedor principal optimizado -->
+  <main class="kids-container" role="main">
+    <!-- Instrucciones claras y visibles -->
+    <section class="instructions-section" aria-labelledby="instructions-title">
+      <h1 id="instructions-title" class="sr-only">Instrucciones del juego</h1>
+      <div class="feedback-message feedback-info" role="banner">
+        <span class="sound-wave" aria-hidden="true"></span>
+        <span class="instruction-text" id="instrucciones">¡Acerca una figura al lector y descubre que es!</span>
+        <span class="sound-wave" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <!-- Área de juego principal -->
+    <section class="game-section" aria-labelledby="game-title">
+      <h2 id="game-title" class="sr-only">Área de detección de figuras</h2>
+      <div class="game-area bounce-in" role="application" aria-label="Detector de figuras geométricas">
+        <div id="welcomeScreen" class="game-screen show">
+          <!-- Display de figura con mejor estructura semántica -->
+          <div class="figura-display" id="figuraDisplay" role="img" aria-labelledby="figura-description">
+            <!-- TUTORIAL: Se muestra solo al inicio -->
+            <div class="figura-display" id="tutorialContainer">
+              <h2 id="tituloTutorial">Tutorial</h2>
+              <video id="tutorialVideo" width="90%" autoplay muted>
+                <source src="/video/tutorial.mp4" type="video/mp4">
+                Tu navegador no soporta la etiqueta de video.
+              </video>
             </div>
-        </section>
 
-        <!-- Área de juego principal -->
-        <section class="game-section" aria-labelledby="game-title">
-            <h2 id="game-title" class="sr-only">Área de detección de figuras</h2>
-            <div class="game-area bounce-in" role="application" aria-label="Detector de figuras geométricas">
-                <div id="welcomeScreen" class="game-screen show">
-                    <!-- Display de figura con mejor estructura semántica -->
-                    <div class="figura-display" id="figuraDisplay" role="img" aria-labelledby="figura-description">
-                        <!-- TUTORIAL: Se muestra solo al inicio -->
-                        <div class="figura-display" id="tutorialContainer">
-                            <h2 id="tituloTutorial">Tutorial</h2>
-                            <video id="tutorialVideo" width="90%" autoplay muted>
-                                <source src="/video/tutorial.mp4" type="video/mp4">
-                                Tu navegador no soporta la etiqueta de video.
-                            </video>
-                        </div>  
-                    
-                        <!-- Icono y nombre de figura -->                       
-                        <div class="figura-content" id="figuraContainer" style="display: none;">
-                            <div class="figura-icon" id="figuraIcon" aria-hidden="true">
-                                <img id="figuraImage" src="/img/incognita.png" alt="" style="width: 80%; height: 80%;" />
-                            </div>
-                            <div class="figura-name" id="figuraName" aria-live="polite"></div>
-                        </div>
-                    </div>
-
-                    <!-- Descripción accesible -->
-                    <div id="figura-description" class="sr-only">
-                        Área donde aparecerá la figura detectada
-                    </div>
-
-                    <!-- Mensajes de retroalimentación -->
-                    <div id="feedbackMessage" class="feedback-message hidden" role="alert" aria-live="assertive"></div>
-                </div>
+            <!-- Icono y nombre de figura -->
+            <div class="figura-content" id="figuraContainer" style="display: none;">
+              <div class="figura-icon" id="figuraIcon" aria-hidden="true">
+                <img id="figuraImage" src="/img/incognita.png" alt="" class="figura-imagen" />
+              </div>
+              <div class="figura-name" id="figuraName" aria-live="polite"></div>
             </div>
-        </section>
+          </div>
 
-        <!-- Personaje guía -->
-        <img src="/img/mago.png" alt="Mago amigable que te ayuda a aprender sobre figuras geométricas" class="mago-img" />
-        <!-- Simulador de lectura RFID manual -->
-<div style="position: fixed; bottom: 20px; right: 20px; background: white; padding: 12px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 999;">
-  <label for="selectSimulador" style="font-weight: bold;">Simular lectura:</label><br>
-  <select id="selectSimulador" style="padding: 6px; margin-top: 5px;">
-    <option value="">-- Selecciona una figura --</option>
-  </select>
-  <button id="btnSimular" style="margin-top: 10px; background-color: #2196f3; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
-    Simular RFID
-  </button>
-</div>
-    </main>
+          <!-- Descripción accesible -->
+          <div id="figura-description" class="sr-only">
+            Área donde aparecerá la figura detectada
+          </div>
 
-    <!-- Audio para retroalimentación -->
-    <audio id="successSound" preload="auto" aria-label="Sonido de éxito">
-        <source src="/audio/success.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="detectSound" preload="auto" aria-label="Sonido de detección">
-        <source src="/audio/detect.mp3" type="audio/mpeg">
-    </audio>
-    <!-- Música de fondo -->
-    <audio id="fondoLibre" loop>
-        <source src="/audio/libre.mp3" type="audio/mpeg">
-    </audio>
+          <!-- Mensajes de retroalimentación -->
+          <div id="feedbackMessage" class="feedback-message hidden" role="alert" aria-live="assertive"></div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Scripts -->
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/game-common.js"></script>
-<script src="/js/modo-libre.js"></script>
-<!-- Script para iniciar la música -->
-<script>
+    <!-- Personaje guía -->
+    <img src="/img/mago.png" alt="Mago amigable que te ayuda a aprender sobre figuras geométricas" class="mago-img" />
+  </main>
 
-function volverAlMenu() {
-  window.location.href = "/dashboard";
-}
-  const music = document.getElementById('fondoLibre'); 
+  <!-- Audio para retroalimentación -->
+  <audio id="successSound" preload="auto" aria-label="Sonido de éxito">
+    <source src="/audio/success.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="detectSound" preload="auto" aria-label="Sonido de detección">
+    <source src="/audio/detect.mp3" type="audio/mpeg">
+  </audio>
+  <!-- Música de fondo -->
+  <audio id="fondoLibre" loop>
+    <source src="/audio/libre.mp3" type="audio/mpeg">
+  </audio>
 
-  function iniciarMusicaFondo() {
-    if (!music) return;
-    music.volume = 0.03;
-    music.play().catch(() => {
-      document.addEventListener('click', reproducirTrasInteraccion, { once: true });
-    });
-  }
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/game-common.js"></script>
+  <script src="/js/modo-libre.js"></script>
+  <!-- Script para iniciar la música -->
+  <script>
 
-  function reproducirTrasInteraccion() {
-    music.play().catch((err) => {
-      console.warn("El navegador sigue bloqueando la reproducción:", err);
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    iniciarMusicaFondo();
-
-    const video = document.getElementById('tutorialVideo');
-    const tutorialContainer = document.getElementById('tutorialContainer');
-    const figuraContainer = document.getElementById('figuraContainer');
-
-    video.onended = () => {
-      tutorialContainer.style.display = "none";
-      figuraContainer.style.display = "flex";
-
-      const titulo = document.getElementById('tituloTutorial');
-      if (titulo) titulo.style.display = "none";
-
-      if (typeof actualizarFigura === 'function') {
-        actualizarFigura();
-      }
-    };
-
-    window.speechSynthesis.cancel();
-  });
-
-  window.addEventListener('beforeunload', () => {
-    if (music) {
-      music.pause();
-      music.currentTime = 0;
+    function volverAlMenu() {
+      window.location.href = "/dashboard";
     }
-  });
-</script>
+    const music = document.getElementById('fondoLibre');
+
+    function iniciarMusicaFondo() {
+      if (!music) return;
+      music.volume = 0.03;
+      music.play().catch(() => {
+        document.addEventListener('click', reproducirTrasInteraccion, { once: true });
+      });
+    }
+
+    function reproducirTrasInteraccion() {
+      music.play().catch((err) => {
+        console.warn("El navegador sigue bloqueando la reproducción:", err);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      iniciarMusicaFondo();
+
+      const video = document.getElementById('tutorialVideo');
+      const tutorialContainer = document.getElementById('tutorialContainer');
+      const figuraContainer = document.getElementById('figuraContainer');
+
+      video.onended = () => {
+        tutorialContainer.style.display = "none";
+        figuraContainer.style.display = "flex";
+
+        const titulo = document.getElementById('tituloTutorial');
+        if (titulo) titulo.style.display = "none";
+
+        if (typeof actualizarFigura === 'function') {
+          actualizarFigura();
+        }
+      };
+
+      window.speechSynthesis.cancel();
+    });
+
+    window.addEventListener('beforeunload', () => {
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
+    });
+  </script>
 
 </body>
+
 </html>

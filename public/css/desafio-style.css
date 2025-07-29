@@ -17,6 +17,7 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
 #tituloTutorial {
     font-family: "MiFuentePersonalizada", sans-serif;
     font-size: clamp(1.8rem, 4vw, 2.8rem);

@@ -19,26 +19,6 @@ const figuras = [
   { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.gif", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
 ];
 
-const mapaRFIDSimulado = {
-  "F6FE0885": "ESTRELLA TURQUESA",
-  "B39DD90D": "CUADRADO AZUL",
-  "E1B7A07B": "CUADRADO ROJO",
-  "55754239": "ESTRELLA AMARILLA",
-  "4CA16D3B": "CORAZON VERDE",
-  "F74B6E3B": "CUADRADO AMARILLO",
-  "BC124D39": "ESTRELLA NARANJA",
-  "22614239": "CIRCULO AMARILLO",
-  "8CAB6D3B": "CIRCULO TURQUESA",
-  "F7934D39": "RECTÁNGULO AZUL",
-  "65EA4139": "RECTÁNGULO VERDE",
-  "BB5F4239": "CORAZON AZUL",
-  "E7BD4239": "RECTÁNGULO TURQUESA",
-  "896A4D39": "CORAZON ROJO",
-  "AE9E4239": "TRIANGULO VERDE",
-  "B0DE6D3B": "TRIANGULO NARANJA",
-  "91275D7B": "TRIANGULO ROJO",
-  "C6770785": "CIRCULO NARANJA"
-};
 function obtenerDiezAleatorias(array) {
   return array.sort(() => Math.random() - 0.5).slice(0, 10);
 }
@@ -190,30 +170,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }).catch((err) => {
       console.error("Error al guardar interacción RFID:", err);
     });
-  });
-
-  // 👇 Aquí va el nuevo bloque del simulador con menú
-  const selectSimulador = document.getElementById("selectSimulador");
-  Object.entries(mapaRFIDSimulado).forEach(([codigo, nombre]) => {
-    const option = document.createElement("option");
-    option.value = codigo;
-    option.textContent = nombre;
-    selectSimulador.appendChild(option);
-  });
-
-  document.getElementById("btnSimular")?.addEventListener("click", () => {
-    const codigo = selectSimulador.value;
-    const nombre = mapaRFIDSimulado[codigo];
-
-    if (!codigo || !nombre) {
-      alert("Selecciona una figura válida para simular.");
-      return;
-    }
-
-    console.log(`🧪 Simulando figura: ${nombre} (${codigo})`);
-    socket.listeners("nuevaFigura").forEach((listener) =>
-      listener({ nombre, codigo })
-    );
   });
 
 

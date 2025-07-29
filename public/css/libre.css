@@ -60,13 +60,15 @@ body {
   -ms-user-select: none;
   -webkit-text-size-adjust: 100%;
 }
+
 #tituloTutorial {
-    font-family: "MiFuentePersonalizada", sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: white;
-    text-align: center;
-    margin-right: 70px;
+  font-family: "MiFuentePersonalizada", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: white;
+  text-align: center;
+  margin-right: 70px;
 }
+
 /* Header con elementos fijos */
 .header-controls {
   position: fixed;
@@ -211,8 +213,8 @@ body {
 
 /* Display de figura optimizado */
 .figura-display {
-  width: 80%;
-  height: 80%;
+  width: 85%;
+  height: 85%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -266,6 +268,7 @@ body {
   line-height: 1.1;
   margin: 0;
 }
+
 .feedback-message.show {
   opacity: 1;
   transform: scale(1.05);
@@ -328,7 +331,8 @@ body {
   position: absolute;
   bottom: 0;
   right: 40px;
-  width: clamp(250px, 25vw, 450px);;
+  width: clamp(250px, 25vw, 450px);
+  ;
   height: auto;
   animation: magoBounce 3s ease-in-out infinite;
   pointer-events: none;
@@ -465,8 +469,8 @@ body {
   }
 
   .figura-display {
-  width: 80%;
-  height: 80%;
+    width: 80%;
+    height: 80%;
   }
 }
 
@@ -486,8 +490,8 @@ body {
   }
 
   .figura-display {
-      width: 80%;
-  height: 80%;
+    width: 80%;
+    height: 80%;
   }
 
 
@@ -520,8 +524,8 @@ body {
   }
 
   .figura-display {
-      width: 80%;
-  height: 80%;
+    width: 80%;
+    height: 80%;
     border-width: 3px;
   }
 
@@ -540,8 +544,8 @@ body {
   }
 
   .figura-display {
-      width: 80%;
-  height: 80%;
+    width: 80%;
+    height: 80%;
   }
 
 }
@@ -564,8 +568,8 @@ body {
   }
 
   .figura-display {
-     width: 80%;
-  height: 80%;
+    width: 80%;
+    height: 80%;
   }
 
 
@@ -590,3 +594,34 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Alineación centrada del contenido de figura */
+.figura-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+/* Contenedor de ícono expandido para centrar verticalmente */
+.figura-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+}
+
+/* Imagen dentro del contenedor de figura */
+.figura-imagen {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
