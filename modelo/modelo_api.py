@@ -18,7 +18,7 @@ def predecir():
         df = pd.DataFrame([datos])
 
         # Normalizar a mayúscula inicial para que coincida con lo entrenado
-        df["modo_usado_ultima_sesion"] = df["modo_usado_ultima_sesion"].str.capitalize()
+        #df["modo_usado_ultima_sesion"] = df["modo_usado_ultima_sesion"].str.capitalize()
 
         # Codificar el campo categórico
         df["modo_usado_ultima_sesion"] = label_encoders["modo_usado_ultima_sesion"].transform(
@@ -31,7 +31,9 @@ def predecir():
 
         return jsonify({"success": True, "modo_sugerido": modo})
     except Exception as e:
+        print("❌ Error en /predecir:", e)
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

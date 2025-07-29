@@ -23,6 +23,7 @@ const figuras = [
 let tiempoRestante = 15; // Tiempo en segundos
 let intervaloTemporizador = null;
 let juegoIniciado = false;
+var figura_esperada;
 
 
 let gameState = {
@@ -321,6 +322,7 @@ function volverAlMenu() {
 
 function procesarLecturaRFID(nombre) {
   if (!gameState.juegoActivo || !gameState.figuraObjetivo) return;
+  figura_esperada=gameState.figuraObjetivo.nombre;
 
   console.log(`📡 RFID detectado: ${nombre}`);
   console.log(`🎯 Figura esperada: ${gameState.figuraObjetivo.nombre}`);
@@ -402,7 +404,7 @@ function conectarWebSocket() {
       body: JSON.stringify({
         codigo_rfid: codigo,
         modo: "desafio",
-        figura_esperada: nombre
+        figura_esperada: figura_esperada
       })
     }).catch((err) => {
       console.error("Error al guardar interacción RFID:", err);

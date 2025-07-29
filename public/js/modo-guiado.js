@@ -18,7 +18,7 @@ const figuras = [
   { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.gif", color: "#e53935", forma: "triangulo", colorTexto: "rojo", genero: "el" },
   { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.gif", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
 ];
-
+var figura_esperada;
 function obtenerDiezAleatorias(array) {
   return array.sort(() => Math.random() - 0.5).slice(0, 10);
 }
@@ -80,8 +80,10 @@ function actualizarEstrellas() {
 
 function verificarFigura(nombreDetectado) {
   if (!mostrarMensaje) return;
+  figura_esperada = "";
   const figuraEsperada = figurasMezcladas[indiceActual];
   const figuraMostrada = figuras.find(f => f.nombre === nombreDetectado);
+  figura_esperada = figuraEsperada.nombre;
 
   if (nombreDetectado === figuraEsperada.nombre) {
     const texto = "¡Correcto, lo hiciste muy bien! ¡Sigue así!";
@@ -165,7 +167,7 @@ window.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify({
         codigo_rfid: codigo,
         modo: "guiado",
-        figura_esperada: nombre
+        figura_esperada: figura_esperada
       })
     }).catch((err) => {
       console.error("Error al guardar interacción RFID:", err);

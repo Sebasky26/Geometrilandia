@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 class InteligenciaController {
   static async obtenerModoInteligente(req, res) {
     const ninoId = req.session.ninoId;
-
+    console.log("🔍 Obteniendo modo inteligente para el niño con ID:", ninoId);
     if (!ninoId) {
       return res.status(401).json({ success: false, message: "No autenticado" });
     }
@@ -16,7 +16,7 @@ class InteligenciaController {
       if (!nino) {
         return res.status(404).json({ success: false, message: "Niño no encontrado" });
       }
-
+      console.log("👶 Niño encontrado:", nino.nombre);
       // Calcular estadísticas reales del niño
       const [
         aciertos_total,
@@ -33,6 +33,7 @@ class InteligenciaController {
         NinoModel.getRendimientoUltimaSesion(ninoId),
         NinoModel.getProgresoGeneral(ninoId)
       ]);
+      console.log("📊 Estadísticas del niño obtenidas satisfactiriamente")
 
       // Consultar el último modo usado
       const [ultimoModo] = await connection.promise().query(`
@@ -43,7 +44,7 @@ class InteligenciaController {
         ORDER BY i.timestamp DESC
         LIMIT 1
       `, [ninoId]);
-
+      console.log("Ultimo modo usado", ultimoModo[0]?.nombre || "No disponible");
       const modo_usado_ultima_sesion = ultimoModo[0]?.nombre || "Libre";
 
       // Preparar payload para la IA
@@ -59,6 +60,7 @@ class InteligenciaController {
       };
 
       // Solicitar predicción al modelo IA
+      console.log("🔗 Enviando datos al modelo IA para predecir modo...");
       const response = await fetch("http://localhost:5000/predecir", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
