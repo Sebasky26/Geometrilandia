@@ -285,10 +285,8 @@ function mostrarNuevaFigura() {
 
   gameState.tiempoInicioFigura = Date.now();
 
-  // Narrar y luego iniciar temporizador
-  hablarConRetardo(texto, () => {
-    iniciarTemporizador(); // Solo cuando termina de hablar
-  });
+  iniciarTemporizador(); // Se inicia inmediatamente
+  hablarConRetardo(texto); // La narración ya no bloquea el temporizador
 }
 
 function actualizarVidas() {
