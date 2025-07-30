@@ -1,22 +1,148 @@
 const figuras = [
-  { nombre: "ESTRELLA TURQUESA", src: "/img/estrella_turquesa.gif", color: "#40e0d0", forma: "estrella", colorTexto: "turquesa", genero: "la" },
-  { nombre: "CUADRADO AZUL", src: "/img/cuadrado_azul.gif", color: "#1e88e5", forma: "cuadrado", colorTexto: "azul", genero: "el" },
-  { nombre: "CUADRADO ROJO", src: "/img/cuadrado_rojo.gif", color: "#e53935", forma: "cuadrado", colorTexto: "rojo", genero: "el" },
-  { nombre: "ESTRELLA AMARILLA", src: "/img/estrella_amarilla.gif", color: "#fdd835", forma: "estrella", colorTexto: "amarilla", genero: "la" },
-  { nombre: "CORAZON VERDE", src: "/img/corazon_verde.gif", color: "#43a047", forma: "corazon", colorTexto: "verde", genero: "el" },
-  { nombre: "CUADRADO AMARILLO", src: "/img/cuadrado_amarillo.gif", color: "#fbc02d", forma: "cuadrado", colorTexto: "amarillo", genero: "el" },
-  { nombre: "ESTRELLA NARANJA", src: "/img/estrella_naranja.gif", color: "#fe970e", forma: "estrella", colorTexto: "naranja", genero: "la" },
-  { nombre: "CIRCULO AMARILLO", src: "/img/circulo_amarillo.gif", color: "#fdd835", forma: "circulo", colorTexto: "amarillo", genero: "el" },
-  { nombre: "CIRCULO TURQUESA", src: "/img/circulo_turquesa.gif", color: "#40e0d0", forma: "circulo", colorTexto: "turquesa", genero: "el" },
-  { nombre: "RECTANGULO AZUL", src: "/img/rectangulo_azul.gif", color: "#1e88e5", forma: "rectangulo", colorTexto: "azul", genero: "el" },
-  { nombre: "RECTANGULO VERDE", src: "/img/rectangulo_verde.gif", color: "#43a047", forma: "rectangulo", colorTexto: "verde", genero: "el" },
-  { nombre: "CORAZON AZUL", src: "/img/corazon_azul.gif", color: "#1e88e5", forma: "corazon", colorTexto: "azul", genero: "el" },
-  { nombre: "RECTANGULO TURQUESA", src: "/img/rectangulo_turquesa.gif", color: "#40e0d0", forma: "rectangulo", colorTexto: "turquesa", genero: "el" },
-  { nombre: "CORAZON ROJO", src: "/img/corazon_rojo.gif", color: "#e53935", forma: "corazon", colorTexto: "rojo", genero: "el" },
-  { nombre: "TRIANGULO VERDE", src: "/img/triangulo_verde.gif", color: "#43a047", forma: "triangulo", colorTexto: "verde", genero: "el" },
-  { nombre: "TRIANGULO NARANJA", src: "/img/triangulo_naranja.gif", color: "#fe970e", forma: "triangulo", colorTexto: "naranja", genero: "el" },
-  { nombre: "TRIANGULO ROJO", src: "/img/triangulo_rojo.gif", color: "#e53935", forma: "triangulo", colorTexto: "rojo", genero: "el" },
-  { nombre: "CIRCULO NARANJA", src: "/img/circulo_naranja.gif", color: "#fe970e", forma: "circulo", colorTexto: "naranja", genero: "el" }
+  {
+    nombre: "ESTRELLA TURQUESA",
+    src: "/img/estrella_turquesa.gif",
+    color: "#40e0d0",
+    forma: "estrella",
+    colorTexto: "turquesa",
+    genero: "la",
+  },
+  {
+    nombre: "CUADRADO AZUL",
+    src: "/img/cuadrado_azul.gif",
+    color: "#1e88e5",
+    forma: "cuadrado",
+    colorTexto: "azul",
+    genero: "el",
+  },
+  {
+    nombre: "CUADRADO ROJO",
+    src: "/img/cuadrado_rojo.gif",
+    color: "#e53935",
+    forma: "cuadrado",
+    colorTexto: "rojo",
+    genero: "el",
+  },
+  {
+    nombre: "ESTRELLA AMARILLA",
+    src: "/img/estrella_amarilla.gif",
+    color: "#fdd835",
+    forma: "estrella",
+    colorTexto: "amarilla",
+    genero: "la",
+  },
+  {
+    nombre: "CORAZON VERDE",
+    src: "/img/corazon_verde.gif",
+    color: "#43a047",
+    forma: "corazon",
+    colorTexto: "verde",
+    genero: "el",
+  },
+  {
+    nombre: "CUADRADO AMARILLO",
+    src: "/img/cuadrado_amarillo.gif",
+    color: "#fbc02d",
+    forma: "cuadrado",
+    colorTexto: "amarillo",
+    genero: "el",
+  },
+  {
+    nombre: "ESTRELLA NARANJA",
+    src: "/img/estrella_naranja.gif",
+    color: "#fe970e",
+    forma: "estrella",
+    colorTexto: "naranja",
+    genero: "la",
+  },
+  {
+    nombre: "CIRCULO AMARILLO",
+    src: "/img/circulo_amarillo.gif",
+    color: "#fdd835",
+    forma: "circulo",
+    colorTexto: "amarillo",
+    genero: "el",
+  },
+  {
+    nombre: "CIRCULO TURQUESA",
+    src: "/img/circulo_turquesa.gif",
+    color: "#40e0d0",
+    forma: "circulo",
+    colorTexto: "turquesa",
+    genero: "el",
+  },
+  {
+    nombre: "RECTANGULO AZUL",
+    src: "/img/rectangulo_azul.gif",
+    color: "#1e88e5",
+    forma: "rectangulo",
+    colorTexto: "azul",
+    genero: "el",
+  },
+  {
+    nombre: "RECTANGULO VERDE",
+    src: "/img/rectangulo_verde.gif",
+    color: "#43a047",
+    forma: "rectangulo",
+    colorTexto: "verde",
+    genero: "el",
+  },
+  {
+    nombre: "CORAZON AZUL",
+    src: "/img/corazon_azul.gif",
+    color: "#1e88e5",
+    forma: "corazon",
+    colorTexto: "azul",
+    genero: "el",
+  },
+  {
+    nombre: "RECTANGULO TURQUESA",
+    src: "/img/rectangulo_turquesa.gif",
+    color: "#40e0d0",
+    forma: "rectangulo",
+    colorTexto: "turquesa",
+    genero: "el",
+  },
+  {
+    nombre: "CORAZON ROJO",
+    src: "/img/corazon_rojo.gif",
+    color: "#e53935",
+    forma: "corazon",
+    colorTexto: "rojo",
+    genero: "el",
+  },
+  {
+    nombre: "TRIANGULO VERDE",
+    src: "/img/triangulo_verde.gif",
+    color: "#43a047",
+    forma: "triangulo",
+    colorTexto: "verde",
+    genero: "el",
+  },
+  {
+    nombre: "TRIANGULO NARANJA",
+    src: "/img/triangulo_naranja.gif",
+    color: "#fe970e",
+    forma: "triangulo",
+    colorTexto: "naranja",
+    genero: "el",
+  },
+  {
+    nombre: "TRIANGULO ROJO",
+    src: "/img/triangulo_rojo.gif",
+    color: "#e53935",
+    forma: "triangulo",
+    colorTexto: "rojo",
+    genero: "el",
+  },
+  {
+    nombre: "CIRCULO NARANJA",
+    src: "/img/circulo_naranja.gif",
+    color: "#fe970e",
+    forma: "circulo",
+    colorTexto: "naranja",
+    genero: "el",
+  },
 ];
 
 // Variables globales
@@ -24,7 +150,6 @@ let tiempoRestante = 15; // Tiempo en segundos
 let intervaloTemporizador = null;
 let juegoIniciado = false;
 var figura_esperada;
-
 
 let gameState = {
   vidas: 3,
@@ -89,17 +214,20 @@ function getFigurasAleatorias(cantidad) {
 }
 
 function hablarConRetardo(texto, callback = null) {
-  if (!('speechSynthesis' in window)) {
+  if (!("speechSynthesis" in window)) {
     if (callback) setTimeout(callback, 2000);
     return;
   }
 
   const iniciarHabla = (voces) => {
     window.speechSynthesis.cancel(); // Cancelar cualquier voz previa
-    const vozNatural = voces.find(v => v.name.includes("es-ES") || v.name.includes("Google español")) || voces[0];
+    const vozNatural =
+      voces.find(
+        (v) => v.name.includes("es-ES") || v.name.includes("Google español")
+      ) || voces[0];
     const msg = new SpeechSynthesisUtterance(texto);
     msg.voice = vozNatural;
-    msg.lang = 'es-ES';
+    msg.lang = "es-ES";
     msg.volume = 1.0;
     msg.rate = 0.9;
     msg.pitch = 1.1;
@@ -127,8 +255,6 @@ function hablarConRetardo(texto, callback = null) {
     };
   }
 }
-
-
 
 function mostrarNuevaFigura() {
   if (!gameState.juegoActivo) return;
@@ -234,9 +360,12 @@ function respuestaIncorrecta(nombre) {
   if (gameState.vidas <= 0) {
     setTimeout(() => mostrarPantallaDerrota(), 1500);
   } else {
+    // setTimeout(() => {
+    //   const instructionText = document.querySelector(".instruction-text");
+    //   instructionText.textContent = `¡Encuentra: ${gameState.figuraObjetivo.nombre}!`;
+    // }, 2000);
     setTimeout(() => {
-      const instructionText = document.querySelector(".instruction-text");
-      instructionText.textContent = `¡Encuentra: ${gameState.figuraObjetivo.nombre}!`;
+      mostrarNuevaFigura();
     }, 2000);
   }
 }
@@ -280,8 +409,12 @@ function mostrarPantallaDerrota() {
       <h2 class="resultado-titulo">¡Inténtalo de nuevo! 😊</h2>
       <p class="resultado-texto">Te quedaste sin vidas, pero puedes intentarlo otra vez</p>
       <div class="resultado-stats">
-        <div class="stat-item"><span class="stat-label">Estrellas obtenidas:</span><span class="stat-value">${"⭐".repeat(gameState.aciertos)}${"✰".repeat(5 - gameState.aciertos)}</span></div>
-        <div class="stat-item"><span class="stat-label">Progreso:</span><span class="stat-value">${gameState.aciertos}/5</span></div>
+        <div class="stat-item"><span class="stat-label">Estrellas obtenidas:</span><span class="stat-value">${"⭐".repeat(
+          gameState.aciertos
+        )}${"✰".repeat(5 - gameState.aciertos)}</span></div>
+        <div class="stat-item"><span class="stat-label">Progreso:</span><span class="stat-value">${
+          gameState.aciertos
+        }/5</span></div>
       </div>
       <div class="resultado-botones">
         <button class="btn-reiniciar" onclick="reiniciarJuego()">🔄 Intentar de nuevo</button>
@@ -322,7 +455,7 @@ function volverAlMenu() {
 
 function procesarLecturaRFID(nombre) {
   if (!gameState.juegoActivo || !gameState.figuraObjetivo) return;
-  figura_esperada=gameState.figuraObjetivo.nombre;
+  figura_esperada = gameState.figuraObjetivo.nombre;
 
   console.log(`📡 RFID detectado: ${nombre}`);
   console.log(`🎯 Figura esperada: ${gameState.figuraObjetivo.nombre}`);
@@ -370,9 +503,11 @@ async function enviarDatosBackend(nombre) {
 
 async function guardarResultadoFinal() {
   try {
-    const tiempoPromedio = gameState.tiemposPorFigura.length > 0
-      ? gameState.tiemposPorFigura.reduce((a, b) => a + b, 0) / gameState.tiemposPorFigura.length
-      : 0;
+    const tiempoPromedio =
+      gameState.tiemposPorFigura.length > 0
+        ? gameState.tiemposPorFigura.reduce((a, b) => a + b, 0) /
+          gameState.tiemposPorFigura.length
+        : 0;
 
     await fetch("/api/desafio/resultado", {
       method: "POST",
@@ -404,18 +539,16 @@ function conectarWebSocket() {
       body: JSON.stringify({
         codigo_rfid: codigo,
         modo: "desafio",
-        figura_esperada: figura_esperada
-      })
+        figura_esperada: figura_esperada,
+      }),
     }).catch((err) => {
       console.error("Error al guardar interacción RFID:", err);
     });
-
   });
 
   gameState.socket.on("disconnect", () => {
     console.log("🔌 Desconectado del servidor WebSocket");
   });
-
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -453,6 +586,5 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarJuego();
   }
 });
-
 
 window.gameState = gameState;
