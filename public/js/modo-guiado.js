@@ -40,9 +40,9 @@ function hablarConRetardo(texto, callback = null) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
     const voces = window.speechSynthesis.getVoices();
-    const vozNatural = voces.find(v => v.name.includes("es-ES") || v.name.includes("Google español")) || voces[0];
+    //const vozNatural = voces.find(v => v.name.includes("es-ES") || v.name.includes("Google español")) || voces[0];
     const msg = new SpeechSynthesisUtterance(texto);
-    msg.voice = vozNatural;
+    //msg.voice = vozNatural;
     msg.lang = 'es-ES';
     msg.volume = 1.0;
     msg.rate = 0.9;
@@ -129,22 +129,6 @@ function finalizarJuego() {
   hablarConRetardo("Felicidades, completaste todas las figuras");
   progress.style.width = "100%";
   actualizarEstrellas();
-  guardarResultadoFinal();
-}
-
-function guardarResultadoFinal() {
-  const tiempoTotal = Math.floor((Date.now() - tiempoInicio) / 1000);
-  fetch("/api/guiado/resultado", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      aciertos: figurasMezcladas.length,
-      tiempo_jugado: tiempoTotal,
-      completado: true,
-    }),
-  }).catch((err) => {
-    console.error("Error guardando resultado del modo guiado:", err);
-  });
 }
 
 window.addEventListener("DOMContentLoaded", () => {

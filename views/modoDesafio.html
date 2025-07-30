@@ -74,7 +74,7 @@
 
     function iniciarMusicaFondo() {
       if (!music) return;
-      music.volume = 0.03;
+      music.volume = 0.08;
       music.play().catch(() => {
         document.addEventListener('click', reproducirTrasInteraccion, { once: true });
       });

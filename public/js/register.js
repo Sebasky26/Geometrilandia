@@ -3,7 +3,7 @@ const music = document.getElementById('fondoTablero');
 
 function iniciarMusicaFondo() {
   if (!music) return;
-  music.volume = 0.2;
+  music.volume = 0.09;
   music.play().catch(() => {
     document.addEventListener('click', reproducirTrasInteraccion, { once: true });
   });
