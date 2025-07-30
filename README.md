@@ -1,15 +1,15 @@
-1.- Instalar XAMPP
-2.- En el gestor de base de datos que ofrece XAMPP crear una base de datos llamada geometrilandia
-3.- Clonar el repositorio en Visual Studio Code
-4.- Conectar el cable USB del juego a la laptop
-5.- Verificar que el nombre del puerto, por lo general es el COM3
-6.- Caso contrario cambiar el nombre del puerto en la siguiente parte del código del archivo app.js
-// === INTEGRACIÓN SERIAL CON ESP32 (PUERTO COM3) ===
-const serialPort = new SerialPort({
-  path: "COM3",
-  baudRate: 115200,
-});
-7.- En la terminal de visual acceder a la carpeta modelo y ejecutar python modelo_api.py
-8.- En otra terminal ejecutar el comandondo npm start
-9.- Acceder a la ruta http://localhost:3000 
-10.- Probar el juego
+# Instalación de librerias
+- Conectar el cable de datos a la computadora
+- Se debe instalar la libreria "CP2102 drivers for Windows" para que detecte el puerto correcto.
+- link: https://www.pololu.com/docs/0j7/all#2
+- Una vez descargado, se extrae el archivo .zip
+- Se abre el administrador de dispositivos
+- Se busca la opción puertos (COM Y LPT) y saldra un warning de instalacion de drivers, entonces se le da clic derecho a actualizar dispositivo, se escoge la opcion "Buscar controladores en este dispositivo" y se busca la carpeta que descargamos previamente, se sigue los pasos y estara instalada correctamente.
+# Instalación
+- Instalar XAMPP
+- En el gestor de base de datos que ofrece XAMPP crear una base de datos llamada geometrilandia
+- Clonar el repositorio en Visual Studio Code
+- En la terminal de visual acceder a la carpeta modelo y ejecutar python modelo_api.py
+- En otra terminal ejecutar el comandondo npm start
+- Acceder a la ruta http://localhost:3000 
+- Probar el juego
