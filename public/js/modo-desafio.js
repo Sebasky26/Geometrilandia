@@ -221,12 +221,9 @@ function hablarConRetardo(texto, callback = null) {
 
   const iniciarHabla = (voces) => {
     window.speechSynthesis.cancel(); // Cancelar cualquier voz previa
-    const vozNatural =
-      voces.find(
-        (v) => v.name.includes("es-ES") || v.name.includes("Google español")
-      ) || voces[0];
+    //const vozNatural = voces.find(v => v.name.includes("es-ES") || v.name.includes("Google español")) || voces[0];
     const msg = new SpeechSynthesisUtterance(texto);
-    msg.voice = vozNatural;
+    //msg.voice = vozNatural;
     msg.lang = "es-ES";
     msg.volume = 1.0;
     msg.rate = 0.9;

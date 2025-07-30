@@ -93,7 +93,7 @@
 
     function iniciarMusicaFondo() {
       if (!music) return;
-      music.volume = 0.03;
+      music.volume = 0.08;
       music.play().catch(() => {
         document.addEventListener('click', reproducirTrasInteraccion, { once: true });
       });
@@ -111,6 +111,7 @@
       const video = document.getElementById('tutorialVideo');
       const tutorialContainer = document.getElementById('tutorialContainer');
       const figuraContainer = document.getElementById('figuraContainer');
+      const instrucciones = document.getElementById('instrucciones');
 
       video.onended = () => {
         tutorialContainer.style.display = "none";
@@ -118,6 +119,7 @@
 
         const titulo = document.getElementById('tituloTutorial');
         if (titulo) titulo.style.display = "none";
+        hablar(instrucciones.textContent);
 
         if (typeof actualizarFigura === 'function') {
           actualizarFigura();
